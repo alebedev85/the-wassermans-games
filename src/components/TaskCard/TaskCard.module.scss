@@ -1,0 +1,24 @@
+@use '../../styles/vars' as *;
+
+.taskCard {
+  padding: 10px;
+  margin: 5px 0;
+  background: #f9f9f9;
+  border-radius: 5px;
+  cursor: grab;
+  transition: transform 0.2s ease;
+}
+
+.taskCard:active {
+  cursor: grabbing;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.description {
+  font-size: 14px;
+  color: #666;
+}

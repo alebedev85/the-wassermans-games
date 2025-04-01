@@ -1,0 +1,24 @@
+@use "../../styles/vars" as *;
+
+.header {
+  background: $primary-color;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: white;
+  padding: $spacing-md $spacing-lg;
+  text-align: center;
+}
+
+.title{
+  display: block;
+  width: 100%;
+}
+
+.button{
+  width: 30px;
+  height: 30px;
+  border: 1px solid blue;
+  border-radius: 50%;
+  background-color: inherit;
+}

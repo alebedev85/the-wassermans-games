@@ -1,0 +1,31 @@
+@use "./styles/vars.scss" as *;
+
+body {
+  font-family: Arial, sans-serif;
+  background: var(--background-color);
+  color: var(--text-color);
+  margin: 0;
+  padding: 0;
+}
+
+[data-theme="light"] {
+  --background-color: #{$background-color-light};
+  --text-color: #{$text-color-light};
+  --modal-bg: #{$modal-bg-light};
+}
+
+[data-theme="dark"] {
+  --background-color: #{$background-color-dark};
+  --text-color: #{$text-color-dark};
+  --modal-bg: #{$modal-bg-dark};
+}
+
+button {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+
+  &:hover{
+    background-color: rgba(105, 104, 104, 0.2);
+  }
+}
