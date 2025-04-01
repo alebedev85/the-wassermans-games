@@ -1,33 +1,36 @@
 import {
   addDays,
+  addMonths,
   endOfMonth,
   format,
+  getDay,
   isSameDay,
   startOfMonth,
   startOfWeek,
+  subMonths,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import TaskCard from "../../components/TaskCard/TaskCard"; // Импорт TaskCard
+import React, { useEffect, useRef, useState } from "react";
+import { useSelector } from "react-redux";
+import AddNewTask from "../../components/AddNewTask/AddNewTask"; // Импортируем компонент формы
+import TaskCard from "../../components/TaskCard/TaskCard";
 import { RootState } from "../../store";
-import { addTask } from "../../store/calendarSlice";
-import { Task } from "../../types";
 import styles from "./Calendar.module.scss";
 
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]; // Названия дней недели
+
 const Calendar: React.FC = () => {
-  const dispatch = useDispatch();
   const tasks = useSelector((state: RootState) => state.calendar.tasks);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [newTask, setNewTask] = useState({ title: "", description: "" });
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [currentMonth, setCurrentMonth] = useState(new Date());
 
-  const today = new Date(); // Текущая дата
-  const monthStart = startOfMonth(today); // Первый день месяца
-  const monthEnd = endOfMonth(today); // Последний день месяца
+  const today = new Date();
+  const monthStart = startOfMonth(currentMonth);
+  const monthEnd = endOfMonth(currentMonth);
 
-  // Генерация всех дней месяца в формате сетки
+  // Генерация дней месяца в виде сетки
   const monthDays = [];
   let currentDay = startOfWeek(monthStart, { weekStartsOn: 1 });
 
@@ -36,80 +39,92 @@ const Calendar: React.FC = () => {
     currentDay = addDays(currentDay, 1);
   }
 
-  // Открытие модального окна при клике на день
-  const handleSelectDay = (day: Date) => {
-    setSelectedDate(day);
-    setModalOpen(true);
+  // Переключение на предыдущий месяц
+  const handlePrevMonth = () => {
+    setCurrentMonth(subMonths(currentMonth, 1));
   };
 
-  // Добавление задачи
-  const handleAddTask = () => {
-    if (newTask.title.trim() && selectedDate) {
-      const newTaskData: Task = {
-        id: Date.now().toString(),
-        title: newTask.title,
-        description: newTask.description || "",
-        date: selectedDate.toISOString(),
-      };
-      dispatch(addTask(newTaskData));
-      setNewTask({ title: "", description: "" });
+  // Переключение на следующий месяц
+  const handleNextMonth = () => {
+    setCurrentMonth(addMonths(currentMonth, 1));
+  };
+
+  // Обработчик клика вне формы (закрытие формы)
+  const modalRef = useRef<HTMLDivElement>(null);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
       setModalOpen(false);
     }
   };
 
+  useEffect(() => {
+    // Добавляем обработчик клика вне формы
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
   return (
     <div className={styles.calendar}>
-      <h2>{format(today, "MMMM yyyy", { locale: ru })}</h2>
+      <div className={styles.header}>
+        <button onClick={handlePrevMonth}>{"<"}</button>
+        <h2>{format(currentMonth, "MMMM yyyy", { locale: ru })}</h2>
+        <button onClick={handleNextMonth}>{">"}</button>
+      </div>
 
+      {/* Заголовки дней недели */}
+      <div className={styles.weekDays}>
+        {weekDays.map((day, index) => (
+          <div
+            key={index}
+            className={`${styles.weekDay} ${index >= 5 ? styles.weekend : ""}`}
+          >
+            {day}
+          </div>
+        ))}
+      </div>
+
+      {/* Сетка календаря */}
       <div className={styles.calendarGrid}>
         {monthDays.map((day, index) => (
           <div
             key={index}
             className={`${styles.calendarDay} ${
               isSameDay(day, today) ? styles.today : ""
+            } ${
+              getDay(day) === 6 || getDay(day) === 0 ? styles.weekendDay : ""
             }`}
-            onClick={() => handleSelectDay(day)}
           >
-            <span className={styles.dayNumber}>{format(day, "d")}</span>
+            <div className={styles.dayTitle}>
+              <span className={styles.dayNumber}>{format(day, "d")}</span>
+              {/* Кнопка для открытия формы */}
+              <AddNewTask
+                selectedDate={day}
+              />
+            </div>
             <div className={styles.taskList}>
               {tasks
                 .filter((task) => isSameDay(new Date(task.date), day))
                 .map((task) => (
-                  <TaskCard key={task.id} task={task} /> // Используем TaskCard
+                  <TaskCard key={task.id} task={task} />
                 ))}
             </div>
           </div>
         ))}
       </div>
 
-      {/* Модальное окно */}
-      {modalOpen && (
-        <div
-          className={styles.modalOverlay}
-          onClick={() => setModalOpen(false)}
-        >
-          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-            <h3>Новая задача</h3>
-            <input
-              type="text"
-              placeholder="Название"
-              value={newTask.title}
-              onChange={(e) =>
-                setNewTask({ ...newTask, title: e.target.value })
-              }
+      {/* Выпадающая форма для добавления задачи */}
+      {/* {modalOpen && selectedDate && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent} ref={modalRef}>
+            <AddNewTask
+              selectedDate={selectedDate}
+              onClose={() => setModalOpen(false)}
             />
-            <textarea
-              placeholder="Описание (необязательно)"
-              value={newTask.description}
-              onChange={(e) =>
-                setNewTask({ ...newTask, description: e.target.value })
-              }
-            />
-            <button onClick={handleAddTask}>Добавить</button>
-            <button onClick={() => setModalOpen(false)}>Закрыть</button>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
