@@ -10,7 +10,7 @@ import {
   subMonths,
 } from "date-fns";
 import { ru } from "date-fns/locale";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import AddNewTask from "../../components/AddNewTask/AddNewTask"; // Импортируем компонент формы
 import TaskCard from "../../components/TaskCard/TaskCard";
@@ -21,11 +21,7 @@ const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]; // Н
 
 const Calendar: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.calendar.tasks);
-
-  const [modalOpen, setModalOpen] = useState(false);
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [currentMonth, setCurrentMonth] = useState(new Date());
-
   const today = new Date();
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
@@ -48,22 +44,6 @@ const Calendar: React.FC = () => {
   const handleNextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
-
-  // Обработчик клика вне формы (закрытие формы)
-  const modalRef = useRef<HTMLDivElement>(null);
-  const handleClickOutside = (event: MouseEvent) => {
-    if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
-      setModalOpen(false);
-    }
-  };
-
-  useEffect(() => {
-    // Добавляем обработчик клика вне формы
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, []);
 
   return (
     <div className={styles.calendar}>
@@ -99,9 +79,7 @@ const Calendar: React.FC = () => {
             <div className={styles.dayTitle}>
               <span className={styles.dayNumber}>{format(day, "d")}</span>
               {/* Кнопка для открытия формы */}
-              <AddNewTask
-                selectedDate={day}
-              />
+              <AddNewTask selectedDate={day} />
             </div>
             <div className={styles.taskList}>
               {tasks
@@ -113,18 +91,6 @@ const Calendar: React.FC = () => {
           </div>
         ))}
       </div>
-
-      {/* Выпадающая форма для добавления задачи */}
-      {/* {modalOpen && selectedDate && (
-        <div className={styles.modalOverlay}>
-          <div className={styles.modalContent} ref={modalRef}>
-            <AddNewTask
-              selectedDate={selectedDate}
-              onClose={() => setModalOpen(false)}
-            />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 };

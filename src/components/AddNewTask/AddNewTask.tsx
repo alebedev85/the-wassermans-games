@@ -1,21 +1,14 @@
-import cn from "classnames";
-import { format } from "date-fns";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { addTask } from "../../store/calendarSlice";
-import { Task } from "../../types";
+import TaskForm from "../TaskForm/TaskForm";
 import styles from "./AddNewTask.module.scss";
 
-interface TaskFormProps {
+interface AddNewTaskProps {
   selectedDate: Date;
 }
 
-const TaskForm = ({ selectedDate }: TaskFormProps) => {
-  const dispatch = useDispatch();
+const AddNewTask = ({ selectedDate }: AddNewTaskProps) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const [taskTitle, setTaskTitle] = useState("");
-  const [taskDescription, setTaskDescription] = useState("");
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -33,19 +26,6 @@ const TaskForm = ({ selectedDate }: TaskFormProps) => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [menuOpen]);
 
-  const handleSubmit = () => {
-    if (taskTitle.trim()) {
-      const newTask: Task = {
-        id: Date.now().toString(),
-        title: taskTitle,
-        description: taskDescription || "",
-        date: selectedDate.toISOString(),
-      };
-      dispatch(addTask(newTask));
-      setMenuOpen(!menuOpen); // Закрыть форму после добавления задачи
-    }
-  };
-
   return (
     <div className={styles.newTaskMenu} ref={menuRef}>
       <button
@@ -54,33 +34,16 @@ const TaskForm = ({ selectedDate }: TaskFormProps) => {
       >
         +
       </button>
-      <form className={cn(styles.dropdownMenu, menuOpen ? styles.open : "")}>
-        <h3>Новая задача на {format(selectedDate, "dd MMMM yyyy")}</h3>
-        <input
-          type="text"
-          placeholder="Название задачи"
-          value={taskTitle}
-          onChange={(e) => setTaskTitle(e.target.value)}
-        />
-        <textarea
-          placeholder="Описание (необязательно)"
-          value={taskDescription}
-          onChange={(e) => setTaskDescription(e.target.value)}
-        />
-        <div className={styles.controls}>
-          <button className={styles.addButton} onClick={handleSubmit}>
-            Добавить
-          </button>
-          <button
-            className={styles.closeButton}
-            onClick={() => setMenuOpen(!menuOpen)}
-          >
-            Закрыть
-          </button>
+      {menuOpen && (
+        <div className={styles.dropdownMenu}>
+          <TaskForm
+            selectedDate={selectedDate}
+            onClose={() => setMenuOpen(false)}
+          />
         </div>
-      </form>
+      )}
     </div>
   );
 };
 
-export default TaskForm;
+export default AddNewTask;
