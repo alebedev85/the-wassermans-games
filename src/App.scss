@@ -1,5 +1,9 @@
 @use "./styles/vars.scss" as *;
 
+* {
+  font-family: "Lora", serif;
+}
+
 body {
   font-family: Arial, sans-serif;
   background: var(--background-color);

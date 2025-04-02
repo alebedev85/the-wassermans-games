@@ -29,8 +29,15 @@ const calendarSlice = createSlice({
     deleteTask: (state, action: PayloadAction<string>) => {
       state.tasks = state.tasks.filter((t) => t.id !== action.payload);
     },
+    // Редактирование задачи
+    editTask: (state, action: PayloadAction<Task>) => {
+      const index = state.tasks.findIndex((t) => t.id === action.payload.id);
+      if (index !== -1) {
+        state.tasks[index] = action.payload;
+      }
+    },
   },
 });
 
-export const { addTask, moveTask, deleteTask } = calendarSlice.actions;
+export const { addTask, moveTask, deleteTask, editTask } = calendarSlice.actions;
 export default calendarSlice.reducer;

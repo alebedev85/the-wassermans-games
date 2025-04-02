@@ -1,8 +1,8 @@
 @use "../../styles/vars" as *;
 
 .calendar {
-  width: 100%;
-  max-width: 800px;
+  width: 80%;
+  min-width: 800px;
   margin: 0 auto;
   text-align: center;
 }
@@ -27,12 +27,13 @@
 .weekDays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: 10px 0;
+  padding: 5px 0;
+  background-color: rgb(220, 219, 219);
+  font-size: 20px;
 }
 
 .weekDay {
   padding: 5px;
-  
 }
 
 .weekend {
@@ -64,7 +65,7 @@
 }
 
 .dayNumber {
-  font-size: 14px;
+  font-size: 17px;
   font-weight: bold;
 }
 
