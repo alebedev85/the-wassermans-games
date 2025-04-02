@@ -1,3 +1,5 @@
+@use "../../styles/vars" as *;
+
 .calendar {
   width: 100%;
   max-width: 800px;
@@ -25,17 +27,16 @@
 .weekDays {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  background: #f4f4f4;
-  font-weight: bold;
   padding: 10px 0;
 }
 
 .weekDay {
   padding: 5px;
+  
 }
 
 .weekend {
-  color: #b00;
+  color: red;
 }
 
 .calendarGrid {
@@ -46,22 +47,20 @@
 
 .calendarDay {
   position: relative;
-  min-height: 80px;
   border: 1px solid #ddd;
   background: #fff;
-  transition: background 0.2s;
 }
 
 .today {
-  border: 2px solid blue;
-}
-
-.weekendDay {
-  background: #e0e0e0;
+  border: 2px solid $primary-color;
 }
 
 .pastDay {
-  background: #f0f0f0;
+  background: #f0f0f0; // Прошедшие дни закрашены серым
+}
+
+.dayTitle {
+  padding: 5px 10px;
 }
 
 .dayNumber {
@@ -70,13 +69,4 @@
 }
 
 .taskList {
-  margin-top: 5px;
-}
-
-.dayTitle {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: rgba(241, 240, 240, 0.6);
-  padding: 5px 0 5px 10px;
 }

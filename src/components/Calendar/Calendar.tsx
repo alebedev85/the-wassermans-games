@@ -4,6 +4,7 @@ import {
   endOfMonth,
   format,
   getDay,
+  isPast,
   isSameDay,
   startOfMonth,
   startOfWeek,
@@ -12,12 +13,12 @@ import {
 import { ru } from "date-fns/locale";
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import AddNewTask from "../../components/AddNewTask/AddNewTask"; // Импортируем компонент формы
+import AddNewTask from "../../components/AddNewTask/AddNewTask";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import { RootState } from "../../store";
 import styles from "./Calendar.module.scss";
 
-const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"]; // Названия дней недели
+const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const Calendar: React.FC = () => {
   const tasks = useSelector((state: RootState) => state.calendar.tasks);
@@ -26,7 +27,6 @@ const Calendar: React.FC = () => {
   const monthStart = startOfMonth(currentMonth);
   const monthEnd = endOfMonth(currentMonth);
 
-  // Генерация дней месяца в виде сетки
   const monthDays = [];
   let currentDay = startOfWeek(monthStart, { weekStartsOn: 1 });
 
@@ -35,12 +35,10 @@ const Calendar: React.FC = () => {
     currentDay = addDays(currentDay, 1);
   }
 
-  // Переключение на предыдущий месяц
   const handlePrevMonth = () => {
     setCurrentMonth(subMonths(currentMonth, 1));
   };
 
-  // Переключение на следующий месяц
   const handleNextMonth = () => {
     setCurrentMonth(addMonths(currentMonth, 1));
   };
@@ -49,11 +47,11 @@ const Calendar: React.FC = () => {
     <div className={styles.calendar}>
       <div className={styles.header}>
         <button onClick={handlePrevMonth}>{"<"}</button>
-        <h2>{format(currentMonth, "MMMM yyyy", { locale: ru })}</h2>
+        <h2>{format(currentMonth, "LLLL yyyy", { locale: ru })}</h2>
         <button onClick={handleNextMonth}>{">"}</button>
       </div>
 
-      {/* Заголовки дней недели */}
+      {/* Дни недели */}
       <div className={styles.weekDays}>
         {weekDays.map((day, index) => (
           <div
@@ -67,29 +65,35 @@ const Calendar: React.FC = () => {
 
       {/* Сетка календаря */}
       <div className={styles.calendarGrid}>
-        {monthDays.map((day, index) => (
-          <div
-            key={index}
-            className={`${styles.calendarDay} ${
-              isSameDay(day, today) ? styles.today : ""
-            } ${
-              getDay(day) === 6 || getDay(day) === 0 ? styles.weekendDay : ""
-            }`}
-          >
-            <div className={styles.dayTitle}>
-              <span className={styles.dayNumber}>{format(day, "d")}</span>
-              {/* Кнопка для открытия формы */}
+        {monthDays.map((day, index) => {
+          const isWeekend = getDay(day) === 6 || getDay(day) === 0;
+          return (
+            <div
+              key={index}
+              className={`${styles.calendarDay} 
+                ${isSameDay(day, today) ? styles.today : ""} 
+                ${isPast(day) ? styles.pastDay : ""}`}
+            >
+              <div className={styles.dayTitle}>
+                <span
+                  className={`${styles.dayNumber} ${
+                    isWeekend ? styles.weekend : ""
+                  }`}
+                >
+                  {format(day, "d")}
+                </span>
+              </div>
               <AddNewTask selectedDate={day} />
+              <ul className={styles.taskList}>
+                {tasks
+                  .filter((task) => isSameDay(new Date(task.date), day))
+                  .map((task) => (
+                    <TaskCard key={task.id} task={task} />
+                  ))}
+              </ul>
             </div>
-            <div className={styles.taskList}>
-              {tasks
-                .filter((task) => isSameDay(new Date(task.date), day))
-                .map((task) => (
-                  <TaskCard key={task.id} task={task} />
-                ))}
-            </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
