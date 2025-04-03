@@ -12,7 +12,7 @@
 
 .modalContent {
   position: relative;
-  background: white;
+  background: var(--calendar-day);
   padding: 35px;
   box-sizing: border-box;
   border-radius: 8px;
@@ -21,22 +21,27 @@
   text-align: center;
 }
 
-/* Кнопка закрытия (крестик) */
 .closeButton {
   position: absolute;
   top: 15px;
   right: 15px;
   width: 30px;
   height: 30px;
-  // background: rgb(217, 217, 217);
   border: none;
   border-radius: 50%;
   font-size: 18px;
   align-items: center;
+  color: var(--text-color);
+
+  &:hover {
+    background-color: var(--hover);
+  }
 }
 
 .input,
 .textarea {
+  color: var(--text-color);
+  background: var(--calendar-day);
   width: 90%;
   padding: 8px;
   margin-top: 10px;
@@ -74,25 +79,18 @@
 .saveButton {
   background: #2ecc71;
   color: white;
-
-  &:hover {
-    background: #27ae60;
-  }
 }
 
 .disabled {
-  background: #b2b2b2;
-  cursor: default; 
+  background: var(--calendar-header);
+  cursor: default;
   &:hover {
-    background: #b2b2b2;
+    background: var(--calendar-header);
+    opacity: 1;
   }
 }
 
 .deleteButton {
-  background: #e74c3c;
+  background: var(--cancel-button-color);
   color: white;
-
-  &:hover {
-    background: #c0392b;
-  }
 }

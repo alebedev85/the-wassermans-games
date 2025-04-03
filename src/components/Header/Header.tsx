@@ -14,7 +14,7 @@ const Header = () => {
           className={styles.button}
           onClick={() => dispatch(toggleTheme())}
         >
-          {theme === "light" ? "🌙" : "☀️"}
+          {theme === "light" ? "☀️" : "🌙"}
         </button>
       </div>
     </header>

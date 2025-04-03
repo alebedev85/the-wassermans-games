@@ -3,7 +3,7 @@
 .taskCard {
   padding: 10px;
   margin: 5px 0;
-  background: #f9f9f9;
+  background: var(--task-color);
   border-radius: 5px;
   cursor: grab;
   transition: transform 0.2s ease;

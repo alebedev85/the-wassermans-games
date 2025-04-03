@@ -15,12 +15,16 @@
   gap: 20px;
 
   button {
-    color: black;
+    color: var(--text-color);
     border: none;
     border-radius: 50%;
     width: 30px;
     height: 30px;
     font-size: large;
+
+    &:hover {
+      background-color: var(--hover);
+    }
   }
 }
 
@@ -28,7 +32,7 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   padding: 5px 0;
-  background-color: rgb(220, 219, 219);
+  background-color: var(--calendar-header);
   font-size: 20px;
 }
 
@@ -49,15 +53,15 @@
 .calendarDay {
   position: relative;
   border: 1px solid #ddd;
-  background: #fff;
+  background: var(--calendar-day);
 }
 
 .today {
-  border: 2px solid $primary-color;
+  border: 2px solid var(--today-color);
 }
 
 .pastDay {
-  background: #f0f0f0; // Прошедшие дни закрашены серым
+  background: var(--calendar-past-day); // Прошедшие дни закрашены серым
 }
 
 .dayTitle {
@@ -69,5 +73,3 @@
   font-weight: bold;
 }
 
-.taskList {
-}

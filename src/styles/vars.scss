@@ -1,15 +1,51 @@
-$primary-color: #007bff;
-$background-color-light: #f8f9fa;
-$background-color-dark: #1e1e1e;
-$text-color-light: #000;
-$text-color-dark: #fff;
-$modal-bg-light: #ffffff;
-$modal-bg-dark: #2c2c2c;
-$border-radius: 8px;
+// Определяем CSS-переменные для обеих тем
+:root {
+  --primary-color: #007bff;
+  --today-color: #007bff;
+  --theme-button-color: #3b97fa;
 
-// Spacing
-$spacing-xs: 0.25rem;
-$spacing-sm: 0.5rem;
-$spacing-md: 1rem;
-$spacing-lg: 1.5rem;
-$spacing-xl: 2rem;
+  // Light Theme
+  --background-color: #f8f9fa;
+  --calendar-header: #dcdbdb;
+  --calendar-past-day: #f0f0f0;
+  --calendar-day: #fff;
+  --task-color: #f9f9f9;
+  --modal-bg: #ffffff;
+  --text-color: #000;
+
+  // Text colors
+  --text-weekend-color: #ff0000;
+
+  // Buttons
+  --save-button-color: #2ecc71;
+  --cancel-button-color: #fb6161;
+  --hover: rgba(105, 104, 104, 0.2);
+
+  // Font sizes
+  --font-size-sm: 0.875rem;
+  --font-size-lg: 1.125rem;
+
+  // Spacing
+  --spacing-xs: 0.25rem;
+  --spacing-sm: 0.5rem;
+  --spacing-md: 1rem;
+  --spacing-lg: 1.5rem;
+  --spacing-xl: 2rem;
+
+  // Shadows
+  --shadow-lg: 3px 3px 7px black;
+  --shadow-sm: 1px 1px 3px black;
+}
+
+// Dark Theme
+[data-theme="dark"] {
+  --primary-color: #014287;
+  --background-color: #1e1e1e;
+  --theme-button-color: #2d5b8b;
+  --calendar-header: #2c2c2c;
+  --calendar-past-day: #3a3a3a;
+  --calendar-day: #9d9d9d;
+  --task-color: #2c2c2c;
+  --modal-bg: #2c2c2c;
+  --text-color: #fff;
+}

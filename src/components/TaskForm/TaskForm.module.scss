@@ -1,11 +1,9 @@
-@use "../../styles/vars" as *;
-
 .taskForm {
-  background: white;
+  background-color: var(--calendar-day);
   border-radius: 0.5rem;
   padding: 0.5rem;
   width: 300px;
-  box-shadow: 3px 3px 7px black;
+  box-shadow: var(--shadow-lg);
 
   & input,
   textarea {
@@ -25,16 +23,17 @@
   justify-content: space-around;
 
   button {
+    color: var(--text-color);
     padding: 5px 10px;
     border-radius: 5px;
-    box-shadow: 1px 1px 3px black;
+    box-shadow: var(--shadow-sm);
   }
 
   .addButton {
-    background: $primary-color;
+    background: var(--primary-color);
   }
 
   .closeButton {
-    background: rgb(251, 97, 97);
+    background: var(--cancel-button-color);
   }
 }

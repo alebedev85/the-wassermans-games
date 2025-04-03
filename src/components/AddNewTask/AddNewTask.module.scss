@@ -1,14 +1,18 @@
-@use "../../styles/vars" as *;
 .newTaskMenu {
   position: relative;
   padding: 2px;
 }
 
 .newTaskButton {
+  color: var(--text-color);
   font-size: 20px;
   width: 100%;
   align-items: center;
   border: 1px grey solid;
+  
+  &:hover {
+    background-color: var(--hover);
+  }
 }
 
 @keyframes fadeIn {

@@ -1,12 +1,10 @@
-@use "../../styles/vars" as *;
-
 .header {
-  background: $primary-color;
+  background: var(--primary-color);
   display: flex;
   justify-content: flex-end;
   align-items: center;
   color: white;
-  padding: $spacing-md $spacing-lg;
+  padding: var(--spacing-md, --spacing-lg);
   text-align: center;
 }
 
@@ -20,5 +18,9 @@
   height: 30px;
   border: 1px solid blue;
   border-radius: 50%;
-  background-color: inherit;
+  background-color: var(--theme-button-color);
+
+  &:hover {
+    background-color: var(--hover);
+  }
 }
