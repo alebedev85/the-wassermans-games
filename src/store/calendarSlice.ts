@@ -13,16 +13,15 @@ const calendarSlice = createSlice({
     addTask: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
     },
-    // Перемещает задачу в новый индекс (для Drag & Drop)
-    moveTask: (
+    // Перемещаем задачу на новую дату
+    moveTask(
       state,
-      action: PayloadAction<{ taskId: string; newIndex: number }>
-    ) => {
-      const { taskId, newIndex } = action.payload;
-      const taskIndex = state.tasks.findIndex((t) => t.id === taskId);
-      if (taskIndex !== -1) {
-        const [task] = state.tasks.splice(taskIndex, 1); // Удаляем задачу из текущей позиции
-        state.tasks.splice(newIndex, 0, task); // Вставляем её в новый индекс
+      action: PayloadAction<{ taskId: string; newDate: string }>
+    ) {
+      const { taskId, newDate } = action.payload;
+      const task = state.tasks.find((task) => task.id === taskId);
+      if (task) {
+        task.date = newDate; // Обновляем дату задачи
       }
     },
     // Удаляет задачу по `id`
@@ -39,5 +38,6 @@ const calendarSlice = createSlice({
   },
 });
 
-export const { addTask, moveTask, deleteTask, editTask } = calendarSlice.actions;
+export const { addTask, moveTask, deleteTask, editTask } =
+  calendarSlice.actions;
 export default calendarSlice.reducer;

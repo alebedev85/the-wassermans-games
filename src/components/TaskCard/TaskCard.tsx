@@ -1,40 +1,36 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
+import { Draggable } from "@hello-pangea/dnd";
 import { useDispatch } from "react-redux";
+import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import styles from "./TaskCard.module.scss";
-import { openTaskModal } from "../../store/taskModalSlice";
 
 interface TaskCardProps {
   task: Task;
+  index: number;
 }
 
-const TaskCard = ({ task }: TaskCardProps) => {
+const TaskCard = ({ task, index }: TaskCardProps) => {
   const dispatch = useDispatch();
-  // Настройки Drag & Drop
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: task.id });
-
-  // Применение стилей для плавного перемещения
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
 
   return (
-    <li
-      ref={setNodeRef}
-      style={style}
-      {...attributes}
-      {...listeners}
-      className={styles.taskCard}
-      onClick={() => dispatch(openTaskModal(task))}
-    >
-      <h3 className={styles.title}>{task.title}</h3>
-      {task.description && (
-        <p className={styles.description}>{task.description}</p>
+    <Draggable draggableId={task.id} index={index}>
+      {(provided, snapshot) => (
+        <li
+          ref={provided.innerRef}
+          {...provided.draggableProps}
+          {...provided.dragHandleProps}
+          className={`${styles.taskCard} ${
+            snapshot.isDragging ? styles.isDragging : ""
+          }`}
+          onClick={() => dispatch(openTaskModal(task))}
+        >
+          <h3 className={styles.title}>{task.title}</h3>
+          {task.description && (
+            <p className={styles.description}>{task.description}</p>
+          )}
+        </li>
       )}
-    </li>
+    </Draggable>
   );
 };
 
