@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import classNames from "classnames";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import { deleteTask, editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
-import { editTask, deleteTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import styles from "./TaskModal.module.scss";
-import classNames from "classnames";
 
-const TaskModal: React.FC = () => {
+const TaskModal = () => {
   const dispatch = useDispatch();
   const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
 
@@ -24,7 +24,8 @@ const TaskModal: React.FC = () => {
   }, [task]);
 
   // Проверка: изменились ли данные
-  const isChanged = task && (title !== task.title || description !== task.description);
+  const isChanged =
+    task && (title !== task.title || description !== task.description);
 
   if (!isOpen || !task) return null;
 
@@ -43,10 +44,16 @@ const TaskModal: React.FC = () => {
   };
 
   return (
-    <div className={styles.modalOverlay} onClick={() => dispatch(closeTaskModal())}>
+    <div
+      className={styles.modalOverlay}
+      onClick={() => dispatch(closeTaskModal())}
+    >
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
         {/* Кнопка закрытия (крестик) */}
-        <button className={styles.closeButton} onClick={() => dispatch(closeTaskModal())}>
+        <button
+          className={styles.closeButton}
+          onClick={() => dispatch(closeTaskModal())}
+        >
           ✖
         </button>
 
@@ -67,7 +74,9 @@ const TaskModal: React.FC = () => {
 
         <div className={styles.controls}>
           <button
-            className={classNames(styles.saveButton, { [styles.disabled]: !isChanged })}
+            className={classNames(styles.saveButton, {
+              [styles.disabled]: !isChanged,
+            })}
             onClick={handleSave}
             disabled={!isChanged} // Дизейблим кнопку при отсутствии изменений
           >

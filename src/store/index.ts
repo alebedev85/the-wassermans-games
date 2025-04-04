@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import themeReducer from "./themeSlice";
 import calendarReducer from "./calendarSlice";
 import taskModalReducer from "./taskModalSlice";
+import deleteTaskModalReducer from "./deleteTaskModalSlice";
 import { loadState, saveState } from "../utils/storageUtils";
 
 const preloadedState = loadState();
@@ -11,6 +12,7 @@ export const store = configureStore({
     theme: themeReducer,
     calendar: calendarReducer,
     taskModal: taskModalReducer,
+    deleteTaskModal: deleteTaskModalReducer,
   },
   preloadedState: preloadedState
     ? {

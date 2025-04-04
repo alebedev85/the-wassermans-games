@@ -1,10 +1,10 @@
 import { Draggable } from "@hello-pangea/dnd";
+import { IoClose } from "react-icons/io5"; // Иконка крестика
 import { useDispatch } from "react-redux";
+import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
-import { IoClose } from "react-icons/io5"; // Иконка крестика
 import styles from "./TaskCard.module.scss";
-import { deleteTask } from "../../store/calendarSlice";
 
 interface TaskCardProps {
   task: Task;
@@ -13,11 +13,6 @@ interface TaskCardProps {
 
 const TaskCard = ({ task, index }: TaskCardProps) => {
   const dispatch = useDispatch();
-
-  const handleDelete = (e: React.MouseEvent) => {
-    e.stopPropagation(); // Чтобы не срабатывал клик на задачу
-    dispatch(deleteTask(task.id));
-  };
 
   return (
     <Draggable draggableId={task.id} index={index}>
@@ -32,7 +27,13 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           onClick={() => dispatch(openTaskModal(task))}
         >
           {/* Кнопка удаления */}
-          <button className={styles.deleteButton} onClick={handleDelete}>
+          <button
+            className={styles.deleteButton}
+            onClick={(e) => {
+              e.stopPropagation();
+              dispatch(openDeleteModal(task));
+            }}
+          >
             <IoClose />
           </button>
 
@@ -42,10 +43,10 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           {/* Цена и место */}
           <div className={styles.details}>
             <p>
-              <strong>Цена:</strong> {task.price} ₽
+              Цена:{task.price} ₽
             </p>
             <p>
-              <strong>Место:</strong> {task.location}
+              Место:{task.location}
             </p>
           </div>
         </li>
