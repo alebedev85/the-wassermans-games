@@ -43,10 +43,10 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           {/* Цена и место */}
           <div className={styles.details}>
             <p>
-              Цена:{task.price} ₽
+              Цена: {task.price} ₽
             </p>
             <p>
-              Место:{task.location}
+              Место: {task.location}
             </p>
           </div>
         </li>

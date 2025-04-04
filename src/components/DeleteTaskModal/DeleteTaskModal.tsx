@@ -3,6 +3,7 @@ import { RootState } from "../../store";
 import { deleteTask } from "../../store/calendarSlice";
 import { closeDeleteModal } from "../../store/deleteTaskModalSlice";
 import styles from "./DeleteTaskModal.module.scss";
+import { closeTaskModal } from "../../store/taskModalSlice";
 
 const DeleteTaskModal = () => {
   const dispatch = useDispatch();
@@ -15,6 +16,7 @@ const DeleteTaskModal = () => {
   const handleDelete = () => {
     dispatch(deleteTask(task.id));
     dispatch(closeDeleteModal());
+    dispatch(closeTaskModal());
   };
 
   return (
