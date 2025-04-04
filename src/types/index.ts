@@ -1,8 +1,10 @@
 export interface Task {
   id: string;
   title: string;
+  price: string;
+  location: string;
   description?: string;
-  date: string; //Дата хранится в виде строки в формате ISO (YYYY-MM-DDTHH:mm:ss.sssZ).
+  date: string; //Дата хранится в виде строки в формате ISO (YYYY-MM-DD).
 }
 
 export interface Calendar {

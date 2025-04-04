@@ -1,20 +1,33 @@
 .taskForm {
   background-color: var(--calendar-day);
   border-radius: 0.5rem;
-  padding: 0.5rem;
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
   width: 300px;
   box-shadow: var(--shadow-lg);
 
-  & input,
-  textarea {
-    width: 90%;
+  & textarea {
+    width: 100%;
     padding: 8px;
     margin: 10px 0;
+    box-sizing: border-box;
   }
 
   & h3 {
     margin-bottom: 10px;
     font-size: 16px;
+  }
+}
+
+.inputBlock {
+  margin: 10px 0;
+  text-align: left;
+
+  
+  & input {
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
   }
 }
 
@@ -36,4 +49,10 @@
   .closeButton {
     background: var(--cancel-button-color);
   }
+}
+
+.error {
+  color: var(--cancel-button-color);
+  font-size: var(--font-size-sm);
+  
 }

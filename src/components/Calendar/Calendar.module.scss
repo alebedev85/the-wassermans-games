@@ -11,10 +11,13 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 10px;
   gap: 20px;
 
-  button {
+  & h2{
+    margin: var(--spacing-lg);
+  }
+
+  & button {
     color: var(--text-color);
     border: none;
     border-radius: 50%;

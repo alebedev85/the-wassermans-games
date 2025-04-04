@@ -1,12 +1,21 @@
-@use '../../styles/vars' as *;
+@use "../../styles/vars" as *;
 
 .taskCard {
-  padding: 10px;
+  position: relative;
+  padding: var(--spacing-sm);
   margin: 5px 0;
   background: var(--task-color);
   border-radius: 5px;
-  cursor: grab;
+  cursor: pointer;
   transition: transform 0.2s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+
+  &:hover {
+    cursor: pointer;
+  }
 }
 
 .taskCard:active {
@@ -14,11 +23,37 @@
 }
 
 .title {
-  font-size: 16px;
+  font-size: var(--font-size-md);
   font-weight: bold;
+  margin-top: var(--spacing-sm);
+  margin-bottom: var(--spacing-md);
 }
 
-.description {
+.details {
+  text-align: left;
+  width: 100%;
   font-size: 14px;
-  color: #666;
+
+  & p {
+    margin-bottom: var(--spacing-sm);
+  }
+}
+
+.deleteButton {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  font-size: var(--font-size-sm);
+  width: var(--font-size-sm);
+  height: var(--font-size-sm);
+  color: var(--text-color);
+  transition: color 0.2s;
+
+  &:hover {
+    color: var(--cancel-button-color);
+    background-color: var(--hover);
+  }
 }

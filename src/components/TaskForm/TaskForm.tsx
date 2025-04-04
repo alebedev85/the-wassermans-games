@@ -9,21 +9,23 @@ interface TaskFormProps {
   onClose: () => void;
 }
 
-interface TaskFormValues {
-  title: string;
-  description?: string;
-}
-
 const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useDispatch();
-  const { register, handleSubmit, reset } = useForm<TaskFormValues>();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<Task>();
 
-  const onSubmit = (data: TaskFormValues) => {
+  const onSubmit = (data: Task) => {
     if (data.title.trim()) {
       const newTask: Task = {
         id: Date.now().toString(),
         title: data.title,
         description: data.description || "",
+        price: data.price,
+        location: data.location,
         date: selectedDate.toISOString(),
       };
       dispatch(addTask(newTask));
@@ -35,11 +37,60 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   return (
     <form className={styles.taskForm} onSubmit={handleSubmit(onSubmit)}>
       <h3>Новая задача на {selectedDate.toLocaleDateString()}</h3>
-      <input {...register("title", { required: true })} type="text" placeholder="Название задачи" />
-      <textarea {...register("description")} placeholder="Описание (необязательно)" />
+
+      {/* Поле Названия */}
+      <div className={styles.inputBlock}>
+        <input
+          {...register("title", { required: "Название обязательно" })}
+          type="text"
+          placeholder="Название игры"
+        />
+        {errors.title && (
+          <span className={styles.error}>{errors.title.message}</span>
+        )}
+      </div>
+
+      {/* Поле Цена */}
+      <div className={styles.inputBlock}>
+        <input
+          {...register("price", {
+            required: "Цена обязательна",
+          })}
+          type="text"
+          placeholder="Цена"
+        />
+        {errors.price && (
+          <span className={styles.error}>{errors.price.message}</span>
+        )}
+      </div>
+
+      {/* Поле Количество мест */}
+      <div className={styles.inputBlock}>
+        <input
+          {...register("location", {
+            required: "Введите место провидения",
+          })}
+          type="text"
+          placeholder="Место"
+        />
+        {errors.location && (
+          <span className={styles.error}>{errors.location.message}</span>
+        )}
+      </div>
+
+      {/* Поле Описания */}
+      <textarea
+        {...register("description")}
+        placeholder="Описание (необязательно)"
+      />
+
       <div className={styles.controls}>
-        <button type="submit" className={styles.addButton}>Добавить</button>
-        <button type="button" className={styles.closeButton} onClick={onClose}>Закрыть</button>
+        <button type="submit" className={styles.addButton}>
+          Добавить
+        </button>
+        <button type="button" className={styles.closeButton} onClick={onClose}>
+          Закрыть
+        </button>
       </div>
     </form>
   );
