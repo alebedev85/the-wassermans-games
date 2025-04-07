@@ -15,16 +15,16 @@ const TaskModal = () => {
   // Устанавливаем начальные значения для title, description, price и location
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
-  const [price, setPrice] = useState(task?.price || ""); // Новое состояние для цены
-  const [location, setLocation] = useState(task?.location || ""); // Новое состояние для места
+  const [price, setPrice] = useState(task?.price || "");
+  const [location, setLocation] = useState(task?.location || "");
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
     if (task) {
       setTitle(task.title);
       setDescription(task.description || "");
-      setPrice(task.price || ""); // Обновляем цену при изменении task
-      setLocation(task.location || ""); // Обновляем место при изменении task
+      setPrice(task.price || "");
+      setLocation(task.location || "");
     }
   }, [task]);
 
@@ -34,7 +34,7 @@ const TaskModal = () => {
     (title !== task.title ||
       description !== task.description ||
       price !== task.price ||
-      location !== task.location); // Проверка на изменения в новых полях
+      location !== task.location);
 
   if (!isOpen || !task) return null;
 
@@ -55,7 +55,6 @@ const TaskModal = () => {
   // Удалить задачу
   const handleDelete = () => {
     dispatch(openDeleteModal(task));
-    // dispatch(closeTaskModal()); // Если хотите сразу закрывать окно
   };
 
   return (

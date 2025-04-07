@@ -1,27 +1,36 @@
 .header {
   background: var(--primary-color);
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
   color: white;
+}
+
+.content {
+  width: 80%;
+  margin: auto;
   padding: var(--spacing-md, --spacing-lg);
-  text-align: center;
-}
+  position: relative;
+  place-items: center;
 
-.title{
-  display: block;
-  width: 100%;
-  margin: var(--spacing-lg);
-}
+  .title {
+    display: block;
+    font-size: var(--font-size-header-title);
+  }
 
-.button{
-  width: 30px;
-  height: 30px;
-  border: 1px solid blue;
-  border-radius: 50%;
-  background-color: var(--theme-button-color);
+  .subtitle {
+    font-size: var(--font-size-header-subtitle);
+  }
 
-  &:hover {
-    background-color: var(--hover);
+  .button {
+    position: absolute;
+    top: 60px;
+    right: 40px;
+    width: 30px;
+    height: 30px;
+    border: 1px solid blue;
+    border-radius: 50%;
+    background-color: var(--theme-button-color);
+
+    &:hover {
+      background-color: var(--hover);
+    }
   }
 }

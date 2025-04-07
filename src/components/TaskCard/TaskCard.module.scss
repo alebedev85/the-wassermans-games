@@ -53,7 +53,7 @@
   transition: color 0.2s;
 
   &:hover {
-    color: var(--cancel-button-color);
-    background-color: var(--hover);
+    color: white;
+    background-color: var(--cancel-button-color);
   }
 }

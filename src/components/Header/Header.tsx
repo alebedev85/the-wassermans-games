@@ -8,8 +8,9 @@ const Header = () => {
   const theme = useSelector((state: RootState) => state.theme.theme);
   return (
     <header className={styles.header}>
-      <h1 className={styles.title}>Календарь</h1>
-      <div className={styles.controls}>
+      <div className={styles.content}>
+        <h1 className={styles.title}>The Wassermans</h1>
+        <p className={styles.subtitle}>Расписание игр</p>
         <button
           className={styles.button}
           onClick={() => dispatch(toggleTheme())}
