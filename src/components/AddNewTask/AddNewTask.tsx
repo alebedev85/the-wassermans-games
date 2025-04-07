@@ -29,7 +29,7 @@ const AddNewTask = ({ selectedDate }: AddNewTaskProps) => {
   return (
     <div className={styles.newTaskMenu} ref={menuRef}>
       <button
-        className={styles.newTaskButton}
+        className={(styles.newTaskButton)}
         onClick={() => setMenuOpen(!menuOpen)}
       >
         +

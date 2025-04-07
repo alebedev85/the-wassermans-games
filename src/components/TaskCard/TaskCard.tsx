@@ -5,6 +5,7 @@ import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import styles from "./TaskCard.module.scss";
+import classNames from "classnames";
 
 interface TaskCardProps {
   task: Task;
@@ -28,7 +29,8 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
         >
           {/* Кнопка удаления */}
           <button
-            className={styles.deleteButton}
+            className={classNames(styles.deleteButton, 'tooltip')}
+            data-tooltip="Удалить игру"
             onClick={(e) => {
               e.stopPropagation();
               dispatch(openDeleteModal(task));
