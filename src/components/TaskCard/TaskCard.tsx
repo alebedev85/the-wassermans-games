@@ -42,6 +42,9 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
 
           {/* Цена и место */}
           <div className={styles.details}>
+          <p>
+              Начало: {task.time}
+            </p>
             <p>
               Цена: {task.price} ₽
             </p>

@@ -125,6 +125,12 @@ const Calendar = () => {
                     >
                       {tasks
                         .filter((task) => isSameDay(new Date(task.date), day)) // Фильтруем задачи по дню
+                        .sort((a, b) => {
+                          // Сортировка по времени (возрастание)
+                          if (a.time < b.time) return -1;
+                          if (a.time > b.time) return 1;
+                          return 0;
+                        })
                         .map((task, index) => (
                           <TaskCard
                             key={task.id} // Обязательно добавляем key

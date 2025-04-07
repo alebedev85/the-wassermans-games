@@ -23,6 +23,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
       const newTask: Task = {
         id: Date.now().toString(),
         title: data.title,
+        time: data.time,
         description: data.description || "",
         price: data.price,
         location: data.location,
@@ -47,6 +48,24 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         />
         {errors.title && (
           <span className={styles.error}>{errors.title.message}</span>
+        )}
+      </div>
+
+      {/* Поле время */}
+      <div className={styles.inputBlock}>
+        <input
+          {...register("time", {
+            required: "Время начала игры обязательно",
+            pattern: {
+              value: /^(?:[01][0-9]|2[0-3])[:.][0-5][0-9]$/,
+              message: "Время должно быть в формате HH:mm или HH.mm",
+            },
+          })}
+          type="text"
+          placeholder="Начало игры (HH:mm или HH.mm)"
+        />
+        {errors.time && (
+          <span className={styles.error}>{errors.time.message}</span>
         )}
       </div>
 
@@ -89,7 +108,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
           Добавить
         </button>
         <button type="button" className={styles.closeButton} onClick={onClose}>
-          Закрыть
+          Отмена
         </button>
       </div>
     </form>

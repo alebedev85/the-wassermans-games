@@ -86,7 +86,7 @@
 }
 
 .saveButton,
-.deleteButton {
+.counselButton {
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   border-radius: 5px;
@@ -95,6 +95,11 @@
 
 .saveButton {
   background:var(--save-button-color);
+  color: white;
+}
+
+.counselButton {
+  background: var(--cancel-button-color);
   color: white;
 }
 
@@ -107,7 +112,3 @@
   }
 }
 
-.deleteButton {
-  background: var(--cancel-button-color);
-  color: white;
-}

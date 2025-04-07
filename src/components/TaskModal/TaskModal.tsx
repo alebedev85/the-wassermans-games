@@ -16,17 +16,23 @@ const TaskModal = () => {
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
   const [price, setPrice] = useState(task?.price || "");
+  const [time, setTime] = useState(task?.time || "");
   const [location, setLocation] = useState(task?.location || "");
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
+    setData()
+  }, [task]);
+
+  const setData = () =>{
     if (task) {
       setTitle(task.title);
       setDescription(task.description || "");
       setPrice(task.price || "");
+      setTime(task.time || "");
       setLocation(task.location || "");
     }
-  }, [task]);
+  }
 
   // Проверка: изменились ли данные
   const isChanged =
@@ -34,6 +40,7 @@ const TaskModal = () => {
     (title !== task.title ||
       description !== task.description ||
       price !== task.price ||
+      time !== task.time ||
       location !== task.location);
 
   if (!isOpen || !task) return null;
@@ -44,17 +51,13 @@ const TaskModal = () => {
       const updatedTask: Task = {
         ...task,
         title,
-        description,
+        time,
         price,
         location,
+        description,
       }; // Добавляем цену и место
       dispatch(editTask(updatedTask));
     }
-  };
-
-  // Удалить задачу
-  const handleDelete = () => {
-    dispatch(openDeleteModal(task));
   };
 
   return (
@@ -78,6 +81,21 @@ const TaskModal = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
+
+        {/* Лейбл и поле ввода для цены */}
+        <div className={styles.inputWrapper}>
+          <label htmlFor="price" className={styles.label}>
+            Начало:
+          </label>
+          <input
+            id="time"
+            className={classNames(styles.input, styles.timeInput)}
+            type="text"
+            value={time}
+            onChange={(e) => setTime(e.target.value)}
+            placeholder="Цена"
+          />
+        </div>
 
         {/* Лейбл и поле ввода для цены */}
         <div className={styles.inputWrapper}>
@@ -130,8 +148,14 @@ const TaskModal = () => {
           >
             Сохранить
           </button>
-          <button className={styles.deleteButton} onClick={handleDelete}>
-            Удалить
+          <button
+            className={classNames(styles.counselButton, {
+              [styles.disabled]: !isChanged,
+            })}
+            onClick={() => setData()}
+            disabled={!isChanged}
+          >
+            Отмена
           </button>
         </div>
       </div>
