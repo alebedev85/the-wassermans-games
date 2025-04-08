@@ -5,6 +5,7 @@ import Calendar from "./components/Calendar/Calendar";
 import DeleteTaskModal from "./components/DeleteTaskModal/DeleteTaskModal";
 import Header from "./components/Header/Header";
 import TaskModal from "./components/TaskModal/TaskModal";
+import "./firebase";
 import { RootState } from "./store";
 
 function App() {

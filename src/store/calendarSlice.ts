@@ -9,6 +9,10 @@ const calendarSlice = createSlice({
   name: "calendar",
   initialState,
   reducers: {
+    // Установка состояния
+    setTasks(state, action: PayloadAction<Task[]>) {
+      state.tasks = action.payload; // Обновляем состояние tasks
+    },
     // Добавляет новую задачу в список
     addTask: (state, action: PayloadAction<Task>) => {
       state.tasks.push(action.payload);
@@ -38,6 +42,6 @@ const calendarSlice = createSlice({
   },
 });
 
-export const { addTask, moveTask, deleteTask, editTask } =
+export const { setTasks, addTask, moveTask, deleteTask, editTask } =
   calendarSlice.actions;
 export default calendarSlice.reducer;

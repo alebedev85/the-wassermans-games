@@ -12,18 +12,22 @@ import {
   subMonths,
 } from "date-fns"; // Импортируем методы для работы с датами
 import { ru } from "date-fns/locale"; // Локализация для русских названий месяцев
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; // Используем Redux
 import AddNewTask from "../../components/AddNewTask/AddNewTask";
 import TaskCard from "../../components/TaskCard/TaskCard";
+import useSaveBoardState from "../../hooks/useSaveBoardState";
 import { RootState } from "../../store";
-import { moveTask } from "../../store/calendarSlice"; // Действие Redux для перемещения задач
+import { moveTask, setTasks } from "../../store/calendarSlice"; // Действие Redux для перемещения задач
+import { loadCalendar } from "../../utils/storageFirebase";
+import Loader from "../Loader/Loader";
 import styles from "./Calendar.module.scss";
 
 const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
 
 const Calendar = () => {
   const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   const tasks = useSelector((state: RootState) => state.calendar.tasks);
   const [currentMonth, setCurrentMonth] = useState(new Date()); // Храним текущий месяц
   const today = new Date();
@@ -67,7 +71,26 @@ const Calendar = () => {
     );
   };
 
-  return (
+  // Загрузка данных календаря из Firebase
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true); // Начинаем загрузку
+      const calendarData = await loadCalendar(); // Загружаем данные без userId
+      if (calendarData) {
+        dispatch(setTasks(calendarData.tasks)); // Записываем задачи в Redux
+      }
+      setIsLoading(false); // Завершаем загрузку
+    };
+
+    fetchData();
+  }, [dispatch]);
+
+  // Хук для сохранения состояния доски при изменении
+  useSaveBoardState();
+
+  return isLoading ? (
+    <Loader />
+  ) : (
     <div className={styles.calendar}>
       {/* DragDropContext обязателен, он оборачивает всю область с DnD */}
       <DragDropContext onDragEnd={handleDragEnd}>
@@ -114,7 +137,7 @@ const Calendar = () => {
                   </span>
                 </div>
                 <AddNewTask selectedDate={day} />
-                
+
                 {/* Droppable для задач в конкретном дне */}
                 <Droppable droppableId={dayId} type="TASK">
                   {(provided) => (
