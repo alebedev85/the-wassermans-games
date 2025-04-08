@@ -89,7 +89,9 @@ const Calendar = () => {
   useSaveBoardState();
 
   return isLoading ? (
-    <Loader />
+    <div className={styles.loader}>
+      <Loader />
+    </div>
   ) : (
     <div className={styles.calendar}>
       {/* DragDropContext обязателен, он оборачивает всю область с DnD */}

@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { editTask } from "../../store/calendarSlice";
-import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import styles from "./TaskModal.module.scss";
@@ -21,10 +20,10 @@ const TaskModal = () => {
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
-    setData()
+    setData();
   }, [task]);
 
-  const setData = () =>{
+  const setData = () => {
     if (task) {
       setTitle(task.title);
       setDescription(task.description || "");
@@ -32,7 +31,7 @@ const TaskModal = () => {
       setTime(task.time || "");
       setLocation(task.location || "");
     }
-  }
+  };
 
   // Проверка: изменились ли данные
   const isChanged =

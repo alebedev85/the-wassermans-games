@@ -1,7 +1,10 @@
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
+import { uploadImageToCloudinary } from "../../utils/cloudinary";
+import Loader from "../Loader/Loader";
 import styles from "./TaskForm.module.scss";
 
 interface TaskFormProps {
@@ -11,6 +14,8 @@ interface TaskFormProps {
 
 const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useDispatch();
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
   const {
     register,
     handleSubmit,
@@ -28,6 +33,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         price: data.price,
         location: data.location,
         date: selectedDate.toISOString(),
+        imageUrl,
       };
       dispatch(addTask(newTask));
       reset();
@@ -35,9 +41,25 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
     }
   };
 
+  // Обработчик выбора изображения
+  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      try {
+        setIsUploading(true);
+        const url = await uploadImageToCloudinary(file);
+        setImageUrl(url);
+      } catch (err) {
+        console.error("Ошибка загрузки изображения:", err);
+      } finally {
+        setIsUploading(false);
+      }
+    }
+  };
+
   return (
     <form className={styles.taskForm} onSubmit={handleSubmit(onSubmit)}>
-      <h3>Новая задача на {selectedDate.toLocaleDateString()}</h3>
+      <h3>Новая игра на {selectedDate.toLocaleDateString()}</h3>
 
       {/* Поле Названия */}
       <div className={styles.inputBlock}>
@@ -94,6 +116,19 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         />
         {errors.location && (
           <span className={styles.error}>{errors.location.message}</span>
+        )}
+      </div>
+
+      {/* Поле для загрузки изображения */}
+      <div className={styles.inputBlock}>
+        <input type="file" accept="image/*" onChange={handleImageChange} />
+        {isUploading && (
+          <div className={styles.previewImage}>
+            <Loader />
+          </div>
+        )}
+        {imageUrl && (
+          <img src={imageUrl} alt="Preview" className={styles.previewImage} />
         )}
       </div>
 

@@ -1,5 +1,9 @@
 @use "../../styles/vars" as *;
 
+.loader{
+  height: 80vh;
+}
+
 .calendar {
   width: 80%;
   margin: 0 auto;
