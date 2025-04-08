@@ -1,11 +1,12 @@
 import { Draggable } from "@hello-pangea/dnd";
+import classNames from "classnames";
 import { IoClose } from "react-icons/io5"; // Иконка крестика
 import { useDispatch } from "react-redux";
 import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import styles from "./TaskCard.module.scss";
-import classNames from "classnames";
+import Image from "../../assets/artwork.png"
 
 interface TaskCardProps {
   task: Task;
@@ -29,7 +30,7 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
         >
           {/* Кнопка удаления */}
           <button
-            className={classNames(styles.deleteButton, 'tooltip')}
+            className={classNames(styles.deleteButton, "tooltip")}
             data-tooltip="Удалить игру"
             onClick={(e) => {
               e.stopPropagation();
@@ -42,17 +43,15 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           {/* Заголовок по центру */}
           <h3 className={styles.title}>{task.title}</h3>
 
+          {/* Изображение (если есть) */}
+
+          <img src={task.imageUrl || Image} alt={task.title} className={styles.image} />
+
           {/* Цена и место */}
           <div className={styles.details}>
-          <p>
-              Начало: {task.time}
-            </p>
-            <p>
-              Цена: {task.price} ₽
-            </p>
-            <p>
-              Место: {task.location}
-            </p>
+            <p>Начало: {task.time}</p>
+            <p>Цена: {task.price} ₽</p>
+            <p>Место: {task.location}</p>
           </div>
         </li>
       )}

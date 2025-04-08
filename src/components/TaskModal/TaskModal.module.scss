@@ -8,12 +8,14 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  z-index: 11;
 }
 
 .modalContent {
   position: relative;
   background: var(--calendar-day);
   padding: var(--spacing-lg);
+  padding-top: var(--spacing-xl);
   box-sizing: border-box;
   border-radius: 8px;
   max-width: 400px;
@@ -64,7 +66,7 @@
 .inputWrapper {
   display: flex;
   align-items: center;
-  margin-bottom: var(--spacing-sm);
+  
   width: 100%;
 }
 
@@ -110,5 +112,13 @@
     background: var(--calendar-header);
     opacity: 1;
   }
+}
+
+.image {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: var(--spacing-sm);
 }
 

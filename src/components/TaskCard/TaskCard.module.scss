@@ -1,8 +1,6 @@
-@use "../../styles/vars" as *;
-
 .taskCard {
   position: relative;
-  padding: var(--spacing-sm);
+  padding: var(--spacing-md);
   margin: 5px 0;
   background: var(--task-color);
   border-radius: 5px;
@@ -56,4 +54,12 @@
     color: white;
     background-color: var(--cancel-button-color);
   }
+}
+
+.image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 8px;
 }

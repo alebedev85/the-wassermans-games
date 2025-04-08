@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import Image from "../../assets/artwork.png";
 import { RootState } from "../../store";
 import { editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
@@ -81,6 +82,12 @@ const TaskModal = () => {
           onChange={(e) => setTitle(e.target.value)}
         />
 
+        <img
+          src={task.imageUrl || Image}
+          alt={task.title}
+          className={styles.image}
+        />
+
         {/* Лейбл и поле ввода для цены */}
         <div className={styles.inputWrapper}>
           <label htmlFor="price" className={styles.label}>
@@ -127,6 +134,7 @@ const TaskModal = () => {
         </div>
 
         {/* Описание редактируется при клике */}
+
         <label htmlFor="description" className={styles.label}>
           Описание:
         </label>
