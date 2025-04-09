@@ -62,3 +62,22 @@
   margin-top: 8px;
   border-radius: 8px;
 }
+
+.customFileUpload {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  padding: var(--spacing-sm);
+  text-align: center;
+  border-radius: 5px;
+  display: inline-block;
+  font-size: var(--font-size-sm);
+}
+
+.customFileUpload input {
+  display: none; /* Скрыть стандартный input */
+}
+
+.fileInput {
+  display: none; /* Скрываем сам input, чтобы он не мешал кастомной кнопке */
+}

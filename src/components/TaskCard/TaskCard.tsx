@@ -2,11 +2,11 @@ import { Draggable } from "@hello-pangea/dnd";
 import classNames from "classnames";
 import { IoClose } from "react-icons/io5"; // Иконка крестика
 import { useDispatch } from "react-redux";
+import fallbackImage  from "../../assets/artwork.png";
 import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import styles from "./TaskCard.module.scss";
-import Image from "../../assets/artwork.png"
 
 interface TaskCardProps {
   task: Task;
@@ -45,7 +45,12 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
 
           {/* Изображение (если есть) */}
 
-          <img src={task.imageUrl || Image} alt={task.title} className={styles.image} />
+          <img
+            src={task.imageUrl || fallbackImage }
+            alt={task.title}
+            className={styles.image}
+            loading="lazy"
+          />
 
           {/* Цена и место */}
           <div className={styles.details}>

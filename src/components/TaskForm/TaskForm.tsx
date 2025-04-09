@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
+import fallbackImage from "../../assets/artwork.png";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
@@ -121,14 +122,25 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
 
       {/* Поле для загрузки изображения */}
       <div className={styles.inputBlock}>
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-        {isUploading && (
+        <label className={styles.customFileUpload}>
+          {isUploading
+            ? "Загружается..."
+            : imageUrl
+            ? "Изменить изображение"
+            : "Загрузить изображение"}
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </label>
+        {isUploading ? (
           <div className={styles.previewImage}>
             <Loader />
           </div>
-        )}
-        {imageUrl && (
-          <img src={imageUrl} alt="Preview" className={styles.previewImage} />
+        ) : (
+          <img
+            src={imageUrl || fallbackImage}
+            alt="Preview"
+            className={styles.previewImage}
+            loading="lazy"
+          />
         )}
       </div>
 
