@@ -59,14 +59,17 @@
 }
 
 .textarea {
-  height: 80px;
   resize: none;
+  box-sizing: border-box;
+  overflow: hidden; 
+  min-height: 40px;
+  width: 100%;
 }
 
 .inputWrapper {
   display: flex;
   align-items: center;
-  
+  margin-bottom: 1px;
   width: 100%;
 }
 

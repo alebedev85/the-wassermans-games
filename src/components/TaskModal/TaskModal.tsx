@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "../../assets/artwork.png";
 import { RootState } from "../../store";
@@ -11,6 +11,7 @@ import styles from "./TaskModal.module.scss";
 const TaskModal = () => {
   const dispatch = useDispatch();
   const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
+  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   // Устанавливаем начальные значения для title, description, price и location
   const [title, setTitle] = useState(task?.title || "");
@@ -57,6 +58,14 @@ const TaskModal = () => {
         description,
       }; // Добавляем цену и место
       dispatch(editTask(updatedTask));
+    }
+  };
+
+  const handleTextareaInput = () => {
+    const textarea = textareaRef.current;
+    if (textarea) {
+      textarea.style.height = "auto"; // сначала сбросим
+      textarea.style.height = `${textarea.scrollHeight}px`; // установим по содержимому
     }
   };
 
@@ -134,15 +143,16 @@ const TaskModal = () => {
         </div>
 
         {/* Описание редактируется при клике */}
-
         <label htmlFor="description" className={styles.label}>
           Описание:
         </label>
         <textarea
+          ref={textareaRef}
           id="description"
           className={styles.textarea}
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          onInput={handleTextareaInput}
         />
 
         <div className={styles.controls}>
