@@ -205,7 +205,7 @@ const TaskModal = () => {
             onClick={handleSave}
             disabled={!isChanged} // Дизейблим кнопку при отсутствии изменений
           >
-            Сохранить
+            Редактировать
           </button>
           <button
             className={classNames(styles.counselButton, {
