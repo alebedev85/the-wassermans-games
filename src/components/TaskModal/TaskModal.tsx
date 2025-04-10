@@ -24,7 +24,7 @@ const TaskModal = () => {
   const [price, setPrice] = useState(task?.price || "");
   const [time, setTime] = useState(task?.time || "");
   const [location, setLocation] = useState(task?.location || "");
-  const [imageUrl, setImageUrl] = useState(task?.imageUrl || undefined);
+  const [imageUrl, setImageUrl] = useState(task?.imageUrl || null);
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
@@ -43,7 +43,7 @@ const TaskModal = () => {
       setPrice(task.price || "");
       setTime(task.time || "");
       setLocation(task.location || "");
-      setImageUrl(task.imageUrl || fallbackImage);
+      setImageUrl(task.imageUrl || null);
     }
   };
 
@@ -122,12 +122,16 @@ const TaskModal = () => {
         />
 
         <div className={styles.inputBlock}>
-          {isUploading || !imageUrl ? (
+          {isUploading ? (
             <div className={styles.previewImage}>
               <Loader />
             </div>
           ) : (
-            <img src={imageUrl} alt="Preview" className={styles.previewImage} />
+            <img
+              src={imageUrl || fallbackImage}
+              alt="Preview"
+              className={styles.previewImage}
+            />
           )}
           <label className={styles.customFileUpload}>
             {isUploading
