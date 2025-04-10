@@ -17,17 +17,22 @@ const TaskModal = () => {
 
   const [isUploading, setIsUploading] = useState(false);
 
+  const [initialTask, setInitialTask] = useState<Task | null>(null);
   // Устанавливаем начальные значения для title, description, price и location
   const [title, setTitle] = useState(task?.title || "");
   const [description, setDescription] = useState(task?.description || "");
   const [price, setPrice] = useState(task?.price || "");
   const [time, setTime] = useState(task?.time || "");
   const [location, setLocation] = useState(task?.location || "");
-  const [imageUrl, setImageUrl] = useState(task?.imageUrl || "");
+  const [imageUrl, setImageUrl] = useState(task?.imageUrl || undefined);
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
+    setInitialTask(task);
     setData();
+    requestAnimationFrame(() => {
+      handleTextareaInput();
+    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
 
@@ -38,24 +43,24 @@ const TaskModal = () => {
       setPrice(task.price || "");
       setTime(task.time || "");
       setLocation(task.location || "");
-      setImageUrl(task.imageUrl || "");
+      setImageUrl(task.imageUrl || fallbackImage);
     }
   };
 
   const handleClose = () => {
     setImageUrl(""); // сброс превью
-    // setIsUploading(false);
     dispatch(closeTaskModal());
   };
 
   // Проверка: изменились ли данные
   const isChanged =
-    task &&
-    (title !== task.title ||
-      description !== task.description ||
-      price !== task.price ||
-      time !== task.time ||
-      location !== task.location);
+    initialTask &&
+    (title !== initialTask.title ||
+      description !== initialTask.description ||
+      price !== initialTask.price ||
+      time !== initialTask.time ||
+      location !== initialTask.location ||
+      imageUrl !== initialTask.imageUrl);
 
   if (!isOpen || !task) return null;
 
@@ -70,18 +75,19 @@ const TaskModal = () => {
         location,
         description,
         imageUrl,
-      }; // Добавляем цену и место
+      };
       dispatch(editTask(updatedTask));
+      setInitialTask(updatedTask);
     }
   };
 
-  const handleTextareaInput = () => {
+  function handleTextareaInput() {
     const textarea = textareaRef.current;
     if (textarea) {
       textarea.style.height = "auto"; // сначала сбросим
       textarea.style.height = `${textarea.scrollHeight}px`; // установим по содержимому
     }
-  };
+  }
 
   // Обработчик выбора изображения
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -116,16 +122,12 @@ const TaskModal = () => {
         />
 
         <div className={styles.inputBlock}>
-          {isUploading ? (
+          {isUploading || !imageUrl ? (
             <div className={styles.previewImage}>
               <Loader />
             </div>
           ) : (
-            <img
-              src={imageUrl || fallbackImage}
-              alt="Preview"
-              className={styles.previewImage}
-            />
+            <img src={imageUrl} alt="Preview" className={styles.previewImage} />
           )}
           <label className={styles.customFileUpload}>
             {isUploading
