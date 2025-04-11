@@ -16,11 +16,33 @@
   background: var(--calendar-day);
   padding: var(--spacing-lg);
   padding-top: var(--spacing-xl);
-  box-sizing: border-box;
   border-radius: 8px;
-  max-width: 400px;
+  // max-width: 400px;
   width: 100%;
   text-align: left; /* Выравнивание по левому краю */
+  
+  width: auto; /* Пропорциональная ширина, на начальном этапе */
+  height: auto; /* Изначально пропорциональная высота */
+  max-width: 90%; /* Устанавливаем максимальную ширину */
+  max-height: 90%; /* Устанавливаем максимальную высоту */
+}
+
+/* Стиль для вертикальной ориентации (портрет) */
+@media (orientation: portrait) {
+  .modalContent {
+    width: 90vw;  /* 80% от ширины экрана для вертикальной ориентации */
+    height: auto;  /* Высота будет зависеть от контента */
+    max-height: 100vh;  /* Максимальная высота 80% от высоты экрана */
+  }
+}
+
+/* Стиль для горизонтальной ориентации (пейзаж) */
+@media (orientation: landscape) {
+  .modalContent {
+    width: auto;  /* Ширина будет зависеть от контента */
+    height: 90vh;  /* 80% от высоты экрана для горизонтальной ориентации */
+    max-width: 80vw;  /* Максимальная ширина 80% от ширины экрана */
+  }
 }
 
 .closeButton {
