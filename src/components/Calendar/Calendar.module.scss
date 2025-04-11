@@ -5,9 +5,10 @@
 }
 
 .calendar {
-  width: 80%;
+  min-width: 947px;
+  max-width: 80%;
   margin: 0 auto;
-  padding-bottom: var(--spacing-xxl);
+  padding:0  var(--spacing-xl) var(--spacing-xxl);
   text-align: center;
 }
 
