@@ -114,14 +114,18 @@ const TaskModal = () => {
         </button>
 
         {/* Заголовок редактируется при клике */}
-        <input
-          className={classNames(styles.input, styles.titleInput)}
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
+        <div className={styles.data}>
 
         <div className={styles.inputBlock}>
+          <input
+            className={classNames(styles.input, styles.titleInput)}
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </div>
+
+        <div className={styles.imgWrapper}>
           {isUploading ? (
             <div className={styles.previewImage}>
               <Loader />
@@ -200,6 +204,7 @@ const TaskModal = () => {
           onChange={(e) => setDescription(e.target.value)}
           onInput={handleTextareaInput}
         />
+        </div>
 
         <div className={styles.controls}>
           <button

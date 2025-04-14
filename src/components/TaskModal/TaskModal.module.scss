@@ -1,3 +1,16 @@
+@use "../../styles/vars.scss" as *;
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.5);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
 .modalOverlay {
   position: fixed;
   top: 0;
@@ -14,34 +27,44 @@
 .modalContent {
   position: relative;
   background: var(--calendar-day);
-  padding: var(--spacing-lg);
-  padding-top: var(--spacing-xl);
+  padding: var(--spacing-xl);
   border-radius: 8px;
   // max-width: 400px;
-  width: 100%;
+  // width: 100%;
   text-align: left; /* Выравнивание по левому краю */
-  
-  width: auto; /* Пропорциональная ширина, на начальном этапе */
-  height: auto; /* Изначально пропорциональная высота */
-  max-width: 90%; /* Устанавливаем максимальную ширину */
-  max-height: 90%; /* Устанавливаем максимальную высоту */
+
+  // width: auto; /* Пропорциональная ширина, на начальном этапе */
+  // height: auto; /* Изначально пропорциональная высота */
+  // max-width: 90%; /* Устанавливаем максимальную ширину */
+  // max-height: 90%; /* Устанавливаем максимальную высоту */
+  // aspect-ratio: 9 / 11;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeIn 0.3s ease-out forwards;
+
+  font-size: var(--font-size-lg);
+
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+  }
 }
 
 /* Стиль для вертикальной ориентации (портрет) */
 @media (orientation: portrait) {
   .modalContent {
-    width: 90vw;  /* 80% от ширины экрана для вертикальной ориентации */
-    height: auto;  /* Высота будет зависеть от контента */
-    max-height: 100vh;  /* Максимальная высота 80% от высоты экрана */
+    width: 80%; /* 80% от ширины экрана для вертикальной ориентации */
+    min-height: 80%; /* Высота будет зависеть от контента */
+    max-height: 100%; /* Максимальная высота 80% от высоты экрана */
   }
 }
 
 /* Стиль для горизонтальной ориентации (пейзаж) */
 @media (orientation: landscape) {
   .modalContent {
-    width: auto;  /* Ширина будет зависеть от контента */
-    height: 90vh;  /* 80% от высоты экрана для горизонтальной ориентации */
-    max-width: 80vw;  /* Максимальная ширина 80% от ширины экрана */
+    width: auto; /* Ширина будет зависеть от контента */
+    min-height: 90%; /* 80% от высоты экрана для горизонтальной ориентации */
+    max-width: 60%; /* Максимальная ширина 80% от ширины экрана */
   }
 }
 
@@ -53,12 +76,24 @@
   height: 30px;
   border: none;
   border-radius: 50%;
-  font-size: 18px;
   color: var(--text-color);
+  font-size: var(--font-size-lg);
+
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+    right: 20px;
+    top: 7px;
+  }
 
   &:hover {
     background-color: var(--hover);
   }
+}
+
+.data {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
 }
 
 .input,
@@ -67,17 +102,13 @@
   background: var(--calendar-day);
   width: 100%;
   padding: 8px;
-  margin-top: var(--spacing-sm);
   border: none;
   border-radius: 5px;
-  font-size: 16px;
-}
+  font-size: var(--font-size-lg);
 
-.titleInput {
-  font-weight: bold;
-  font-size: var(--font-size-md);
-  text-align: center;
-  display: block;
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+  }
 }
 
 .textarea {
@@ -96,8 +127,8 @@
 }
 
 .label {
-  font-size: var(--font-size-sm);
   color: var(--text-color);
+  font-weight: bold;
 }
 
 .input {
@@ -107,15 +138,15 @@
 
 .titleInput {
   resize: none;
-  overflow: hidden;
   width: 100%;
-  font-size: 20px;
   font-weight: bold;
   border: none;
   background: transparent;
   outline: none;
   word-break: break-word;
   line-height: 1.2;
+  font-size: var(--font-size-header-subtitle);
+  text-align: center;
 }
 
 .controls {
@@ -130,7 +161,11 @@
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   border-radius: 5px;
-  font-size: var(--font-size-sm);
+  font-size: var(--font-size-lg);
+
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+  }
 }
 
 .saveButton {
@@ -152,17 +187,9 @@
   }
 }
 
-.image {
-  width: 100%;
-  height: 320px;
-  object-fit: cover;
-  border-radius: 6px;
-  margin-bottom: var(--spacing-sm);
-}
-
 .previewImage {
   width: 100%;
-  height: 300px;
+  height: 450px;
   object-fit: cover;
   margin-top: 8px;
   border-radius: 8px;
@@ -172,11 +199,11 @@
   cursor: pointer;
   background-color: var(--primary-color);
   color: white;
+  margin-top: var(--spacing-sm);
   padding: var(--spacing-sm);
   text-align: center;
   border-radius: 5px;
   display: inline-block;
-  font-size: var(--font-size-sm);
 }
 
 .customFileUpload input {

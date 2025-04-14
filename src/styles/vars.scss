@@ -39,6 +39,8 @@
   // Shadows
   --shadow-lg: 3px 3px 7px black;
   --shadow-sm: 1px 1px 3px black;
+
+  --max-width: 969px;
 }
 
 // Dark Theme
@@ -53,3 +55,5 @@
   --modal-bg: #2c2c2c;
   --text-color: #fff;
 }
+
+$max-width: 969px;

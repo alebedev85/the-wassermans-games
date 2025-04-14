@@ -1,3 +1,5 @@
+@use "../../styles/vars.scss" as *;
+
 .header {
   background: var(--primary-color);
   color: white;
@@ -23,10 +25,10 @@
 
   .button {
     position: absolute;
-    top: 60px;
+    top: 55px;
     right: 40px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     border: 1px solid blue;
     border-radius: 50%;
     background-color: var(--theme-button-color);
@@ -34,9 +36,19 @@
     &:hover {
       background-color: var(--hover);
     }
+
+    font-size: var(--font-size-lg);
+
+    @media (max-width: $max-width) {
+      font-size: var(--font-size-header-subtitle);
+      top: 45px;
+      right: 50px;
+      width: 55px;
+      height: 55px;
+    }
   }
 
-  @media (max-width: 970px) {
+  @media (max-width: $max-width) {
     width: 100%;
   }
 }
