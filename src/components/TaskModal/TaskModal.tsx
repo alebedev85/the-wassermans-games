@@ -28,12 +28,14 @@ const TaskModal = () => {
   const [imageUrl, setImageUrl] = useState(task?.imageUrl || null);
   const [link, setLink] = useState(task?.link || "");
   const [isEditLink, setIsEditLink] = useState(false);
+  const [linkError, setLinkError] = useState("");
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
     setInitialTask(task);
     setData();
     setIsEditLink(false);
+    setLinkError("");
     requestAnimationFrame(() => {
       handleTextareaInput();
     });
@@ -50,6 +52,8 @@ const TaskModal = () => {
       setImageUrl(task.imageUrl || null);
       setLink(task.link || "");
     }
+    setIsEditLink(false);
+    setLinkError("");
   };
 
   const handleClose = () => {
@@ -70,8 +74,25 @@ const TaskModal = () => {
 
   if (!isOpen || !task) return null;
 
+  const validateLink = (value: string) => {
+    if (!value) {
+      setLinkError("");
+      return true;
+    }
+    if (!value.startsWith("https://t.me/c/1767036997/")) {
+      setLinkError("Ссылка должна начинаться с https://t.me/c/1767036997/");
+      return false;
+    }
+    setLinkError("");
+    return true;
+  };
+
   // Сохранить изменения
   const handleSave = () => {
+    const isValidLink = validateLink(link);
+
+    if (!isValidLink) return;
+
     if (isChanged) {
       const updatedTask: Task = {
         ...task,
@@ -213,7 +234,7 @@ const TaskModal = () => {
 
           <div className={styles.linkBlock}>
             {link ? (
-              <>
+              <div style={{ width: "100%" }}>
                 <a
                   href={link}
                   target="_blank"
@@ -230,7 +251,7 @@ const TaskModal = () => {
                 >
                   <FaEdit />
                 </button>
-              </>
+              </div>
             ) : (
               <button
                 className={styles.customFileUpload}
@@ -240,14 +261,17 @@ const TaskModal = () => {
               </button>
             )}
             {isEditLink && (
-              <input
-                id="location"
-                className={classNames(styles.input, styles.linkInput)}
-                type="text"
-                value={link}
-                onChange={(e) => setLink(e.target.value)}
-                placeholder="Ссылка в ТГ"
-              />
+              <div className={styles.linkInputBlock}>
+                <input
+                  id="location"
+                  className={classNames(styles.input, styles.linkInput)}
+                  type="text"
+                  value={link}
+                  onChange={(e) => setLink(e.target.value)}
+                  placeholder="Ссылка в ТГ"
+                />
+                {linkError && <span className={styles.error}>{linkError}</span>}
+              </div>
             )}
           </div>
 

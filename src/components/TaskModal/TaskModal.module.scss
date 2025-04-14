@@ -34,7 +34,7 @@
   flex-direction: column;
   justify-content: space-between;
   animation: fadeIn 0.3s ease-out forwards;
-  overflow: scroll;
+  overflow-y: auto;
 
   font-size: var(--font-size-lg);
 
@@ -234,4 +234,13 @@
     background-color: var(--hover);
     opacity: 0.9;
   }
+}
+
+.linkInputBlock{
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: var(--cancel-button-color);
 }
