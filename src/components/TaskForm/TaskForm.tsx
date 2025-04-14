@@ -32,6 +32,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         time: data.time,
         description: data.description || "",
         price: data.price,
+        link: data.link,
         location: data.location,
         date: selectedDate.toISOString(),
         imageUrl,
@@ -117,6 +118,22 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         />
         {errors.location && (
           <span className={styles.error}>{errors.location.message}</span>
+        )}
+      </div>
+
+      <div className={styles.inputBlock}>
+        <input
+          {...register("link", {
+            validate: (value?: string) =>
+              !value ||
+              value.startsWith("https://t.me/c/1767036997/") ||
+              "Ссылка должна начинаться с https://t.me/c/1767036997/",
+          })}
+          type="text"
+          placeholder="Ссылка в ТГ (необязательно)"
+        />
+        {errors.link && (
+          <span className={styles.error}>{errors.link.message}</span>
         )}
       </div>
 

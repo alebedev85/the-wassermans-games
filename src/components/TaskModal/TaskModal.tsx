@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
+import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import fallbackImage from "../../assets/artwork.png";
 import { RootState } from "../../store";
@@ -25,11 +26,14 @@ const TaskModal = () => {
   const [time, setTime] = useState(task?.time || "");
   const [location, setLocation] = useState(task?.location || "");
   const [imageUrl, setImageUrl] = useState(task?.imageUrl || null);
+  const [link, setLink] = useState(task?.link || "");
+  const [isEditLink, setIsEditLink] = useState(false);
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
     setInitialTask(task);
     setData();
+    setIsEditLink(false);
     requestAnimationFrame(() => {
       handleTextareaInput();
     });
@@ -44,6 +48,7 @@ const TaskModal = () => {
       setTime(task.time || "");
       setLocation(task.location || "");
       setImageUrl(task.imageUrl || null);
+      setLink(task.link || "");
     }
   };
 
@@ -60,7 +65,8 @@ const TaskModal = () => {
       price !== initialTask.price ||
       time !== initialTask.time ||
       location !== initialTask.location ||
-      imageUrl !== initialTask.imageUrl);
+      imageUrl !== initialTask.imageUrl ||
+      link !== initialTask.link);
 
   if (!isOpen || !task) return null;
 
@@ -75,9 +81,11 @@ const TaskModal = () => {
         location,
         description,
         imageUrl,
+        link,
       };
       dispatch(editTask(updatedTask));
       setInitialTask(updatedTask);
+      setIsEditLink(false);
     }
   };
 
@@ -105,6 +113,10 @@ const TaskModal = () => {
     }
   };
 
+  const handelEditLink = () => {
+    setIsEditLink(!isEditLink);
+  };
+
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -115,95 +127,142 @@ const TaskModal = () => {
 
         {/* Заголовок редактируется при клике */}
         <div className={styles.data}>
-
-        <div className={styles.inputBlock}>
-          <input
-            className={classNames(styles.input, styles.titleInput)}
-            type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-          />
-        </div>
-
-        <div className={styles.imgWrapper}>
-          {isUploading ? (
-            <div className={styles.previewImage}>
-              <Loader />
-            </div>
-          ) : (
-            <img
-              src={imageUrl || fallbackImage}
-              alt="Preview"
-              className={styles.previewImage}
+          <div className={styles.inputBlock}>
+            <input
+              className={classNames(styles.input, styles.titleInput)}
+              type="text"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
             />
-          )}
-          <label className={styles.customFileUpload}>
-            {isUploading
-              ? "Загружается..."
-              : imageUrl
-              ? "Изменить изображение"
-              : "Загрузить изображение"}
-            <input type="file" accept="image/*" onChange={handleImageChange} />
-          </label>
-        </div>
+          </div>
 
-        {/* Лейбл и поле ввода для цены */}
-        <div className={styles.inputWrapper}>
-          <label htmlFor="price" className={styles.label}>
-            Начало:
+          <div className={styles.imgWrapper}>
+            {isUploading ? (
+              <div className={styles.previewImage}>
+                <Loader />
+              </div>
+            ) : (
+              <img
+                src={imageUrl || fallbackImage}
+                alt="Preview"
+                className={styles.previewImage}
+              />
+            )}
+            <label className={styles.customFileUpload}>
+              {isUploading
+                ? "Загружается..."
+                : imageUrl
+                ? "Изменить изображение"
+                : "Загрузить изображение"}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </label>
+          </div>
+
+          {/* Лейбл и поле ввода для цены */}
+          <div className={styles.inputWrapper}>
+            <label htmlFor="price" className={styles.label}>
+              Начало:
+            </label>
+            <input
+              id="time"
+              className={classNames(styles.input, styles.timeInput)}
+              type="text"
+              value={time}
+              onChange={(e) => setTime(e.target.value)}
+              placeholder="Цена"
+            />
+          </div>
+
+          {/* Лейбл и поле ввода для цены */}
+          <div className={styles.inputWrapper}>
+            <label htmlFor="price" className={styles.label}>
+              Цена:
+            </label>
+            <input
+              id="price"
+              className={classNames(styles.input, styles.priceInput)}
+              type="text"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="Цена"
+            />
+          </div>
+
+          {/* Лейбл и поле ввода для места */}
+          <div className={styles.inputWrapper}>
+            <label htmlFor="location" className={styles.label}>
+              Место:
+            </label>
+            <input
+              id="location"
+              className={classNames(
+                styles.input,
+                styles.locationInput,
+                "tooltip"
+              )}
+              type="text"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              placeholder="Место"
+            />
+          </div>
+
+          <div className={styles.linkBlock}>
+            {link ? (
+              <>
+                <a
+                  href={link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.link}
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  Запись на игру
+                </a>
+                <button
+                  className={classNames(styles.editLinkButton, "tooltip")}
+                  data-tooltip="Редактировать ссылку"
+                  onClick={handelEditLink}
+                >
+                  <FaEdit />
+                </button>
+              </>
+            ) : (
+              <button
+                className={styles.customFileUpload}
+                onClick={handelEditLink}
+              >
+                Добавить ссылку в ТГ
+              </button>
+            )}
+            {isEditLink && (
+              <input
+                id="location"
+                className={classNames(styles.input, styles.linkInput)}
+                type="text"
+                value={link}
+                onChange={(e) => setLink(e.target.value)}
+                placeholder="Ссылка в ТГ"
+              />
+            )}
+          </div>
+
+          {/* Описание редактируется при клике */}
+          <label htmlFor="description" className={styles.label}>
+            Описание:
           </label>
-          <input
-            id="time"
-            className={classNames(styles.input, styles.timeInput)}
-            type="text"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
-            placeholder="Цена"
+          <textarea
+            ref={textareaRef}
+            id="description"
+            className={styles.textarea}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            onInput={handleTextareaInput}
           />
-        </div>
-
-        {/* Лейбл и поле ввода для цены */}
-        <div className={styles.inputWrapper}>
-          <label htmlFor="price" className={styles.label}>
-            Цена:
-          </label>
-          <input
-            id="price"
-            className={classNames(styles.input, styles.priceInput)}
-            type="text"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="Цена"
-          />
-        </div>
-
-        {/* Лейбл и поле ввода для места */}
-        <div className={styles.inputWrapper}>
-          <label htmlFor="location" className={styles.label}>
-            Место:
-          </label>
-          <input
-            id="location"
-            className={classNames(styles.input, styles.locationInput)}
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Место"
-          />
-        </div>
-
-        {/* Описание редактируется при клике */}
-        <label htmlFor="description" className={styles.label}>
-          Описание:
-        </label>
-        <textarea
-          ref={textareaRef}
-          id="description"
-          className={styles.textarea}
-          value={description}
-          onChange={(e) => setDescription(e.target.value)}
-          onInput={handleTextareaInput}
-        />
         </div>
 
         <div className={styles.controls}>

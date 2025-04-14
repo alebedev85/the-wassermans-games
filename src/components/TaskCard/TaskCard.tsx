@@ -2,7 +2,7 @@ import { Draggable } from "@hello-pangea/dnd";
 import classNames from "classnames";
 import { IoClose } from "react-icons/io5"; // Иконка крестика
 import { useDispatch } from "react-redux";
-import fallbackImage  from "../../assets/artwork.png";
+import fallbackImage from "../../assets/artwork.png";
 import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
@@ -46,7 +46,7 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           {/* Изображение (если есть) */}
 
           <img
-            src={task.imageUrl || fallbackImage }
+            src={task.imageUrl || fallbackImage}
             alt={task.title}
             className={styles.image}
             loading="lazy"
@@ -57,6 +57,16 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
             <p>Начало: {task.time}</p>
             <p>Цена: {task.price} ₽</p>
             <p>Место: {task.location}</p>
+            {task.link && (
+              <a
+                href={task.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={(e) => e.stopPropagation()}
+              >
+                Запись на игру
+              </a>
+            )}
           </div>
         </li>
       )}

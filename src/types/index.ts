@@ -7,6 +7,7 @@ export interface Task {
   description?: string;
   date: string; //Дата хранится в виде строки в формате ISO (YYYY-MM-DD).
   imageUrl?: string | null;
+  link?: string;
 }
 
 export interface Calendar {
