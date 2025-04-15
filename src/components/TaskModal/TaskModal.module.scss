@@ -89,6 +89,11 @@
   gap: 15px;
 }
 
+.date{
+  font-size: var(--font-size-header-subtitle);
+  text-align: center;
+}
+
 .input,
 .textarea {
   color: var(--text-color);

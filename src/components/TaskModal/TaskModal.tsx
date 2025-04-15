@@ -9,6 +9,7 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
+import { IoClose } from "react-icons/io5";
 import styles from "./TaskModal.module.scss";
 
 const TaskModal = () => {
@@ -148,6 +149,16 @@ const TaskModal = () => {
 
         {/* Заголовок редактируется при клике */}
         <div className={styles.data}>
+          <span className={styles.date}>
+            {new Date(task?.date)
+              .toLocaleDateString("ru-RU", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })
+              .replace(/^./, (s) => s.toUpperCase())}
+          </span>
           <div className={styles.inputBlock}>
             <input
               className={classNames(styles.input, styles.titleInput)}
