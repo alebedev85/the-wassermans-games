@@ -9,7 +9,6 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
-import { IoClose } from "react-icons/io5";
 import styles from "./TaskModal.module.scss";
 
 const TaskModal = () => {

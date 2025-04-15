@@ -99,7 +99,7 @@ const Calendar = () => {
         {/* Шапка календаря */}
         <div className={styles.header}>
           <button onClick={handlePrevMonth}>{"<"}</button>
-          <h2>{format(currentMonth, "LLLL yyyy", { locale: ru })}</h2>
+          <h2>{format(currentMonth, "LLLL yyyy", { locale: ru }).replace(/^./, (s) => s.toUpperCase())}</h2>
           <button onClick={handleNextMonth}>{">"}</button>
         </div>
 
