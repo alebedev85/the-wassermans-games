@@ -1,3 +1,4 @@
+import { format } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch } from "react-redux";
@@ -34,7 +35,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         price: data.price,
         link: data.link,
         location: data.location,
-        date: selectedDate.toISOString(),
+        date: format(selectedDate.toISOString(), "yyyy-MM-dd"),
         imageUrl,
       };
       dispatch(addTask(newTask));
