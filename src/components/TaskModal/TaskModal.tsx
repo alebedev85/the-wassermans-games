@@ -8,7 +8,7 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
-import InputAria from "../ui/InputAria/InputAria";
+import InputArea from "../ui/InputArea/InputArea";
 import LinkBlock from "../ui/LinkBlock/LinkBlock";
 import styles from "./TaskModal.module.scss";
 
@@ -155,14 +155,8 @@ const TaskModal = () => {
               })
               .replace(/^./, (s) => s.toUpperCase())}
           </span>
-          <div className={styles.inputBlock}>
-            <input
-              className={classNames(styles.input, styles.titleInput)}
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
-          </div>
+          
+          <InputArea value={title} onChange={setTitle} isTitle={true} />
 
           <div className={styles.imgWrapper}>
             {isUploading ? (
@@ -190,9 +184,9 @@ const TaskModal = () => {
             </label>
           </div>
 
-          <InputAria label={"Начало"} value={time} onChange={setTime} />
-          <InputAria label={"Цена"} value={price} onChange={setPrice} />
-          <InputAria label={"Место"} value={location} onChange={setLocation} />
+          <InputArea label={"Начало"} value={time} onChange={setTime} />
+          <InputArea label={"Цена"} value={price} onChange={setPrice} />
+          <InputArea label={"Место"} value={location} onChange={setLocation} />
           <LinkBlock
             link={link}
             onChange={setLink}
