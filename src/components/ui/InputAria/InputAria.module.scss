@@ -1,0 +1,28 @@
+@use "../../../styles/vars.scss" as *;
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1px;
+  width: 100%;
+}
+
+.label {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.input {
+  flex-grow: 1;
+  margin: 0;
+  color: var(--text-color);
+  background: var(--calendar-day);
+  width: 100%;
+  padding: 0 0 0 8px;
+  border: none;
+  border-radius: 5px;
+  font-size: var(--font-size-lg);
+
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+  }
+}

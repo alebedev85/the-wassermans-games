@@ -1,0 +1,55 @@
+@use "../../../styles/vars" as *;
+
+.input {
+  color: var(--text-color);
+  background: var(--calendar-day);
+  width: 100%;
+  padding: 0 0 0 8px;
+  border: none;
+  border-radius: 5px;
+  font-size: var(--font-size-lg);
+  flex-grow: 1;
+  margin: 0;
+
+  &.linkInput {
+    border: 2px solid black;
+    padding: 5px;
+    margin-top: var(--spacing-sm);
+
+    &:focus {
+      border: 2px solid var(--primary-color);
+      outline: none;
+    }
+
+    @media (max-width: $max-width) {
+      font-size: var(--font-size-header-subtitle);
+    }
+  }
+}
+
+.link {
+  margin-right: var(--spacing-md);
+}
+
+.editLinkButton {
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 20%;
+  display: inline-flex;
+  align-items: center;
+  font-size: var(--font-size-sm);
+
+  &:hover {
+    background-color: var(--hover);
+    opacity: 0.9;
+  }
+}
+
+.linkInputBlock {
+  display: flex;
+  flex-direction: column;
+}
+
+.error {
+  color: var(--cancel-button-color);
+}

@@ -1,6 +1,5 @@
 import classNames from "classnames";
 import { useEffect, useRef, useState } from "react";
-import { FaEdit } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import fallbackImage from "../../assets/artwork.png";
 import { RootState } from "../../store";
@@ -9,6 +8,8 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
+import InputAria from "../ui/InputAria/InputAria";
+import LinkBlock from "../ui/LinkBlock/LinkBlock";
 import styles from "./TaskModal.module.scss";
 
 const TaskModal = () => {
@@ -134,10 +135,6 @@ const TaskModal = () => {
     }
   };
 
-  const handelEditLink = () => {
-    setIsEditLink(!isEditLink);
-  };
-
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -193,97 +190,16 @@ const TaskModal = () => {
             </label>
           </div>
 
-          {/* Лейбл и поле ввода для цены */}
-          <div className={styles.inputWrapper}>
-            <label htmlFor="price" className={styles.label}>
-              Начало:
-            </label>
-            <input
-              id="time"
-              className={classNames(styles.input, styles.timeInput)}
-              type="text"
-              value={time}
-              onChange={(e) => setTime(e.target.value)}
-              placeholder="Цена"
-            />
-          </div>
-
-          {/* Лейбл и поле ввода для цены */}
-          <div className={styles.inputWrapper}>
-            <label htmlFor="price" className={styles.label}>
-              Цена:
-            </label>
-            <input
-              id="price"
-              className={classNames(styles.input, styles.priceInput)}
-              type="text"
-              value={price}
-              onChange={(e) => setPrice(e.target.value)}
-              placeholder="Цена"
-            />
-          </div>
-
-          {/* Лейбл и поле ввода для места */}
-          <div className={styles.inputWrapper}>
-            <label htmlFor="location" className={styles.label}>
-              Место:
-            </label>
-            <input
-              id="location"
-              className={classNames(
-                styles.input,
-                styles.locationInput,
-                "tooltip"
-              )}
-              type="text"
-              value={location}
-              onChange={(e) => setLocation(e.target.value)}
-              placeholder="Место"
-            />
-          </div>
-
-          <div className={styles.linkBlock}>
-            {link ? (
-              <div style={{ width: "100%" }}>
-                <a
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.link}
-                  onClick={(e) => e.stopPropagation()}
-                >
-                  Запись на игру
-                </a>
-                <button
-                  className={classNames(styles.editLinkButton, "tooltip")}
-                  data-tooltip="Редактировать ссылку"
-                  onClick={handelEditLink}
-                >
-                  <FaEdit />
-                </button>
-              </div>
-            ) : (
-              <button
-                className={styles.customFileUpload}
-                onClick={handelEditLink}
-              >
-                Добавить ссылку в ТГ
-              </button>
-            )}
-            {isEditLink && (
-              <div className={styles.linkInputBlock}>
-                <input
-                  id="location"
-                  className={classNames(styles.input, styles.linkInput)}
-                  type="text"
-                  value={link}
-                  onChange={(e) => setLink(e.target.value)}
-                  placeholder="Ссылка в ТГ"
-                />
-                {linkError && <span className={styles.error}>{linkError}</span>}
-              </div>
-            )}
-          </div>
+          <InputAria label={"Начало"} value={time} onChange={setTime} />
+          <InputAria label={"Цена"} value={price} onChange={setPrice} />
+          <InputAria label={"Место"} value={location} onChange={setLocation} />
+          <LinkBlock
+            link={link}
+            onChange={setLink}
+            linkError={linkError}
+            isEditLink={isEditLink}
+            setIsEditLink={setIsEditLink}
+          />
 
           {/* Описание редактируется при клике */}
           <label htmlFor="description" className={styles.label}>
