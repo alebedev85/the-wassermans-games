@@ -1,0 +1,24 @@
+@use "../../../styles/vars" as *;
+
+.label {
+  color: var(--text-color);
+  font-weight: bold;
+}
+
+.textarea {
+  resize: none;
+  box-sizing: border-box;
+  overflow: hidden;
+  min-height: 40px;
+  color: var(--text-color);
+  background: var(--calendar-day);
+  width: 100%;
+  padding: 8px 0;
+  border: none;
+  border-radius: 5px;
+  font-size: var(--font-size-lg);
+
+  @media (max-width: $max-width) {
+    font-size: var(--font-size-header-subtitle);
+  }
+}

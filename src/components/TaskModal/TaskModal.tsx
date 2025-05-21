@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import fallbackImage from "../../assets/artwork.png";
 import { RootState } from "../../store";
@@ -11,11 +11,11 @@ import Loader from "../Loader/Loader";
 import InputArea from "../ui/InputArea/InputArea";
 import LinkBlock from "../ui/LinkBlock/LinkBlock";
 import styles from "./TaskModal.module.scss";
+import TextArea from "../ui/TextArea/TextArea";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
   const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
-  const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -37,9 +37,6 @@ const TaskModal = () => {
     setData();
     setIsEditLink(false);
     setLinkError("");
-    requestAnimationFrame(() => {
-      handleTextareaInput();
-    });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
 
@@ -111,14 +108,6 @@ const TaskModal = () => {
     }
   };
 
-  function handleTextareaInput() {
-    const textarea = textareaRef.current;
-    if (textarea) {
-      textarea.style.height = "auto"; // сначала сбросим
-      textarea.style.height = `${textarea.scrollHeight}px`; // установим по содержимому
-    }
-  }
-
   // Обработчик выбора изображения
   const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -155,7 +144,7 @@ const TaskModal = () => {
               })
               .replace(/^./, (s) => s.toUpperCase())}
           </span>
-          
+
           <InputArea value={title} onChange={setTitle} isTitle={true} />
 
           <div className={styles.imgWrapper}>
@@ -194,19 +183,7 @@ const TaskModal = () => {
             isEditLink={isEditLink}
             setIsEditLink={setIsEditLink}
           />
-
-          {/* Описание редактируется при клике */}
-          <label htmlFor="description" className={styles.label}>
-            Описание:
-          </label>
-          <textarea
-            ref={textareaRef}
-            id="description"
-            className={styles.textarea}
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            onInput={handleTextareaInput}
-          />
+          <TextArea label={"Описание"} value={description} onChange={setDescription} />
         </div>
 
         <div className={styles.controls}>
