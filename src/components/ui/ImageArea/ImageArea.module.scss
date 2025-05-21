@@ -1,0 +1,24 @@
+@use '../../../styles/vars' as *;
+
+.previewImage {
+  width: 100%;
+  height: 450px;
+  object-fit: cover;
+  margin-top: 8px;
+  border-radius: 8px;
+}
+
+.customFileUpload {
+  cursor: pointer;
+  background-color: var(--primary-color);
+  color: white;
+  margin-top: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  text-align: center;
+  border-radius: 5px;
+  display: inline-block;
+}
+
+.customFileUpload input {
+  display: none; /* Скрыть стандартный input */
+}

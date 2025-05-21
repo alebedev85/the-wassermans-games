@@ -94,69 +94,69 @@
   text-align: center;
 }
 
-.input,
-.textarea {
-  color: var(--text-color);
-  background: var(--calendar-day);
-  width: 100%;
-  padding: 0 0 0 8px;
-  border: none;
-  border-radius: 5px;
-  font-size: var(--font-size-lg);
+// .input,
+// .textarea {
+//   color: var(--text-color);
+//   background: var(--calendar-day);
+//   width: 100%;
+//   padding: 0 0 0 8px;
+//   border: none;
+//   border-radius: 5px;
+//   font-size: var(--font-size-lg);
 
-  @media (max-width: $max-width) {
-    font-size: var(--font-size-header-subtitle);
-  }
-}
+//   @media (max-width: $max-width) {
+//     font-size: var(--font-size-header-subtitle);
+//   }
+// }
 
-.textarea {
-  resize: none;
-  box-sizing: border-box;
-  overflow: hidden;
-  min-height: 40px;
-  width: 100%;
-}
+// .textarea {
+//   resize: none;
+//   box-sizing: border-box;
+//   overflow: hidden;
+//   min-height: 40px;
+//   width: 100%;
+// }
 
-.inputWrapper {
-  display: flex;
-  align-items: center;
-  margin-bottom: 1px;
-  width: 100%;
-}
+// .inputWrapper {
+//   display: flex;
+//   align-items: center;
+//   margin-bottom: 1px;
+//   width: 100%;
+// }
 
-.label {
-  color: var(--text-color);
-  font-weight: bold;
-}
+// .label {
+//   color: var(--text-color);
+//   font-weight: bold;
+// }
 
-.input {
-  flex-grow: 1;
-  margin: 0;
+// .input {
+//   flex-grow: 1;
+//   margin: 0;
 
-  &.linkInput {
-    border: 2px solid black;
-    padding: 5px;
-    margin-top: var(--spacing-sm);
+//   &.linkInput {
+//     border: 2px solid black;
+//     padding: 5px;
+//     margin-top: var(--spacing-sm);
 
-    &:focus {
-      border: 2px solid var(--primary-color);
-      outline: none;
-    }
-  }
+//     &:focus {
+//       border: 2px solid var(--primary-color);
+//       outline: none;
+//     }
+//   }
 
-  &.titleInput {
-    resize: none;
-    width: 100%;
-    font-weight: bold;
-    border: none;
-    background: transparent;
-    outline: none;
-    word-break: break-word;
-    line-height: 1.2;
-    font-size: var(--font-size-header-subtitle);
-    text-align: center;
-  }
-}
+//   &.titleInput {
+//     resize: none;
+//     width: 100%;
+//     font-weight: bold;
+//     border: none;
+//     background: transparent;
+//     outline: none;
+//     word-break: break-word;
+//     line-height: 1.2;
+//     font-size: var(--font-size-header-subtitle);
+//     text-align: center;
+//   }
+// }
 
 .controls {
   display: flex;
@@ -219,7 +219,7 @@
   display: none; /* Скрыть стандартный input */
 }
 
-.fileInput {
-  display: none; /* Скрываем сам input, чтобы он не мешал кастомной кнопке */
-}
+// .fileInput {
+//   display: none; /* Скрываем сам input, чтобы он не мешал кастомной кнопке */
+// }
 

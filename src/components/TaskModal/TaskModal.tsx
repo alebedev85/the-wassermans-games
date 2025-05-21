@@ -1,17 +1,16 @@
 import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import fallbackImage from "../../assets/artwork.png";
 import { RootState } from "../../store";
 import { editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
-import Loader from "../Loader/Loader";
+import ImageArea from "../ui/ImageArea/ImageArea";
 import InputArea from "../ui/InputArea/InputArea";
 import LinkBlock from "../ui/LinkBlock/LinkBlock";
-import styles from "./TaskModal.module.scss";
 import TextArea from "../ui/TextArea/TextArea";
+import styles from "./TaskModal.module.scss";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
@@ -144,35 +143,9 @@ const TaskModal = () => {
               })
               .replace(/^./, (s) => s.toUpperCase())}
           </span>
-
+          {/* Заголовок*/}
           <InputArea value={title} onChange={setTitle} isTitle={true} />
-
-          <div className={styles.imgWrapper}>
-            {isUploading ? (
-              <div className={styles.previewImage}>
-                <Loader />
-              </div>
-            ) : (
-              <img
-                src={imageUrl || fallbackImage}
-                alt="Preview"
-                className={styles.previewImage}
-              />
-            )}
-            <label className={styles.customFileUpload}>
-              {isUploading
-                ? "Загружается..."
-                : imageUrl
-                ? "Изменить изображение"
-                : "Загрузить изображение"}
-              <input
-                type="file"
-                accept="image/*"
-                onChange={handleImageChange}
-              />
-            </label>
-          </div>
-
+          <ImageArea imageUrl={imageUrl} setImageUrl={setImageUrl} />
           <InputArea label={"Начало"} value={time} onChange={setTime} />
           <InputArea label={"Цена"} value={price} onChange={setPrice} />
           <InputArea label={"Место"} value={location} onChange={setLocation} />
@@ -183,7 +156,11 @@ const TaskModal = () => {
             isEditLink={isEditLink}
             setIsEditLink={setIsEditLink}
           />
-          <TextArea label={"Описание"} value={description} onChange={setDescription} />
+          <TextArea
+            label={"Описание"}
+            value={description}
+            onChange={setDescription}
+          />
         </div>
 
         <div className={styles.controls}>
