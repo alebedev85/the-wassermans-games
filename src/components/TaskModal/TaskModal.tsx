@@ -5,7 +5,6 @@ import { RootState } from "../../store";
 import { editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
-import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import ImageArea from "../ui/ImageArea/ImageArea";
 import InputArea from "../ui/InputArea/InputArea";
 import LinkBlock from "../ui/LinkBlock/LinkBlock";
@@ -15,8 +14,6 @@ import styles from "./TaskModal.module.scss";
 const TaskModal = () => {
   const dispatch = useDispatch();
   const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
-
-  const [isUploading, setIsUploading] = useState(false);
 
   const [initialTask, setInitialTask] = useState<Task | null>(null);
   // Устанавливаем начальные значения для title, description, price и location
@@ -107,22 +104,6 @@ const TaskModal = () => {
     }
   };
 
-  // Обработчик выбора изображения
-  const handleImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      try {
-        setIsUploading(true);
-        const url = await uploadImageToCloudinary(file);
-        setImageUrl(url);
-      } catch (err) {
-        console.error("Ошибка загрузки изображения:", err);
-      } finally {
-        setIsUploading(false);
-      }
-    }
-  };
-
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
@@ -145,10 +126,13 @@ const TaskModal = () => {
           </span>
           {/* Заголовок*/}
           <InputArea value={title} onChange={setTitle} isTitle={true} />
+          {/* Изображение*/}
           <ImageArea imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          {/* Поля с данными*/}
           <InputArea label={"Начало"} value={time} onChange={setTime} />
           <InputArea label={"Цена"} value={price} onChange={setPrice} />
           <InputArea label={"Место"} value={location} onChange={setLocation} />
+          {/* Ссылка*/}
           <LinkBlock
             link={link}
             onChange={setLink}
