@@ -1,4 +1,3 @@
-import classNames from "classnames";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
@@ -10,6 +9,7 @@ import InputArea from "../ui/InputArea/InputArea";
 import LinkBlock from "../ui/LinkBlock/LinkBlock";
 import TextArea from "../ui/TextArea/TextArea";
 import styles from "./TaskModal.module.scss";
+import TaskModalControls from "./TaskModalControls/TaskModalControls";
 
 const TaskModal = () => {
   const dispatch = useDispatch();
@@ -112,7 +112,7 @@ const TaskModal = () => {
           ✖
         </button>
 
-        {/* Заголовок редактируется при клике */}
+        {/* Дата игры */}
         <div className={styles.data}>
           <span className={styles.date}>
             {new Date(task?.date)
@@ -124,15 +124,15 @@ const TaskModal = () => {
               })
               .replace(/^./, (s) => s.toUpperCase())}
           </span>
-          {/* Заголовок*/}
+          {/* Заголовок */}
           <InputArea value={title} onChange={setTitle} isTitle={true} />
-          {/* Изображение*/}
+          {/* Изображение */}
           <ImageArea imageUrl={imageUrl} setImageUrl={setImageUrl} />
-          {/* Поля с данными*/}
+          {/* Поля с данными */}
           <InputArea label={"Начало"} value={time} onChange={setTime} />
           <InputArea label={"Цена"} value={price} onChange={setPrice} />
           <InputArea label={"Место"} value={location} onChange={setLocation} />
-          {/* Ссылка*/}
+          {/* Ссылка */}
           <LinkBlock
             link={link}
             onChange={setLink}
@@ -140,33 +140,19 @@ const TaskModal = () => {
             isEditLink={isEditLink}
             setIsEditLink={setIsEditLink}
           />
+          {/* Описание */}
           <TextArea
             label={"Описание"}
             value={description}
             onChange={setDescription}
           />
         </div>
-
-        <div className={styles.controls}>
-          <button
-            className={classNames(styles.saveButton, {
-              [styles.disabled]: !isChanged,
-            })}
-            onClick={handleSave}
-            disabled={!isChanged} // Дизейблим кнопку при отсутствии изменений
-          >
-            Редактировать
-          </button>
-          <button
-            className={classNames(styles.counselButton, {
-              [styles.disabled]: !isChanged,
-            })}
-            onClick={() => setData()}
-            disabled={!isChanged}
-          >
-            Отмена
-          </button>
-        </div>
+        {/* Кнопки управления */}
+        <TaskModalControls
+          disabled={!isChanged}
+          handleSave={handleSave}
+          handleCancel={setData}
+        />
       </div>
     </div>
   );
