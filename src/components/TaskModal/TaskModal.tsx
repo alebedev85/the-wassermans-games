@@ -6,7 +6,7 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import ImageArea from "../ui/ImageArea/ImageArea";
 import InputArea from "../ui/InputArea/InputArea";
-import LinkArea from "../ui/LinkArea/linkArea";
+import LinkArea from "../ui/LinkArea/LinkArea";
 import TextArea from "../ui/TextArea/TextArea";
 import styles from "./TaskModal.module.scss";
 import TaskModalControls from "./TaskModalControls/TaskModalControls";

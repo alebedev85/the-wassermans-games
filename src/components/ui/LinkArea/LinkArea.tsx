@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import { FaTelegramPlane } from "react-icons/fa";
 import Spotti from "../../../assets/spotti.svg"
-import styles from "./linkArea.module.scss";
+import styles from "./LinkArea.module.scss";
 
 interface LinkBlockProps {
   link: string;
