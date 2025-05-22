@@ -6,7 +6,7 @@ import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
 import ImageArea from "../ui/ImageArea/ImageArea";
 import InputArea from "../ui/InputArea/InputArea";
-import LinkBlock from "../ui/LinkBlock/LinkBlock";
+import LinkArea from "../ui/LinkArea/linkArea";
 import TextArea from "../ui/TextArea/TextArea";
 import styles from "./TaskModal.module.scss";
 import TaskModalControls from "./TaskModalControls/TaskModalControls";
@@ -24,14 +24,13 @@ const TaskModal = () => {
   const [location, setLocation] = useState(task?.location || "");
   const [imageUrl, setImageUrl] = useState(task?.imageUrl || null);
   const [link, setLink] = useState(task?.link || "");
-  const [isEditLink, setIsEditLink] = useState(false);
   const [linkError, setLinkError] = useState("");
+  const [isEditMode, setIsEditMode] = useState(false);
 
   // Используем useEffect, чтобы обновить состояние при изменении task
   useEffect(() => {
     setInitialTask(task);
     setData();
-    setIsEditLink(false);
     setLinkError("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [task]);
@@ -46,8 +45,8 @@ const TaskModal = () => {
       setImageUrl(task.imageUrl || null);
       setLink(task.link || "");
     }
-    setIsEditLink(false);
     setLinkError("");
+    setIsEditMode(false);
   };
 
   const handleClose = () => {
@@ -100,7 +99,6 @@ const TaskModal = () => {
       };
       dispatch(editTask(updatedTask));
       setInitialTask(updatedTask);
-      setIsEditLink(false);
     }
   };
 
@@ -114,7 +112,14 @@ const TaskModal = () => {
 
         {/* Дата игры */}
         <div className={styles.content}>
-          <span className={styles.date}>
+          {/* Заголовок */}
+          <InputArea
+            value={title}
+            onChange={setTitle}
+            isTitle={true}
+            isEditMode={isEditMode}
+          />
+          <p className={styles.date}>
             {new Date(task?.date)
               .toLocaleDateString("ru-RU", {
                 weekday: "long",
@@ -123,28 +128,45 @@ const TaskModal = () => {
                 day: "numeric",
               })
               .replace(/^./, (s) => s.toUpperCase())}
-          </span>
-          {/* Заголовок */}
-          <InputArea value={title} onChange={setTitle} isTitle={true} />
+          </p>
           {/* Изображение */}
-          <ImageArea imageUrl={imageUrl} setImageUrl={setImageUrl} />
+          <ImageArea
+            imageUrl={imageUrl}
+            setImageUrl={setImageUrl}
+            isEditMode={isEditMode}
+          />
           {/* Поля с данными */}
-          <InputArea label={"🕖 Начало"} value={time} onChange={setTime} />
-          <InputArea label={"💵 Цена"} value={price} onChange={setPrice} />
-          <InputArea label={"📍 Место"} value={location} onChange={setLocation} />
+          <InputArea
+            label={"🕖 Начало"}
+            value={time}
+            onChange={setTime}
+            isEditMode={isEditMode}
+          />
+          <InputArea
+            label={"💵 Цена"}
+            value={price}
+            onChange={setPrice}
+            isEditMode={isEditMode}
+          />
+          <InputArea
+            label={"📍 Место"}
+            value={location}
+            onChange={setLocation}
+            isEditMode={isEditMode}
+          />
           {/* Ссылка */}
-          <LinkBlock
+          <LinkArea
             link={link}
             onChange={setLink}
             linkError={linkError}
-            isEditLink={isEditLink}
-            setIsEditLink={setIsEditLink}
+            isEditMode={isEditMode}
           />
           {/* Описание */}
           <TextArea
             label={"📝 Описание"}
             value={description}
             onChange={setDescription}
+            isEditMode={isEditMode}
           />
         </div>
         {/* Кнопки управления */}
@@ -152,6 +174,8 @@ const TaskModal = () => {
           disabled={!isChanged}
           handleSave={handleSave}
           handleCancel={setData}
+          isEditMode={isEditMode}
+          setIsEditMode={() => setIsEditMode(true)}
         />
       </div>
     </div>

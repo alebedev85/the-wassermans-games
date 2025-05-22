@@ -5,9 +5,10 @@ interface TextAreaProps {
   label: string;
   value: string;
   onChange: (value: string) => void;
+  isEditMode: boolean;
 }
 
-export default function TextArea({ label, value, onChange }: TextAreaProps) {
+export default function TextArea({ label, value, onChange, isEditMode }: TextAreaProps) {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   useEffect(() => {
@@ -35,6 +36,7 @@ export default function TextArea({ label, value, onChange }: TextAreaProps) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         onInput={handleTextareaInput}
+        disabled={!isEditMode}
       />
     </div>
   );

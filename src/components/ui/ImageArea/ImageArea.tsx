@@ -1,15 +1,20 @@
 import { useState } from "react";
+import fallbackImage from "../../../assets/artwork.png";
 import { uploadImageToCloudinary } from "../../../utils/cloudinary";
 import Loader from "../../Loader/Loader";
-import fallbackImage from "../../../assets/artwork.png";
 import styles from "./ImageArea.module.scss";
 
 interface ImageAreaProps {
   imageUrl: string | null;
   setImageUrl: (value: string) => void;
+  isEditMode: boolean;
 }
 
-export default function ImageArea({imageUrl, setImageUrl}: ImageAreaProps) {
+export default function ImageArea({
+  imageUrl,
+  setImageUrl,
+  isEditMode,
+}: ImageAreaProps) {
   const [isUploading, setIsUploading] = useState(false);
 
   // Обработчик выбора изображения
@@ -41,14 +46,16 @@ export default function ImageArea({imageUrl, setImageUrl}: ImageAreaProps) {
           className={styles.previewImage}
         />
       )}
-      <label className={styles.customFileUpload}>
-        {isUploading
-          ? "Загружается..."
-          : imageUrl
-          ? "Изменить изображение"
-          : "Загрузить изображение"}
-        <input type="file" accept="image/*" onChange={handleImageChange} />
-      </label>
+      {isEditMode && (
+        <label className={styles.customFileUpload}>
+          {isUploading
+            ? "Загружается..."
+            : imageUrl
+            ? "Изменить изображение"
+            : "Загрузить изображение"}
+          <input type="file" accept="image/*" onChange={handleImageChange} />
+        </label>
+      )}
     </div>
   );
 }

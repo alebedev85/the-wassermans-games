@@ -1,31 +1,27 @@
 import classNames from "classnames";
-import { FaEdit } from "react-icons/fa";
-import styles from "./LinkBlock.module.scss";
+import { FaTelegramPlane } from "react-icons/fa";
+import Spotti from "../../../assets/spotti.svg"
+import styles from "./linkArea.module.scss";
 
 interface LinkBlockProps {
   link: string;
   onChange: (value: string) => void;
   linkError: string;
-  isEditLink: boolean;
-  setIsEditLink: (value: boolean) => void;
+  isEditMode: boolean;
 }
 
-export default function LinkBlock({
+export default function LinkArea({
   link,
   onChange,
   linkError,
-  isEditLink,
-  setIsEditLink,
+  isEditMode,
 }: LinkBlockProps) {
 
-  const handelEditLink = () => {
-    setIsEditLink(!isEditLink);
-  };
-
   return (
-    <div className={styles.linkBlock}>
+    <div className={styles.linkArea}>
       {link ? (
-        <div style={{ width: "100%" }}>
+        <div className={styles.linkBlock}>
+          <FaTelegramPlane style={{ color: "#3b97fa" }} />
           <a
             href={link}
             target="_blank"
@@ -35,20 +31,14 @@ export default function LinkBlock({
           >
             Запись на игру
           </a>
-          <button
-            className={classNames(styles.editLinkButton, "tooltip")}
-            data-tooltip="Редактировать ссылку"
-            onClick={handelEditLink}
-          >
-            <FaEdit />
-          </button>
         </div>
       ) : (
-        <button className={styles.customFileUpload} onClick={handelEditLink}>
-          Добавить ссылку в ТГ
-        </button>
+        <div className={styles.linkBlock}>
+          <img className={styles.spotti} src={Spotti} alt='' />
+          <p>Пока нет ссылки на запись</p>
+        </div>
       )}
-      {isEditLink && (
+      {isEditMode && (
         <div className={styles.linkInputBlock}>
           <input
             id="location"

@@ -1,32 +1,33 @@
-@use '../../../styles/vars' as *;
+@use "../../../styles/vars" as *;
 
 .controls {
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-top: var(--spacing-md);
+  // margin-top: var(--spacing-md);
 }
 
-.saveButton,
-.cancelButton {
+.button {
   padding: var(--spacing-sm) var(--spacing-md);
   border: none;
   border-radius: 5px;
   font-size: var(--font-size-lg);
-
+  color: white;
+  font-family: inherit;
   @media (max-width: $max-width) {
     font-size: var(--font-size-header-subtitle);
   }
 }
 
+.editButton {
+  background: var(--primary-color);
+}
 .saveButton {
   background: var(--save-button-color);
-  color: white;
 }
 
 .cancelButton {
   background: var(--cancel-button-color);
-  color: white;
 }
 
 .disabled {

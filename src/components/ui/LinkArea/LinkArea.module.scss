@@ -1,5 +1,15 @@
 @use "../../../styles/vars" as *;
 
+.linkBlock {
+  align-items: center;
+  display: flex;
+  gap: 5px;
+}
+
+.spotti{
+  width: 30px;
+}
+
 .input {
   color: var(--text-color);
   background: var(--calendar-day);

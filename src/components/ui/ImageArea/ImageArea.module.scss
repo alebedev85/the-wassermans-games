@@ -1,6 +1,6 @@
-@use '../../../styles/vars' as *;
+@use "../../../styles/vars" as *;
 
-.imageArea{
+.imageArea {
   padding-bottom: 15px;
 }
 .previewImage {
@@ -9,6 +9,9 @@
   object-fit: cover;
   margin-top: 8px;
   border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .customFileUpload {

@@ -6,6 +6,7 @@ interface InputAreaProps {
   value: string;
   onChange: (value: string) => void;
   isTitle?: boolean;
+  isEditMode: boolean;
 }
 
 export default function InputArea({
@@ -13,6 +14,7 @@ export default function InputArea({
   value,
   onChange,
   isTitle = false,
+  isEditMode
 }: InputAreaProps) {
   return (
     <div className={styles.inputWrapper}>
@@ -26,7 +28,7 @@ export default function InputArea({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
-        // disabled
+        disabled={!isEditMode}
       />
     </div>
   );

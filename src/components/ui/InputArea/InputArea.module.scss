@@ -4,6 +4,7 @@
   align-items: center;
   margin-bottom: 1px;
   width: 100%;
+  gap: 8px;
 }
 
 .label {
@@ -20,20 +21,25 @@
   color: var(--text-color);
   background: var(--calendar-day);
   width: 100%;
-  padding: 0 0 0 8px;
-  border: none;
+  // padding: 0 0 0 8px;
+  // border: none;
   border-radius: 5px;
   font-size: var(--font-size-lg);
 
-  // &:disabled {
-  //   border: none;
-  // }
+  &:disabled {
+    border: none;
+  }
+
+  &:focus {
+      border: 2px solid var(--primary-color);
+      outline: none;
+    }
 
   &.titleInput {
     resize: none;
     width: 100%;
     font-weight: bold;
-    border: none;
+    // border: none;
     background: transparent;
     outline: none;
     word-break: break-word;

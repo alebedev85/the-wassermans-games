@@ -14,9 +14,18 @@
   background: var(--calendar-day);
   width: 100%;
   padding: 8px 0;
-  border: none;
   border-radius: 5px;
   font-size: var(--font-size-lg);
+  font-family: inherit;
+
+  &:disabled {
+    border: none;
+  }
+
+  &:focus {
+      border: 2px solid var(--primary-color);
+      outline: none;
+    }
 
   @media (max-width: $max-width) {
     font-size: var(--font-size-header-subtitle);
