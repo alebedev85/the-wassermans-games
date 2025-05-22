@@ -21,8 +21,6 @@
   color: var(--text-color);
   background: var(--calendar-day);
   width: 100%;
-  // padding: 0 0 0 8px;
-  // border: none;
   border-radius: 5px;
   font-size: var(--font-size-lg);
 
@@ -31,21 +29,24 @@
   }
 
   &:focus {
-      border: 2px solid var(--primary-color);
-      outline: none;
-    }
+    border: 2px solid var(--primary-color);
+    outline: none;
+  }
 
   &.titleInput {
     resize: none;
     width: 100%;
     font-weight: bold;
-    // border: none;
     background: transparent;
     outline: none;
     word-break: break-word;
     line-height: 1.2;
     font-size: var(--font-size-header-subtitle);
     text-align: center;
+
+    @media (max-width: $max-width) {
+    font-size: var(--font-size-header-title);
+  }
   }
 
   @media (max-width: $max-width) {
