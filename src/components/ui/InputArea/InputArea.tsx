@@ -18,7 +18,7 @@ export default function InputArea({
     <div className={styles.inputWrapper}>
       {!isTitle && (
         <label htmlFor="price" className={styles.label}>
-          {label}:
+          {`${label}:`}
         </label>
       )}
       <input
@@ -26,6 +26,7 @@ export default function InputArea({
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        // disabled
       />
     </div>
   );

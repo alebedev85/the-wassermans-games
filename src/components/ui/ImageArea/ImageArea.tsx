@@ -29,7 +29,7 @@ export default function ImageArea({imageUrl, setImageUrl}: ImageAreaProps) {
   };
 
   return (
-    <div className={styles.imgWrapper}>
+    <div className={styles.imageArea}>
       {isUploading ? (
         <div className={styles.previewImage}>
           <Loader />

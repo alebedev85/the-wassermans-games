@@ -113,7 +113,7 @@ const TaskModal = () => {
         </button>
 
         {/* Дата игры */}
-        <div className={styles.data}>
+        <div className={styles.content}>
           <span className={styles.date}>
             {new Date(task?.date)
               .toLocaleDateString("ru-RU", {
@@ -129,9 +129,9 @@ const TaskModal = () => {
           {/* Изображение */}
           <ImageArea imageUrl={imageUrl} setImageUrl={setImageUrl} />
           {/* Поля с данными */}
-          <InputArea label={"Начало"} value={time} onChange={setTime} />
-          <InputArea label={"Цена"} value={price} onChange={setPrice} />
-          <InputArea label={"Место"} value={location} onChange={setLocation} />
+          <InputArea label={"🕖 Начало"} value={time} onChange={setTime} />
+          <InputArea label={"💵 Цена"} value={price} onChange={setPrice} />
+          <InputArea label={"📍 Место"} value={location} onChange={setLocation} />
           {/* Ссылка */}
           <LinkBlock
             link={link}
@@ -142,7 +142,7 @@ const TaskModal = () => {
           />
           {/* Описание */}
           <TextArea
-            label={"Описание"}
+            label={"📝 Описание"}
             value={description}
             onChange={setDescription}
           />

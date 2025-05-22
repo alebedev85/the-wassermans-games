@@ -9,9 +9,12 @@
 .label {
   color: var(--text-color);
   font-weight: bold;
+  white-space: nowrap;
+  display: inline-block;
 }
 
 .input {
+  font-family: inherit;
   flex-grow: 1;
   margin: 0;
   color: var(--text-color);
@@ -21,6 +24,10 @@
   border: none;
   border-radius: 5px;
   font-size: var(--font-size-lg);
+
+  // &:disabled {
+  //   border: none;
+  // }
 
   &.titleInput {
     resize: none;
