@@ -15,7 +15,6 @@ export default function TaskModalControls({
   isEditMode,
   setIsEditMode,
 }: TaskModalControlsProps) {
-  console.log(isEditMode)
   return (
     <div className={styles.controls}>
       {!isEditMode ? (

@@ -9,23 +9,41 @@
   resize: none;
   box-sizing: border-box;
   overflow: hidden;
-  min-height: 40px;
+  min-height: auto;
   color: var(--text-color);
   background: var(--calendar-day);
   width: 100%;
-  padding: 8px 0;
+  // padding: 8px 0;
   border-radius: 5px;
   font-size: var(--font-size-lg);
   font-family: inherit;
+  border: 2px solid black;
+
+  &.title {
+    resize: none;
+    // width: 100%;
+    font-weight: bold;
+    // background: transparent;
+    outline: none;
+    word-break: break-word;
+    line-height: 1.2;
+    font-size: var(--font-size-header-subtitle);
+    text-align: center;
+    
+
+    @media (max-width: $max-width) {
+      font-size: var(--font-size-header-title);
+    }
+  }
 
   &:disabled {
     border: none;
   }
 
   &:focus {
-      border: 2px solid var(--primary-color);
-      outline: none;
-    }
+    border: 2px solid var(--primary-color);
+    outline: none;
+  }
 
   @media (max-width: $max-width) {
     font-size: var(--font-size-header-subtitle);

@@ -14,7 +14,7 @@ export default function InputArea({
   value,
   onChange,
   isTitle = false,
-  isEditMode
+  isEditMode,
 }: InputAreaProps) {
   return (
     <div className={styles.inputWrapper}>
@@ -24,7 +24,7 @@ export default function InputArea({
         </label>
       )}
       <input
-        className={classNames(styles.input, isTitle ? styles.titleInput : "")}
+        className={classNames(styles.input, isTitle ? styles.title : "")}
         type="text"
         value={value}
         onChange={(e) => onChange(e.target.value)}

@@ -1,13 +1,17 @@
 @use "../../../styles/vars" as *;
 
 .linkBlock {
-  align-items: center;
+  align-items: flex-end;
   display: flex;
   gap: 5px;
 }
 
 .spotti{
   width: 30px;
+
+  @media (max-width: $max-width) {
+      width: 50px;
+    }
 }
 
 .input {

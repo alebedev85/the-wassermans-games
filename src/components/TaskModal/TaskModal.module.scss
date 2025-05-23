@@ -28,15 +28,15 @@
   min-width: 525px;
   position: relative;
   background: var(--calendar-day);
-  padding: var(--spacing-xl);
-  padding-top: 2.5rem;
-  border-radius: 8px;
+  // padding: var(--spacing-xl);
+  // padding-top: 2.5rem;
+  border-radius: 10px;
   text-align: left; /* Выравнивание по левому краю */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   animation: fadeIn 0.3s ease-out forwards;
-  overflow-y: auto;
+  overflow: hidden;
 
   font-size: var(--font-size-lg);
 
@@ -45,11 +45,22 @@
   }
 }
 
+.scrollableInner {
+  overflow-y: auto;
+  padding: var(--spacing-xl);
+  padding-top: 2.5rem;
+  // max-height: calc(90vh - 5rem); // или подстрой под отступы
+  // padding-right: 8px; // чтобы скролл не наезжал на контент
+
+  // // Важное: чтобы скролл не выходил за рамки
+  // border-radius: inherit;
+}
+
 /* Стиль для вертикальной ориентации (портрет) */
 @media (orientation: portrait) {
   .modalContent {
     width: 80%; /* 80% от ширины экрана для вертикальной ориентации */
-    min-height: 80%; /* Высота будет зависеть от контента */
+    // min-height: 80%; /* Высота будет зависеть от контента */
     max-height: 90vh; /* Максимальная высота 80% от высоты экрана */
     padding-top: 3.5rem;
   }
@@ -59,7 +70,7 @@
 @media (orientation: landscape) {
   .modalContent {
     width: auto; /* Ширина будет зависеть от контента */
-    max-height: 100vh;/* 80% от высоты экрана для горизонтальной ориентации */
+    max-height: 95vh; /* 80% от высоты экрана для горизонтальной ориентации */
     max-width: 60%; /* Максимальная ширина 80% от ширины экрана */
   }
 }
@@ -95,4 +106,8 @@
 .date {
   font-size: var(--font-size-xl);
   text-align: center;
+
+  @media (max-width: $max-width) {
+    font-size: var(--spacing-xl);
+  }
 }

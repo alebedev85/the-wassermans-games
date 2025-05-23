@@ -105,78 +105,80 @@ const TaskModal = () => {
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        {/* Кнопка закрытия (крестик) */}
-        <button className={styles.closeButton} onClick={handleClose}>
-          ✖
-        </button>
+        <div className={styles.scrollableInner}>
+          {/* Кнопка закрытия (крестик) */}
+          <button className={styles.closeButton} onClick={handleClose}>
+            ✖
+          </button>
 
-        {/* Дата игры */}
-        <div className={styles.content}>
-          {/* Заголовок */}
-          <InputArea
-            value={title}
-            onChange={setTitle}
-            isTitle={true}
+          <div className={styles.content}>
+            {/* Заголовок */}
+            <TextArea
+              value={title}
+              onChange={setTitle}
+              isEditMode={isEditMode}
+              isTitle={true}
+            />
+            {/* Дата игры */}
+            <p className={styles.date}>
+              {new Date(task?.date)
+                .toLocaleDateString("ru-RU", {
+                  weekday: "long",
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })
+                .replace(/^./, (s) => s.toUpperCase())}
+            </p>
+            {/* Изображение */}
+            <ImageArea
+              imageUrl={imageUrl}
+              setImageUrl={setImageUrl}
+              isEditMode={isEditMode}
+            />
+            {/* Поля с данными */}
+            <InputArea
+              label={"🕖 Начало"}
+              value={time}
+              onChange={setTime}
+              isEditMode={isEditMode}
+            />
+            <InputArea
+              label={"💵 Цена"}
+              value={price}
+              onChange={setPrice}
+              isEditMode={isEditMode}
+            />
+            <InputArea
+              label={"📍 Место"}
+              value={location}
+              onChange={setLocation}
+              isEditMode={isEditMode}
+            />
+            {/* Ссылка */}
+            <LinkArea
+              link={link}
+              onChange={setLink}
+              linkError={linkError}
+              isEditMode={isEditMode}
+            />
+            {/* Описание */}
+            <TextArea
+              label={"📝 Описание"}
+              value={description}
+              onChange={setDescription}
+              isEditMode={isEditMode}
+            />
+          </div>
+          {/* Кнопки управления */}
+          <TaskModalControls
+            disabled={!isChanged}
+            handleSave={handleSave}
+            handleCancel={setData}
             isEditMode={isEditMode}
-          />
-          <p className={styles.date}>
-            {new Date(task?.date)
-              .toLocaleDateString("ru-RU", {
-                weekday: "long",
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })
-              .replace(/^./, (s) => s.toUpperCase())}
-          </p>
-          {/* Изображение */}
-          <ImageArea
-            imageUrl={imageUrl}
-            setImageUrl={setImageUrl}
-            isEditMode={isEditMode}
-          />
-          {/* Поля с данными */}
-          <InputArea
-            label={"🕖 Начало"}
-            value={time}
-            onChange={setTime}
-            isEditMode={isEditMode}
-          />
-          <InputArea
-            label={"💵 Цена"}
-            value={price}
-            onChange={setPrice}
-            isEditMode={isEditMode}
-          />
-          <InputArea
-            label={"📍 Место"}
-            value={location}
-            onChange={setLocation}
-            isEditMode={isEditMode}
-          />
-          {/* Ссылка */}
-          <LinkArea
-            link={link}
-            onChange={setLink}
-            linkError={linkError}
-            isEditMode={isEditMode}
-          />
-          {/* Описание */}
-          <TextArea
-            label={"📝 Описание"}
-            value={description}
-            onChange={setDescription}
-            isEditMode={isEditMode}
+            setIsEditMode={() => setIsEditMode(true)}
           />
         </div>
-        {/* Кнопки управления */}
-        <TaskModalControls
-          disabled={!isChanged}
-          handleSave={handleSave}
-          handleCancel={setData}
-          isEditMode={isEditMode}
-          setIsEditMode={() => setIsEditMode(true)}
-        />
       </div>
     </div>
   );
