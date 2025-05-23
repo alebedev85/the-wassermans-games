@@ -45,7 +45,7 @@ export default function TextArea({
       )}
       <textarea
         ref={textareaRef}
-        id="description"
+        rows={1}
         className={classNames(styles.textarea, isTitle ? styles.title : "")}
         value={value}
         onChange={(e) => onChange(e.target.value)}
