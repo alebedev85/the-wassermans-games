@@ -26,7 +26,7 @@
 
 .modalContent {
   min-width: 525px;
-  position: relative;
+  
   background: var(--calendar-day);
   // padding: var(--spacing-xl);
   // padding-top: 2.5rem;
@@ -46,24 +46,22 @@
 }
 
 .scrollableInner {
+  position: relative;
   overflow-y: auto;
   padding: var(--spacing-xl);
   padding-top: 2.5rem;
-  // max-height: calc(90vh - 5rem); // или подстрой под отступы
-  // padding-right: 8px; // чтобы скролл не наезжал на контент
-
-  // // Важное: чтобы скролл не выходил за рамки
-  // border-radius: inherit;
 }
 
 /* Стиль для вертикальной ориентации (портрет) */
 @media (orientation: portrait) {
   .modalContent {
     width: 80%; /* 80% от ширины экрана для вертикальной ориентации */
-    // min-height: 80%; /* Высота будет зависеть от контента */
-    max-height: 90vh; /* Максимальная высота 80% от высоты экрана */
-    padding-top: 3.5rem;
+    min-height: 57%; /* Высота будет зависеть от контента */
+    max-height: 90%; /* Максимальная высота 80% от высоты экрана */
   }
+  .scrollableInner {
+  padding-top: 3.5rem;
+}
 }
 
 /* Стиль для горизонтальной ориентации (пейзаж) */
