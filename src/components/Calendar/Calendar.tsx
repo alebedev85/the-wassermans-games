@@ -99,26 +99,28 @@ const Calendar = () => {
         {/* Шапка календаря */}
         <div className={styles.header}>
           <button onClick={handlePrevMonth}>{"<"}</button>
-          <h2>{format(currentMonth, "LLLL yyyy", { locale: ru }).replace(/^./, (s) => s.toUpperCase())}</h2>
+          <h2>
+            {format(currentMonth, "LLLL yyyy", { locale: ru }).replace(
+              /^./,
+              (s) => s.toUpperCase()
+            )}
+          </h2>
           <button onClick={handleNextMonth}>{">"}</button>
         </div>
 
-        {/* Отображение дней недели */}
-        <div className={styles.weekDays}>
+        {/* Основная сетка календаря */}
+        <div className={styles.calendarGrid}>
+          {/* Отображение дней недели */}
           {weekDays.map((day, index) => (
             <div
-              key={index}
+              key={`label-${index}`}
               className={`${styles.weekDay} ${
-                index >= 5 ? styles.weekend : "" // Выделяем выходные
+                index >= 5 ? styles.weekend : ""
               }`}
             >
               {day}
             </div>
           ))}
-        </div>
-
-        {/* Основная сетка календаря */}
-        <div className={styles.calendarGrid}>
           {monthDays.map((day, index) => {
             const isWeekend = getDay(day) === 6 || getDay(day) === 0;
             const dayId = format(day, "yyyy-MM-dd"); // Используем формат YYYY-MM-DD для ID
