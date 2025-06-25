@@ -1,20 +1,16 @@
 @use "./styles/vars.scss" as *;
 
-// * {
-//   font-family: "Lora", Arial, serif;
-// }
-
-html,
-body {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+#scaler {
+  // min-width: 970px;
+  margin: 0 auto;
+  transform-origin: top left;
 }
 
-@media screen and (max-width: $max-width) {
-  html {
-    zoom: calc(100vw / 970); // Автоматически подгоняет масштаб
+@media screen and (max-width: 970px) {
+  #scaler {
+    width: 970px;
+    // transform: scale(calc(100vw / 970));
+    transform: scale(#{'calc(100vw / 970)'});
   }
 }
 
@@ -25,10 +21,11 @@ body {
 }
 
 body {
+  margin: 0;
   font-family: "Lora", Arial, serif;
   background: var(--background-color);
   color: var(--text-color);
-  min-width: 970px;
+  width: 100%;
 }
 
 *,
