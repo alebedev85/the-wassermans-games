@@ -1,0 +1,34 @@
+@use "../../styles/vars" as *;
+
+.calendarDay {
+  position: relative;
+  border: 1px solid #ddd;
+  background: var(--calendar-day);
+}
+
+.today {
+  border: 2px solid var(--today-color);
+}
+
+.pastDay {
+  background: var(--calendar-past-day);
+}
+
+.dayTitle {
+  padding: 5px 10px;
+}
+
+.dayNumber {
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.weekend {
+  color: red;
+}
+
+.taskList {
+  list-style: none;
+  margin: 0;
+  height: 100%;
+}

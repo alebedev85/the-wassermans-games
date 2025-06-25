@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import "./App.scss";
-import Calendar from "./components/Calendar/Calendar";
+// import Calendar from "./components/Calendar/Calendar";
+import Calendar from "./pages/Calendar/Calendar";
 import DeleteTaskModal from "./components/DeleteTaskModal/DeleteTaskModal";
 import Header from "./components/Header/Header";
 import TaskModal from "./components/TaskModal/TaskModal";

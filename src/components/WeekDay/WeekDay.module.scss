@@ -1,0 +1,19 @@
+@use "../../styles/vars" as *;
+
+.weekDays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: 5px 0;
+  background-color: var(--calendar-header);
+  font-size: 20px;
+}
+
+.weekDay {
+  padding: 5px;
+  background-color: var(--calendar-header);
+  font-size: 20px;
+}
+
+.weekend {
+  color: red;
+}

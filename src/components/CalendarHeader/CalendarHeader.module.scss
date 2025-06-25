@@ -1,0 +1,25 @@
+@use "../../styles/vars" as *;
+
+.header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+
+  & h2 {
+    margin: var(--spacing-lg);
+  }
+
+  & button {
+    color: var(--text-color);
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    font-size: large;
+
+    &:hover {
+      background-color: var(--hover);
+    }
+  }
+}
