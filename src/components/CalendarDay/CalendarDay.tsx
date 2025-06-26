@@ -1,7 +1,7 @@
+import { DroppableProvided } from "@hello-pangea/dnd";
 import AddNewTask from "../../components/AddNewTask/AddNewTask";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import { Task } from "../../types";
-import { DroppableProvided } from "@hello-pangea/dnd";
 import styles from "./CalendarDay.module.scss";
 
 interface CalendarDayProps {
@@ -11,13 +11,23 @@ interface CalendarDayProps {
   isPast: boolean;
   tasks: Task[];
   droppableProps?: Partial<DroppableProvided["droppableProps"]>; // DnD-пропсы
-  innerRef?: (element: HTMLElement | null) => void;       // DnD-реф
-  placeholder?: React.ReactNode;                          // DnD-заполнитель
+  innerRef?: (element: HTMLElement | null) => void; // DnD-реф
+  placeholder?: React.ReactNode; // DnD-заполнитель
 }
 
 /**
- * Компонент одного дня календаря.
- * Поддерживает Drop-зону для задач.
+ * Компонент `CalendarDay`
+ * Отображает отдельную ячейку календаря с задачами, датой и возможностью добавить новую задачу.
+ * Поддерживает drag-and-drop (drop-зона).
+ *
+ * @param {Date} day - Дата, которую представляет эта ячейка календаря
+ * @param {boolean} isWeekend - Флаг, указывающий, является ли день выходным (для стилизации)
+ * @param {boolean} isToday - Флаг, указывающий, является ли день текущим (для подсветки)
+ * @param {boolean} isPast - Флаг, указывающий, прошёл ли этот день (для затемнения)
+ * @param {Task[]} tasks - Массив задач, относящихся к этой дате
+ * @param {Partial<DroppableProvided["droppableProps"]>} [droppableProps] - Пропсы, предоставленные DnD-библиотекой (опционально)
+ * @param {(element: HTMLElement | null) => void} [innerRef] - Ref, используемый DnD-библиотекой (опционально)
+ * @param {React.ReactNode} [placeholder] - Placeholder от DnD-библиотеки для корректного рендера (опционально)
  */
 const CalendarDay = ({
   day,
@@ -34,9 +44,10 @@ const CalendarDay = ({
       className={`${styles.calendarDay} ${isToday ? styles.today : ""} ${
         isPast ? styles.pastDay : ""
       }`}
-      ref={innerRef}           // DnD внутренняя ссылка
-      {...droppableProps}      // DnD пропсы
+      ref={innerRef} // DnD: передаём ссылку, необходимую для корректной работы перетаскивания
+      {...droppableProps} // DnD: прокидываем специальные пропсы от библиотеки dnd
     >
+      {/* Заголовок дня с номером и пометкой выходного дня */}
       <div className={styles.dayTitle}>
         <span
           className={`${styles.dayNumber} ${isWeekend ? styles.weekend : ""}`}
@@ -45,17 +56,20 @@ const CalendarDay = ({
         </span>
       </div>
 
+      {/* Кнопка/форма для добавления новой задачи */}
       <AddNewTask selectedDate={day} />
 
+      {/* Список задач этого дня */}
       <ul className={styles.taskList}>
         {tasks
-          .sort((a, b) => (a.time < b.time ? -1 : a.time > b.time ? 1 : 0))
+          .sort((a, b) => (a.time < b.time ? -1 : a.time > b.time ? 1 : 0)) // Сортировка по времени
           .map((task, index) => (
-            <TaskCard key={task.id} task={task} index={index} />
+            <TaskCard key={task.id} task={task} index={index} /> // Отображение каждой задачи
           ))}
       </ul>
 
-      {placeholder} {/* DnD placeholder обязателен для плавного перемещения */}
+      {/* DnD placeholder — нужен для корректной отрисовки при перетаскивании */}
+      {placeholder}
     </div>
   );
 };
