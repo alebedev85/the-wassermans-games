@@ -17,17 +17,17 @@ import { RootState } from "../../store";
 import styles from "./Calendar.module.scss";
 
 const Calendar = () => {
+  // Получаем список задач из Redux store
+  const tasks = useSelector((state: RootState) => state.calendar.tasks);
+
   // Хук для текущего месяца и переключения месяцев
   const { currentMonth, handleNextMonth, handlePrevMonth } = useCurrentMonth();
 
   // Хук для обработки drag and drop
-  const { handleDragEnd } = useDragAndDrop(currentMonth);
+  const { handleDragEnd } = useDragAndDrop();
 
   // Получаем массив дней для текущего месяца
   const days = useCalendarDays(currentMonth);
-
-  // Получаем список задач из Redux store
-  const tasks = useSelector((state: RootState) => state.calendar.tasks);
 
   // Кастомный хук для загрузки данных из Firebase и состояния загрузки
   const { isLoading } = useLoadCalendar();
@@ -44,16 +44,12 @@ const Calendar = () => {
   const today = new Date();
 
   // Показываем лоадер, если данные еще загружаются
-  if (isLoading) {
-    return (
-      <div className={styles.loader}>
-        <Loader />
-      </div>
-    );
-  }
-
-  // Основной UI календаря с drag and drop контекстом
-  return (
+  return isLoading ? (
+    <div className={styles.loader}>
+      <Loader />
+    </div>
+  ) : (
+    // Основной UI календаря с drag and drop контекстом
     <div className={styles.calendar}>
       <DragDropContext onDragEnd={handleDragEnd}>
         {/* Заголовок с месяцем и кнопками переключения */}

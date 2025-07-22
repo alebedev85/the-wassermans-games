@@ -1,11 +1,16 @@
+@use "../../styles/vars.scss" as *;
 .loader {
   height: 80vh;
 }
 
 .calendar {
-  min-width: 947px;
-  max-width: 80%;
+  // min-width: 947px;
+  width: 80%;
   margin: 0 auto;
   padding: 0 var(--spacing-xl) var(--spacing-xxl);
   text-align: center;
+
+  @media (max-width: $max-width) {
+    width: 100%;
+  }
 }

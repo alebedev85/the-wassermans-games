@@ -1,6 +1,8 @@
 @use "../../styles/vars" as *;
 
 .calendarDay {
+  max-width: 100%;
+  box-sizing: border-box;
   position: relative;
   border: 1px solid #ddd;
   background: var(--calendar-day);

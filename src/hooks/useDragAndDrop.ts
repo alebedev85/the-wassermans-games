@@ -1,20 +1,14 @@
-// src/hooks/useDragAndDrop.ts
-
 import { DropResult } from "@hello-pangea/dnd";
-import { useCallback, useState, useEffect } from "react";
+import { useCallback } from "react";
 import { useDispatch } from "react-redux";
-import { moveTask, setTasks } from "../store/calendarSlice";
-import { loadCalendar } from "../utils/storageFirebase";
+import { moveTask } from "../store/calendarSlice";
 
 /**
  * Хук для загрузки задач и обработки DnD в календаре.
- * @param currentMonth - текущий выбранный месяц
  * @returns handleDragEnd - функция для DragDropContext
  */
-const useDragAndDrop = (currentMonth: Date) => {
+const useDragAndDrop = () => {
   const dispatch = useDispatch();
-  const [isLoading, setIsLoading] = useState(true);
-
   /**
    * Обработчик завершения drag-and-drop.
    * @param result - объект, содержащий информацию о перетаскивании
@@ -39,21 +33,7 @@ const useDragAndDrop = (currentMonth: Date) => {
     [dispatch]
   );
 
-  // Загружаем данные из Firebase один раз при изменении месяца
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const calendarData = await loadCalendar();
-      if (calendarData) {
-        dispatch(setTasks(calendarData.tasks));
-      }
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, [currentMonth, dispatch]);
-
-  return { handleDragEnd, isLoading };
+  return { handleDragEnd };
 };
 
 export default useDragAndDrop;

@@ -1,18 +1,19 @@
 @use "./styles/vars.scss" as *;
 
 #scaler {
-  // min-width: 970px;
+  min-width: 970px;
+  width: 100%;
   margin: 0 auto;
   transform-origin: top left;
 }
 
-@media screen and (max-width: 970px) {
-  #scaler {
-    width: 970px;
-    // transform: scale(calc(100vw / 970));
-    transform: scale(#{'calc(100vw / 970)'});
-  }
-}
+// @media screen and (max-width: 970px) {
+//   #scaler {
+//     width: 970px;
+//     // transform: scale(calc(100vw / 970));
+//     transform: scale(#{'calc(100vw / 970)'});
+//   }
+// }
 
 #root {
   height: 100%;
