@@ -1,3 +1,4 @@
+import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { toggleTheme } from "../../store/themeSlice";
@@ -11,12 +12,20 @@ const Header = () => {
       <div className={styles.content}>
         <h1 className={styles.title}>The Wassermans</h1>
         <p className={styles.subtitle}>Расписание игр</p>
-        <button
-          className={styles.button}
-          onClick={() => dispatch(toggleTheme())}
-        >
-          {theme === "light" ? "☀️" : "🌙"}
-        </button>
+        <div className={styles.actions}>
+          <button
+            className={styles.buttonLogin}
+            onClick={() => console.log("login")}
+          >
+            <FaUserCircle />
+          </button>
+          <button
+            className={styles.buttonTheme}
+            onClick={() => dispatch(toggleTheme())}
+          >
+            {theme === "light" ? "☀️" : "🌙"}
+          </button>
+        </div>
       </div>
     </header>
   );

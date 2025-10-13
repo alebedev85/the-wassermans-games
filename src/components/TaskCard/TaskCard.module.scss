@@ -27,6 +27,9 @@
   font-weight: bold;
   margin-top: var(--spacing-sm);
   margin-bottom: var(--spacing-md);
+  white-space: normal;
+  overflow-wrap: break-word;
+  hyphens: auto;
 }
 
 .details {

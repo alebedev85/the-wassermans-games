@@ -23,10 +23,22 @@
     font-size: var(--font-size-header-subtitle);
   }
 
-  .button {
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
     position: absolute;
     top: 55px;
     right: 40px;
+
+    @media (max-width: $max-width) {
+      top: 45px;
+      right: 50px;
+    }
+  }
+
+  .buttonTheme {
     width: 35px;
     height: 35px;
     border: 1px solid blue;
@@ -41,10 +53,28 @@
 
     @media (max-width: $max-width) {
       font-size: var(--font-size-header-subtitle);
-      top: 45px;
-      right: 50px;
       width: 55px;
       height: 55px;
+    }
+  }
+
+  .buttonLogin {
+    padding: 0;
+    margin: 0;
+    color: white;
+    font-size: 33px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+
+    @media (max-width: $max-width) {
+      width: 50px;
+    }
+
+    svg{
+      width: 100%;
+      height: 100%;
     }
   }
 
