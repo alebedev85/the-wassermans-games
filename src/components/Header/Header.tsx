@@ -2,6 +2,7 @@ import { FaUserCircle } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { toggleTheme } from "../../store/themeSlice";
+import LoginForm from "../LoginForm/LoginForm";
 import styles from "./Header.module.scss";
 
 const Header = () => {
@@ -25,6 +26,9 @@ const Header = () => {
           >
             {theme === "light" ? "☀️" : "🌙"}
           </button>
+          <div className={styles.dropdownMenu}>
+            <LoginForm />
+          </div>
         </div>
       </div>
     </header>
