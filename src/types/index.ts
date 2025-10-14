@@ -13,3 +13,9 @@ export interface Task {
 export interface Calendar {
   tasks: Task[];
 }
+
+export interface User {
+  name: string | null;
+  token: string | null;
+  id: string | null;
+}

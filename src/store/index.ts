@@ -4,6 +4,7 @@ import calendarReducer from "./calendarSlice";
 import taskModalReducer from "./taskModalSlice";
 import deleteTaskModalReducer from "./deleteTaskModalSlice";
 import { loadState, saveState } from "../utils/storageUtils";
+import authReducer from "./authSlice";
 
 const preloadedState = loadState();
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     calendar: calendarReducer,
     taskModal: taskModalReducer,
     deleteTaskModal: deleteTaskModalReducer,
+    auth: authReducer,
   },
   preloadedState: preloadedState
     ? {
