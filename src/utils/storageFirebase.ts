@@ -17,6 +17,10 @@ export const loadCalendar = async () => {
 
 // Функция для сохранения данных в Firebase (без использования userId)
 export const saveCalendar = async (calendarData: { tasks: Task[] }) => {
+  // защита от записи пустого стора
+  if (!calendarData || Object.keys(calendarData.tasks || {}).length === 0)
+    return;
+
   const calendarRef = doc(db, "calendar", "default"); // Один документ с данными календаря
   try {
     await setDoc(calendarRef, calendarData); // Сохраняем данные
