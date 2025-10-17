@@ -6,16 +6,16 @@ import { saveCalendar } from "../utils/storageFirebase"; // Подключаем
 const useSaveCalendarState = () => {
   useEffect(() => {
     //Первичная запись календаря из Redux (который инициализирован LocalStorage)
-    const calendarState = store.getState().calendar;
-    saveCalendar(calendarState);
+    // const calendarState = store.getState().calendar;
+    // saveCalendar(calendarState);
 
     //Подписка на дальнейшие изменения
-    // const unsubscribe = store.subscribe(() => {
-    //   const calendarState = store.getState().calendar; // Получаем состояние календаря из Redux
-    //   saveCalendar(calendarState); // Сохраняем данные календаря в Firebase
-    // });
+    const unsubscribe = store.subscribe(() => {
+      const calendarState = store.getState().calendar; // Получаем состояние календаря из Redux
+      saveCalendar(calendarState); // Сохраняем данные календаря в Firebase
+    });
 
-    // return () => unsubscribe(); // Очистка подписки при размонтировании компонента
+    return () => unsubscribe(); // Очистка подписки при размонтировании компонента
   }, []); // Пустой массив зависимостей для однократной подписки
 };
 
