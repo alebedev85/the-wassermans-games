@@ -35,14 +35,14 @@
   justify-content: space-around;
 
   button {
-    color: var(--text-color);
+    color: var(--button-text-color);
     padding: 5px 10px;
     border-radius: 5px;
-    box-shadow: var(--shadow-sm);
+    font-family: inherit;
   }
 
   .addButton {
-    background: var(--primary-color);
+    background-color: var(--primary-color);
   }
 
   .closeButton {

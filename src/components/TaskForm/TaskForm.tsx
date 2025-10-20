@@ -19,6 +19,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingTask, setIsUploadingTask] = useState(false);
   const {
     register,
     handleSubmit,
@@ -40,6 +41,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         imageUrl,
       };
       try {
+        setIsUploadingTask(true);
         await saveTaskInFB(newTask);
         dispatch(addTask(newTask));
         reset();
@@ -47,6 +49,8 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
       } catch (error) {
         console.error("Не удалось сохранить задачу:", error);
         alert("Ошибка при сохранении задачи. Попробуйте снова.");
+      } finally {
+        setIsUploadingTask(false);
       }
     }
   };
@@ -175,14 +179,22 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         placeholder="Описание (необязательно)"
       />
 
-      <div className={styles.controls}>
-        <button type="submit" className={styles.addButton}>
-          Добавить
-        </button>
-        <button type="button" className={styles.closeButton} onClick={onClose}>
-          Отмена
-        </button>
-      </div>
+      {isUploadingTask ? (
+        <Loader />
+      ) : (
+        <div className={styles.controls}>
+          <button type="submit" className={styles.addButton}>
+            Добавить
+          </button>
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={onClose}
+          >
+            Отмена
+          </button>
+        </div>
+      )}
     </form>
   );
 };
