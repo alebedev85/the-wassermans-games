@@ -10,8 +10,6 @@ import Loader from "../../components/Loader/Loader";
 import useCalendarDays from "../../hooks/useCalendarDays";
 import useCurrentMonth from "../../hooks/useCurrentMonth";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
-// import useLoadCalendar from "../../hooks/useLoadCalendar";
-// import useSaveBoardState from "../../hooks/useSaveBoardState";
 import { RootState } from "../../store";
 
 import { useEffect, useState } from "react";
@@ -33,17 +31,6 @@ const Calendar = () => {
 
   // Получаем массив дней для текущего месяца
   const days = useCalendarDays(currentMonth);
-
-  // Кастомный хук для загрузки данных из Firebase и состояния загрузки
-  // const { isLoading } = useLoadCalendar();
-
-  // Хук для автоматического сохранения состояния доски при изменениях
-  // useSaveBoardState();
-
-  //***** */
-  // useEffect(() => {
-  //     migrateOldCalendarData();
-  //   }, []);
 
   useEffect(() => {
     const fetchTasks = async () => {
