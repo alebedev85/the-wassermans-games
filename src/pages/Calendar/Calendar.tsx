@@ -1,7 +1,7 @@
 import { DragDropContext } from "@hello-pangea/dnd";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import CalendarGrid from "../../components/CalendarGrid/CalendarGrid";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader";
@@ -10,13 +10,18 @@ import Loader from "../../components/Loader/Loader";
 import useCalendarDays from "../../hooks/useCalendarDays";
 import useCurrentMonth from "../../hooks/useCurrentMonth";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
-import useLoadCalendar from "../../hooks/useLoadCalendar";
-import useSaveBoardState from "../../hooks/useSaveBoardState";
+// import useLoadCalendar from "../../hooks/useLoadCalendar";
+// import useSaveBoardState from "../../hooks/useSaveBoardState";
 import { RootState } from "../../store";
 
+import { useEffect, useState } from "react";
+import { setTasks } from "../../store/calendarSlice";
+import { getAllTasks } from "../../utils/storageFirebase";
 import styles from "./Calendar.module.scss";
 
 const Calendar = () => {
+  const dispatch = useDispatch();
+  const [isLoading, setIsLoading] = useState(true);
   // Получаем список задач из Redux store
   const tasks = useSelector((state: RootState) => state.calendar.tasks);
 
@@ -30,10 +35,33 @@ const Calendar = () => {
   const days = useCalendarDays(currentMonth);
 
   // Кастомный хук для загрузки данных из Firebase и состояния загрузки
-  const { isLoading } = useLoadCalendar();
+  // const { isLoading } = useLoadCalendar();
 
   // Хук для автоматического сохранения состояния доски при изменениях
-  useSaveBoardState();
+  // useSaveBoardState();
+
+  //***** */
+  // useEffect(() => {
+  //     migrateOldCalendarData();
+  //   }, []);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
+      setIsLoading(true); // Начинаем загрузку
+      try {
+        const tasks = await getAllTasks();
+        dispatch(setTasks(tasks));
+      } catch (error) {
+        console.error("Ошибка при загрузке задач:", error);
+        alert("Не удалось загрузить задачи. Попробуйте обновить страницу.");
+      } finally {
+        setIsLoading(false); // Завершаем загрузку в любом случае
+      }
+    };
+
+    fetchTasks();
+  }, [dispatch]);
+  //***** */
 
   // Форматируем название месяца с локализацией на русский язык и с заглавной буквы
   const formattedMonth = format(currentMonth, "LLLL yyyy", { locale: ru });

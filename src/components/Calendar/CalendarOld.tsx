@@ -14,12 +14,12 @@ import {
 import { ru } from "date-fns/locale"; // Локализация для русских названий месяцев
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux"; // Используем Redux
-import AddNewTask from "../../components/AddNewTask/AddNewTask";
-import TaskCard from "../../components/TaskCard/TaskCard";
-import useSaveBoardState from "../../hooks/useSaveBoardState";
+import AddNewTask from "../AddNewTask/AddNewTask";
+import TaskCard from "../TaskCard/TaskCard";
 import { RootState } from "../../store";
 import { moveTask, setTasks } from "../../store/calendarSlice"; // Действие Redux для перемещения задач
-import { loadCalendar } from "../../utils/storageFirebase";
+// import { loadCalendar } from "../../utils/storageFirebase";
+import { getAllTasks, migrateOldCalendarData } from "../../utils/storageFirebase";
 import Loader from "../Loader/Loader";
 import styles from "./Calendar.module.scss";
 
@@ -71,22 +71,37 @@ const Calendar = () => {
     );
   };
 
-  // Загрузка данных календаря из Firebase
+  // // Загрузка данных календаря из Firebase
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     setIsLoading(true); // Начинаем загрузку
+  //     const calendarData = await loadCalendar(); // Загружаем данные без userId
+  //     if (calendarData) {
+  //       dispatch(setTasks(calendarData.tasks)); // Записываем задачи в Redux
+  //     }
+  //     setIsLoading(false); // Завершаем загрузку
+  //   };
+
+  //   fetchData();
+  // }, [dispatch]);
+
+  // Хук для сохранения состояния доски при изменении
+  // useSaveBoardState();
+
   useEffect(() => {
-    const fetchData = async () => {
+    migrateOldCalendarData();
+  }, []);
+
+  useEffect(() => {
+    const fetchTasks = async () => {
       setIsLoading(true); // Начинаем загрузку
-      const calendarData = await loadCalendar(); // Загружаем данные без userId
-      if (calendarData) {
-        dispatch(setTasks(calendarData.tasks)); // Записываем задачи в Redux
-      }
+      const tasks = await getAllTasks();
+      dispatch(setTasks(tasks));
       setIsLoading(false); // Завершаем загрузку
     };
 
-    fetchData();
+    fetchTasks();
   }, [dispatch]);
-
-  // Хук для сохранения состояния доски при изменении
-  useSaveBoardState();
 
   return isLoading ? (
     <div className={styles.loader}>

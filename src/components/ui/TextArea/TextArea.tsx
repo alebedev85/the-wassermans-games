@@ -28,11 +28,7 @@ export default function TextArea({
   function handleTextareaInput() {
     const textarea = textareaRef.current;
     if (textarea) {
-      if (isTitle) {
-        console.log(textarea.scrollHeight);
-      }
-
-      textarea.style.height = "auto"; // сначала сбросим
+        textarea.style.height = "auto"; // сначала сбросим
       textarea.style.height = `${textarea.scrollHeight}px`; // установим по содержимому
     }
   }

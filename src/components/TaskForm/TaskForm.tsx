@@ -6,6 +6,7 @@ import fallbackImage from "../../assets/artwork.png";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
+import { saveTaskInFB } from "../../utils/storageFirebase";
 import Loader from "../Loader/Loader";
 import styles from "./TaskForm.module.scss";
 
@@ -25,7 +26,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
     formState: { errors },
   } = useForm<Task>();
 
-  const onSubmit = (data: Task) => {
+  const onSubmit = async (data: Task) => {
     if (data.title.trim()) {
       const newTask: Task = {
         id: Date.now().toString(),
@@ -38,9 +39,15 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         date: format(selectedDate.toISOString(), "yyyy-MM-dd"),
         imageUrl,
       };
-      dispatch(addTask(newTask));
-      reset();
-      onClose();
+      try {
+        await saveTaskInFB(newTask);
+        dispatch(addTask(newTask));
+        reset();
+        onClose();
+      } catch (error) {
+        console.error("Не удалось сохранить задачу:", error);
+        alert("Ошибка при сохранении задачи. Попробуйте снова.");
+      }
     }
   };
 
