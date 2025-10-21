@@ -1,0 +1,19 @@
+@use "../../styles/vars" as *;
+
+.logout {
+  background-color: var(--calendar-day);
+  border-radius: 0.5rem;
+  padding: var(--spacing-lg);
+  box-sizing: border-box;
+  width: 130px;
+  box-shadow: var(--shadow-lg);
+  text-align: center; 
+  button {
+    display: inline-block;
+    color: white;
+    margin: auto;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background: var(--primary-color);
+  }
+}
