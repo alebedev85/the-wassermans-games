@@ -55,7 +55,7 @@ export default function HeaderActions() {
       {menuOpen && (
         <div className={styles.dropdownMenu}>
           {status ? (
-            <LogoutForm />
+            <LogoutForm onClose={() => setMenuOpen(false)}/>
           ) : (
             <LoginForm onClose={() => setMenuOpen(false)} />
           )}
