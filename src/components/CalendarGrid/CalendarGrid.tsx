@@ -4,6 +4,8 @@ import { Task } from "../../types";
 import CalendarDay from "../CalendarDay/CalendarDay";
 import WeekDay from "../WeekDay/WeekDay";
 import styles from "./CalendarGrid.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 // Типизация пропсов
 interface CalendarGridProps {
@@ -23,6 +25,7 @@ interface CalendarGridProps {
  */
 const CalendarGrid = ({ days, today, tasks }: CalendarGridProps) => {
   const weekDays = ["Пн", "Вт", "Ср", "Чт", "Пт", "Сб", "Вс"];
+  const { status } = useSelector((state: RootState) => state.auth);
 
   return (
     <div className={styles.calendarGrid}>
@@ -37,7 +40,7 @@ const CalendarGrid = ({ days, today, tasks }: CalendarGridProps) => {
         const dayId = format(day, "yyyy-MM-dd");
 
         return (
-          <Droppable droppableId={dayId} type="TASK" key={dayId}>
+          <Droppable droppableId={dayId} type="TASK" key={dayId} isDropDisabled={!status}>
             {(provided) => (
               <CalendarDay
                 day={day}

@@ -3,6 +3,8 @@ import AddNewTask from "../../components/AddNewTask/AddNewTask";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import { Task } from "../../types";
 import styles from "./CalendarDay.module.scss";
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 interface CalendarDayProps {
   day: Date;
@@ -39,6 +41,8 @@ const CalendarDay = ({
   innerRef,
   placeholder,
 }: CalendarDayProps) => {
+  const { status } = useSelector((state: RootState) => state.auth);
+  
   return (
     <div
       className={`${styles.calendarDay} ${isToday ? styles.today : ""} ${
@@ -57,7 +61,7 @@ const CalendarDay = ({
       </div>
 
       {/* Кнопка/форма для добавления новой задачи */}
-      <AddNewTask selectedDate={day} />
+      {status && <AddNewTask selectedDate={day} />}
 
       {/* Список задач этого дня */}
       <ul className={styles.taskList}>

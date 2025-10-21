@@ -45,7 +45,7 @@ export const getAllTasks = async (): Promise<Task[]> => {
       ...doc.data()
     } as Task));
   } catch (error) {
-    console.error("Ошибка при загрузке всех задач:", error);
+    console.error("❌ Ошибка при загрузке всех задач:", error);
     return [];
   }
 };
@@ -57,7 +57,7 @@ export const saveTaskInFB = async (task: Task): Promise<void> => {
     await setDoc(taskRef, task);
     console.log(`Задача ${task.id} успешно сохранена/обновлена ✅`);
   } catch (error) {
-    console.error(`Ошибка при сохранении задачи ${task.id}:`, error);
+    console.error(`❌ Ошибка при сохранении задачи ${task.id}:`, error);
   }
 };
 
@@ -68,7 +68,7 @@ export const deleteTaskFromFB = async (taskId: string): Promise<void> => {
     await deleteDoc(taskRef);
     console.log(`Задача ${taskId} успешно удалена ✅`);
   } catch (error) {
-    console.error(`Ошибка при удалении задачи ${taskId}:`, error);
+    console.error(`❌ Ошибка при удалении задачи ${taskId}:`, error);
   }
 };
 
@@ -80,6 +80,6 @@ export const updateTaskInFB = async (task: Task): Promise<void> => {
     await updateDoc(taskRef, { ...task });
     console.log(`Задача ${task.id} успешно обновлена ✅`);
   } catch (error) {
-    console.error(`Ошибка при обновлении задачи ${task.id}:`, error);
+    console.error(`❌ Ошибка при обновлении задачи ${task.id}:`, error);
   }
 };

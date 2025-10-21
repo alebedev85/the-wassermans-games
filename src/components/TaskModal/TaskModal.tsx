@@ -17,7 +17,7 @@ const TaskModal = () => {
   const [isUploading, setIsUploading] = useState(false);
   const dispatch = useDispatch();
   const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
-
+  const { status } = useSelector((state: RootState) => state.auth);
   const [initialTask, setInitialTask] = useState<Task | null>(null);
   // Устанавливаем начальные значения для title, description, price и location
   const [title, setTitle] = useState(task?.title || "");
@@ -187,13 +187,15 @@ const TaskModal = () => {
               />
             </div>
             {/* Кнопки управления */}
-            <TaskModalControls
-              disabled={!isChanged}
-              handleSave={handleSave}
-              handleCancel={setData}
-              isEditMode={isEditMode}
-              setIsEditMode={() => setIsEditMode(true)}
-            />
+            {status && (
+              <TaskModalControls
+                disabled={!isChanged}
+                handleSave={handleSave}
+                handleCancel={setData}
+                isEditMode={isEditMode}
+                setIsEditMode={() => setIsEditMode(true)}
+              />
+            )}
           </div>
         )}
       </div>

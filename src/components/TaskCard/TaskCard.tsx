@@ -1,8 +1,9 @@
 import { Draggable } from "@hello-pangea/dnd";
 import classNames from "classnames";
 import { IoClose } from "react-icons/io5"; // Иконка крестика
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import fallbackImage from "../../assets/artwork.png";
+import { RootState } from "../../store";
 import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
@@ -15,9 +16,10 @@ interface TaskCardProps {
 
 const TaskCard = ({ task, index }: TaskCardProps) => {
   const dispatch = useDispatch();
+  const { status } = useSelector((state: RootState) => state.auth);
 
   return (
-    <Draggable draggableId={task.id} index={index}>
+    <Draggable draggableId={task.id} index={index} isDragDisabled={!status} >
       {(provided, snapshot) => (
         <li
           ref={provided.innerRef}
@@ -29,16 +31,18 @@ const TaskCard = ({ task, index }: TaskCardProps) => {
           onClick={() => dispatch(openTaskModal(task))}
         >
           {/* Кнопка удаления */}
-          <button
-            className={classNames(styles.deleteButton, "tooltip")}
-            data-tooltip="Удалить игру"
-            onClick={(e) => {
-              e.stopPropagation();
-              dispatch(openDeleteModal(task));
-            }}
-          >
-            <IoClose />
-          </button>
+          {status && (
+            <button
+              className={classNames(styles.deleteButton, "tooltip")}
+              data-tooltip="Удалить игру"
+              onClick={(e) => {
+                e.stopPropagation();
+                dispatch(openDeleteModal(task));
+              }}
+            >
+              <IoClose />
+            </button>
+          )}
 
           {/* Заголовок по центру */}
           <h3 className={styles.title}>{task.title}</h3>
