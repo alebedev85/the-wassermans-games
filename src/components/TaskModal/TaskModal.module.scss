@@ -20,7 +20,7 @@
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-around;
   z-index: 11;
 }
 
@@ -34,7 +34,7 @@
   text-align: left; /* Выравнивание по левому краю */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
   animation: fadeIn 0.3s ease-out forwards;
   overflow: hidden;
 
@@ -70,6 +70,8 @@
     width: auto; /* Ширина будет зависеть от контента */
     max-height: 95vh; /* 80% от высоты экрана для горизонтальной ориентации */
     max-width: 60%; /* Максимальная ширина 80% от ширины экрана */
+    min-width: 40%;
+    min-height: 50%;
   }
 }
 

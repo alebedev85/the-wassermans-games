@@ -6,6 +6,7 @@ import fallbackImage from "../../assets/artwork.png";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
+import { saveTaskInFB } from "../../utils/storageFirebase";
 import Loader from "../Loader/Loader";
 import styles from "./TaskForm.module.scss";
 
@@ -18,6 +19,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
+  const [isUploadingTask, setIsUploadingTask] = useState(false);
   const {
     register,
     handleSubmit,
@@ -25,7 +27,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
     formState: { errors },
   } = useForm<Task>();
 
-  const onSubmit = (data: Task) => {
+  const onSubmit = async (data: Task) => {
     if (data.title.trim()) {
       const newTask: Task = {
         id: Date.now().toString(),
@@ -38,9 +40,18 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         date: format(selectedDate.toISOString(), "yyyy-MM-dd"),
         imageUrl,
       };
-      dispatch(addTask(newTask));
-      reset();
-      onClose();
+      try {
+        setIsUploadingTask(true);
+        await saveTaskInFB(newTask);
+        dispatch(addTask(newTask));
+        reset();
+        onClose();
+      } catch (error) {
+        console.error("Не удалось сохранить задачу:", error);
+        alert("Ошибка при сохранении задачи. Попробуйте снова.");
+      } finally {
+        setIsUploadingTask(false);
+      }
     }
   };
 
@@ -168,14 +179,22 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         placeholder="Описание (необязательно)"
       />
 
-      <div className={styles.controls}>
-        <button type="submit" className={styles.addButton}>
-          Добавить
-        </button>
-        <button type="button" className={styles.closeButton} onClick={onClose}>
-          Отмена
-        </button>
-      </div>
+      {isUploadingTask ? (
+        <Loader />
+      ) : (
+        <div className={styles.controls}>
+          <button type="submit" className={styles.addButton}>
+            Добавить
+          </button>
+          <button
+            type="button"
+            className={styles.closeButton}
+            onClick={onClose}
+          >
+            Отмена
+          </button>
+        </div>
+      )}
     </form>
   );
 };

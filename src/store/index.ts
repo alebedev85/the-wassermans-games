@@ -1,9 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
-import themeReducer from "./themeSlice";
-import calendarReducer from "./calendarSlice";
-import taskModalReducer from "./taskModalSlice";
-import deleteTaskModalReducer from "./deleteTaskModalSlice";
 import { loadState, saveState } from "../utils/storageUtils";
+import calendarReducer from "./calendarSlice";
+import deleteTaskModalReducer from "./deleteTaskModalSlice";
+import taskModalReducer from "./taskModalSlice";
+import themeReducer from "./themeSlice";
 import authReducer from "./authSlice";
 
 const preloadedState = loadState();
