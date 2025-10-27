@@ -35,8 +35,8 @@
 }
 
 .cancel {
-  background: var(--save-button-color);
-  color: var(--text-color);
+  background: var(--primary-color);
+  color: var(--button-text-color);
   border: none;
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: 5px;
@@ -45,7 +45,7 @@
 
 .confirm {
   background: var(--cancel-button-color);
-  color: white;
+  color: var(--button-text-color);
   border: none;
   padding: var(--spacing-sm) var(--spacing-md);
   border-radius: 5px;

@@ -9,6 +9,17 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase"; // Импортируем Firebase
 import { Task } from "../types";
+import { store } from "../store"; 
+
+
+// Проверка статуса админа
+const checkAdminAccess = () => {
+  const state = store.getState();
+  const isAdmin = state.auth.status;
+  if (!isAdmin) {
+    throw new Error("Доступ запрещён: только админ может изменять данные.");
+  }
+};
 
 // Миграция данных
 export const migrateOldCalendarData = async () => {
@@ -53,6 +64,7 @@ export const getAllTasks = async (): Promise<Task[]> => {
 // 🔹 Сохранить или обновить задачу
 export const saveTaskInFB = async (task: Task): Promise<void> => {
   try {
+    checkAdminAccess();
     const taskRef = doc(db, "calendar/default/tasks", task.id);
     await setDoc(taskRef, task);
     console.log(`Задача ${task.id} успешно сохранена/обновлена ✅`);
@@ -64,6 +76,7 @@ export const saveTaskInFB = async (task: Task): Promise<void> => {
 // 🔹 Удалить задачу
 export const deleteTaskFromFB = async (taskId: string): Promise<void> => {
   try {
+    checkAdminAccess();
     const taskRef = doc(db, "calendar/default/tasks", taskId);
     await deleteDoc(taskRef);
     console.log(`Задача ${taskId} успешно удалена ✅`);
@@ -75,6 +88,7 @@ export const deleteTaskFromFB = async (taskId: string): Promise<void> => {
 // 🔹 Обновить часть полей (без перезаписи всего документа)
 export const updateTaskInFB = async (task: Task): Promise<void> => {
   try {
+    checkAdminAccess();
     const taskRef = doc(db, "calendar/default/tasks", task.id);
     // Преобразуем task в обычный объект без типизации
     await updateDoc(taskRef, { ...task });
