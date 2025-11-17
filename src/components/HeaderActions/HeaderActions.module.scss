@@ -43,14 +43,16 @@
     justify-content: center;
     border-radius: 50%;
 
-    @media (max-width: $max-width) {
-      width: 50px;
-    }
-
     svg {
       width: 100%;
       height: 100%;
       margin-right: 5px;
+
+      @media (max-width: $max-width) {
+      font-size: var(--font-size-header-subtitle);
+      width: 55px;
+      height: 55px;
+    }
     }
   }
 }

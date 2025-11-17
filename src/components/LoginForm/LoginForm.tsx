@@ -20,7 +20,6 @@ export default function LoginForm({ onClose }: AuthLoginForm) {
   const {
     register,
     handleSubmit,
-    formState: { errors },
   } = useForm<{ email: string; password: string }>();
 
   const dispatch = useDispatch();
