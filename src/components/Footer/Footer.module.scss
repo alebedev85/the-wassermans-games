@@ -1,0 +1,14 @@
+.footer {
+  background: var(--primary-color);
+  padding: var(--spacing-xl);
+  width: 100%;
+  text-align: center;
+  a {
+    color: white;
+    font-size: var(--font-size-lg);
+
+    &:hover {
+      opacity: 0.8;
+    }
+  }
+}

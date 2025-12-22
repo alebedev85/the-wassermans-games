@@ -2,15 +2,13 @@ import {
   collection,
   deleteDoc,
   doc,
-  getDoc,
   getDocs,
   setDoc,
   updateDoc,
 } from "firebase/firestore";
 import { db } from "../firebase"; // Импортируем Firebase
+import { store } from "../store";
 import { Task } from "../types";
-import { store } from "../store"; 
-
 
 // Проверка статуса админа
 const checkAdminAccess = () => {
@@ -21,28 +19,27 @@ const checkAdminAccess = () => {
   }
 };
 
-// Миграция данных
-export const migrateOldCalendarData = async () => {
-  const oldRef = doc(db, "calendar", "default");
-  const snapshot = await getDoc(oldRef);
+// // Миграция данных (для восстановления старых данных)
+// export const migrateOldCalendarData = async () => {
+//   const oldRef = doc(db, "calendar", "default");
+//   const snapshot = await getDoc(oldRef);
 
-  if (!snapshot.exists()) return console.log("Нет старых данных для миграции");
+//   if (!snapshot.exists()) return console.log("Нет старых данных для миграции");
 
-  const data = snapshot.data();
-  const tasks = data?.tasks || [];
+//   const data = snapshot.data();
+//   const tasks = data?.tasks || [];
 
-  console.log(`Найдено ${tasks.length} задач для миграции`);
+//   console.log(`Найдено ${tasks.length} задач для миграции`);
 
-  const tasksCollection = collection(db, "calendar/default/tasks");
+//   const tasksCollection = collection(db, "calendar/default/tasks");
 
-  for (const task of tasks) {
-    const taskRef = doc(tasksCollection, task.id);
-    await setDoc(taskRef, task);
-  }
+//   for (const task of tasks) {
+//     const taskRef = doc(tasksCollection, task.id);
+//     await setDoc(taskRef, task);
+//   }
 
-  console.log("Миграция завершена ✅");
-};
-
+//   console.log("Миграция завершена ✅");
+// };
 
 // 🔹 Загрузка всех задач
 export const getAllTasks = async (): Promise<Task[]> => {
@@ -51,10 +48,13 @@ export const getAllTasks = async (): Promise<Task[]> => {
     const snapshot = await getDocs(tasksCol);
 
     console.log(`Все задачи загружены ✅`);
-    return snapshot.docs.map((doc) => ({
-      id: doc.id,
-      ...doc.data()
-    } as Task));
+    return snapshot.docs.map(
+      (doc) =>
+        ({
+          id: doc.id,
+          ...doc.data(),
+        } as Task)
+    );
   } catch (error) {
     console.error("❌ Ошибка при загрузке всех задач:", error);
     return [];

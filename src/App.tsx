@@ -9,6 +9,7 @@ import { auth } from "./firebase";
 import Calendar from "./pages/Calendar/Calendar";
 import { RootState } from "./store";
 import { loginSuccess, logout } from "./store/authSlice";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const { theme } = useSelector((state: RootState) => state.theme);
@@ -41,6 +42,7 @@ function App() {
       <Calendar />
       <TaskModal />
       <DeleteTaskModal />
+      <Footer />
     </div>
   );
 }
