@@ -1,16 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import { FaUserCircle } from "react-icons/fa";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { toggleTheme } from "../../store/themeSlice";
 import LoginForm from "../LoginForm/LoginForm";
 import LogoutForm from "../LogoutForm/LogoutForm";
 import styles from "./HeaderActions.module.scss";
 
 export default function HeaderActions() {
-  const dispatch = useDispatch();
-  const theme = useSelector((state: RootState) => state.theme.theme);
-  const { status } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const theme = useAppSelector((state) => state.theme.theme);
+  const { status } = useAppSelector((state) => state.auth);
   const [menuOpen, setMenuOpen] = useState(false);
   // Ссылка на DOM-элемент меню (нужна, чтобы отлавливать клики вне него)
   const menuRef = useRef<HTMLDivElement>(null);
@@ -55,7 +54,7 @@ export default function HeaderActions() {
       {menuOpen && (
         <div className={styles.dropdownMenu}>
           {status ? (
-            <LogoutForm onClose={() => setMenuOpen(false)}/>
+            <LogoutForm onClose={() => setMenuOpen(false)} />
           ) : (
             <LoginForm onClose={() => setMenuOpen(false)} />
           )}

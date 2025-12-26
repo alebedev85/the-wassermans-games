@@ -3,8 +3,7 @@ import AddNewTask from "../../components/AddNewTask/AddNewTask";
 import TaskCard from "../../components/TaskCard/TaskCard";
 import { Task } from "../../types";
 import styles from "./CalendarDay.module.scss";
-import { useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useAppSelector } from "../../store";
 
 interface CalendarDayProps {
   day: Date;
@@ -41,7 +40,7 @@ const CalendarDay = ({
   innerRef,
   placeholder,
 }: CalendarDayProps) => {
-  const { status } = useSelector((state: RootState) => state.auth);
+  const { status } = useAppSelector((state) => state.auth);
   
   return (
     <div

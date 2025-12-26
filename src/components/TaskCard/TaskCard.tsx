@@ -1,9 +1,8 @@
 import { Draggable } from "@hello-pangea/dnd";
 import classNames from "classnames";
 import { IoClose } from "react-icons/io5"; // Иконка крестика
-import { useDispatch, useSelector } from "react-redux";
 import fallbackImage from "../../assets/artwork.png";
-import { RootState } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { openDeleteModal } from "../../store/deleteTaskModalSlice";
 import { openTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
@@ -15,11 +14,11 @@ interface TaskCardProps {
 }
 
 const TaskCard = ({ task, index }: TaskCardProps) => {
-  const dispatch = useDispatch();
-  const { status } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.auth);
 
   return (
-    <Draggable draggableId={task.id} index={index} isDragDisabled={!status} >
+    <Draggable draggableId={task.id} index={index} isDragDisabled={!status}>
       {(provided, snapshot) => (
         <li
           ref={provided.innerRef}

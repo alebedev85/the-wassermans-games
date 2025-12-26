@@ -1,7 +1,7 @@
 import { format } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "../../store";
 import fallbackImage from "../../assets/artwork.png";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
@@ -16,7 +16,7 @@ interface TaskFormProps {
 }
 
 const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [isUploadingTask, setIsUploadingTask] = useState(false);

@@ -1,16 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { deleteTask } from "../../store/calendarSlice";
 import { closeDeleteModal } from "../../store/deleteTaskModalSlice";
-import styles from "./DeleteTaskModal.module.scss";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { deleteTaskFromFB } from "../../utils/storageFirebase";
+import styles from "./DeleteTaskModal.module.scss";
 
 const DeleteTaskModal = () => {
-  const dispatch = useDispatch();
-  const { isOpen, task } = useSelector(
-    (state: RootState) => state.deleteTaskModal
-  );
+  const dispatch = useAppDispatch();
+  const { isOpen, task } = useAppSelector((state) => state.deleteTaskModal);
 
   if (!isOpen || !task) return null;
 

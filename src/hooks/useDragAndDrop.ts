@@ -1,7 +1,6 @@
 import { DropResult } from "@hello-pangea/dnd";
 import { useCallback } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../store";
+import { useAppDispatch, useAppSelector } from "../store";
 import { moveTask } from "../store/calendarSlice";
 import { Task } from "../types";
 import { updateTaskInFB } from "../utils/storageFirebase";
@@ -11,9 +10,9 @@ import { updateTaskInFB } from "../utils/storageFirebase";
  * @returns handleDragEnd - функция для DragDropContext
  */
 const useDragAndDrop = () => {
-  const dispatch = useDispatch();
-  const { status } = useSelector((state: RootState) => state.auth);
-  const tasks = useSelector((state: RootState) => state.calendar.tasks);
+  const dispatch = useAppDispatch();
+  const { status } = useAppSelector((state) => state.auth);
+  const tasks = useAppSelector((state) => state.calendar.tasks);
   /**
    * Обработчик завершения drag-and-drop.
    * @param result - объект, содержащий информацию о перетаскивании

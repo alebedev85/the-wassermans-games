@@ -1,19 +1,18 @@
 import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import "./App.scss";
 import DeleteTaskModal from "./components/DeleteTaskModal/DeleteTaskModal";
+import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
 import TaskModal from "./components/TaskModal/TaskModal";
 import "./firebase";
 import { auth } from "./firebase";
 import Calendar from "./pages/Calendar/Calendar";
-import { RootState } from "./store";
-import { setUser, clearUser } from "./store/authSlice";
-import Footer from "./components/Footer/Footer";
+import { useAppDispatch, useAppSelector } from "./store";
+import { clearUser, setUser } from "./store/authSlice";
 
 function App() {
-  const { theme } = useSelector((state: RootState) => state.theme);
-  const dispatch = useDispatch();
+  const { theme } = useAppSelector((state) => state.theme);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { LoginUser } from "../../store/authSlice";
 import Loader from "../Loader/Loader";
 import styles from "./LoginForm.module.scss";
@@ -22,7 +21,7 @@ export default function LoginForm({ onClose }: AuthLoginForm) {
   }>();
 
   const dispatch = useAppDispatch();
-  const { isLoading } = useSelector((state: RootState) => state.auth);
+  const { isLoading } = useAppSelector((state) => state.auth);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async ({ email, password }: FormData) => {

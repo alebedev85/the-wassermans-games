@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
@@ -15,9 +14,9 @@ import TaskModalControls from "./TaskModalControls/TaskModalControls";
 
 const TaskModal = () => {
   const [isUploading, setIsUploading] = useState(false);
-  const dispatch = useDispatch();
-  const { isOpen, task } = useSelector((state: RootState) => state.taskModal);
-  const { status } = useSelector((state: RootState) => state.auth);
+  const dispatch = useAppDispatch();
+  const { isOpen, task } = useAppSelector((state) => state.taskModal);
+  const { status } = useAppSelector((state) => state.auth);
   const [initialTask, setInitialTask] = useState<Task | null>(null);
   // Устанавливаем начальные значения для title, description, price и location
   const [title, setTitle] = useState(task?.title || "");

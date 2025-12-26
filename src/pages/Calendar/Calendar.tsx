@@ -1,7 +1,6 @@
 import { DragDropContext } from "@hello-pangea/dnd";
 import { format } from "date-fns";
 import { ru } from "date-fns/locale";
-import { useDispatch, useSelector } from "react-redux";
 
 import CalendarGrid from "../../components/CalendarGrid/CalendarGrid";
 import CalendarHeader from "../../components/CalendarHeader/CalendarHeader";
@@ -10,7 +9,7 @@ import Loader from "../../components/Loader/Loader";
 import useCalendarDays from "../../hooks/useCalendarDays";
 import useCurrentMonth from "../../hooks/useCurrentMonth";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
-import { RootState } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 
 import { useEffect, useState } from "react";
 import { setTasks } from "../../store/calendarSlice";
@@ -18,10 +17,10 @@ import { getAllTasks } from "../../utils/storageFirebase";
 import styles from "./Calendar.module.scss";
 
 const Calendar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = useState(true);
   // Получаем список задач из Redux store
-  const tasks = useSelector((state: RootState) => state.calendar.tasks);
+  const tasks = useAppSelector((state) => state.calendar.tasks);
 
   // Хук для текущего месяца и переключения месяцев
   const { currentMonth, handleNextMonth, handlePrevMonth } = useCurrentMonth();
