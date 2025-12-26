@@ -1,7 +1,6 @@
-import { useDispatch } from "react-redux";
-import { logout } from "../../store/authSlice";
+import { useAppDispatch } from "../../store";
+import { LogoutUser } from "../../store/authSlice";
 
-import { auth } from "../../firebase";
 import styles from "./LogoutForm.module.scss";
 
 interface LogoutFormProps {
@@ -9,17 +8,14 @@ interface LogoutFormProps {
 }
 
 export default function LogoutForm({ onClose }: LogoutFormProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   // Полный разлогин
   const handleLogout = async () => {
-    try {
-      await auth.signOut(); // Разлогиниваем пользователя в Firebase
-      dispatch(logout()); // Очищаем Redux store
-      onClose(); // Закрываем меню
-    } catch (error) {
-      console.error("Ошибка при выходе:", error);
-    }
+    const result = await dispatch(LogoutUser());
+        if (LogoutUser.fulfilled.match(result)) {
+          onClose();
+        } 
   };
 
   return (

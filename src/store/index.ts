@@ -5,6 +5,7 @@ import deleteTaskModalReducer from "./deleteTaskModalSlice";
 import taskModalReducer from "./taskModalSlice";
 import themeReducer from "./themeSlice";
 import authReducer from "./authSlice";
+import { useDispatch } from "react-redux";
 
 const preloadedState = loadState();
 
@@ -30,3 +31,4 @@ store.subscribe(() => {
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const useAppDispatch = () => useDispatch<AppDispatch>();

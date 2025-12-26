@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../store";
-import { loginFailure, loginStart, loginSuccess } from "../../store/authSlice";
-import { login as firebaseLogin } from "../../utils/authService";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../store";
+import { LoginUser } from "../../store/authSlice";
 import Loader from "../Loader/Loader";
 import styles from "./LoginForm.module.scss";
 
@@ -17,31 +16,21 @@ interface AuthLoginForm {
 }
 
 export default function LoginForm({ onClose }: AuthLoginForm) {
-  const {
-    register,
-    handleSubmit,
-  } = useForm<{ email: string; password: string }>();
+  const { register, handleSubmit } = useForm<{
+    email: string;
+    password: string;
+  }>();
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const { isLoading } = useSelector((state: RootState) => state.auth);
   const [error, setError] = useState<string | null>(null);
 
   const onSubmit = async ({ email, password }: FormData) => {
-    dispatch(loginStart());
-    try {
-      const user = await firebaseLogin(email, password);
-      dispatch(
-        loginSuccess({
-          email: user.email,
-          id: user.uid,
-          token: await user.getIdToken(),
-        })
-      );
+    const result = await dispatch(LoginUser({ email, password }));
+    if (LoginUser.fulfilled.match(result)) {
       onClose();
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    } catch (error: any) {
-      setError(error.message);
-      dispatch(loginFailure());
+    } else {
+      setError("Неверный логин или пароль");
     }
   };
 

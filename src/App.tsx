@@ -8,7 +8,7 @@ import "./firebase";
 import { auth } from "./firebase";
 import Calendar from "./pages/Calendar/Calendar";
 import { RootState } from "./store";
-import { loginSuccess, logout } from "./store/authSlice";
+import { setUser, clearUser } from "./store/authSlice";
 import Footer from "./components/Footer/Footer";
 
 function App() {
@@ -19,14 +19,14 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         dispatch(
-          loginSuccess({
+          setUser({
             email: user.email,
             token: user.refreshToken,
             id: user.uid,
           })
         );
       } else {
-        dispatch(logout());
+        dispatch(clearUser());
       }
     });
 
