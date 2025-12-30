@@ -40,13 +40,20 @@ export const LoginUser = createAsyncThunk(
     } catch (err) {
       return rejectWithValue("Ошибка сервера");
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      const state = getState() as RootState;
+      if (state.auth.isLoading) {
+        return false;
+      }
+    },
   }
 );
 
 export const LogoutUser = createAsyncThunk("auth/logout", async () => {
   await logout();
 });
-
 
 // Создаем слайс аутентификации
 const authSlice = createSlice({

@@ -7,7 +7,7 @@
   // min-width: 947px;
   width: 80%;
   margin: 0 auto;
-  padding: 0 var(--spacing-xl);
+  padding: 0 var(--spacing-xl) var(--spacing-xl);
   text-align: center;
 
   @media (max-width: $max-width) {
