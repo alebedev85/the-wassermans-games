@@ -74,6 +74,7 @@ export const editTask = createAsyncThunk<Task, Task>(
   "calendar/editTask",
   async (task, { rejectWithValue }) => {
     try {
+      console.log("я здесь")
       await updateTaskInFB(task);
       return task;
     } catch (error) {

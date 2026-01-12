@@ -3,7 +3,6 @@ import { useAppDispatch, useAppSelector } from "../../store";
 import { editTask } from "../../store/calendarSlice";
 import { closeTaskModal } from "../../store/taskModalSlice";
 import { Task } from "../../types";
-import { updateTaskInFB } from "../../utils/storageFirebase";
 import Loader from "../Loader/Loader";
 import ImageArea from "../ui/ImageArea/ImageArea";
 import InputArea from "../ui/InputArea/InputArea";
@@ -13,7 +12,8 @@ import styles from "./TaskModal.module.scss";
 import TaskModalControls from "./TaskModalControls/TaskModalControls";
 
 const TaskModal = () => {
-  const [isUploading, setIsUploading] = useState(false);
+  // const [isUploading, setIsUploading] = useState(false);
+  const { editTaskStatus } = useAppSelector((state) => state.calendar);
   const dispatch = useAppDispatch();
   const { isOpen, task } = useAppSelector((state) => state.taskModal);
   const { status } = useAppSelector((state) => state.auth);
@@ -100,16 +100,12 @@ const TaskModal = () => {
         link,
       };
       try {
-        setIsUploading(true);
-        await updateTaskInFB(updatedTask);
         dispatch(editTask(updatedTask));
         setInitialTask(updatedTask);
         setIsEditMode(false);
       } catch (error) {
         console.error("Не удалось сохранить задачу:", error);
         alert("Ошибка при сохранении задачи. Попробуйте снова.");
-      } finally {
-        setIsUploading(false);
       }
     }
   };
@@ -117,7 +113,7 @@ const TaskModal = () => {
   return (
     <div className={styles.modalOverlay} onClick={handleClose}>
       <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
-        {isUploading ? (
+        {editTaskStatus ? (
           <Loader />
         ) : (
           <div className={styles.scrollableInner}>
