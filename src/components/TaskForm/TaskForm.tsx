@@ -1,12 +1,11 @@
 import { format } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch } from "../../store";
+import { useAppDispatch, useAppSelector } from "../../store";
 import fallbackImage from "../../assets/artwork.png";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
-import { saveTaskInFB } from "../../utils/storageFirebase";
 import Loader from "../Loader/Loader";
 import styles from "./TaskForm.module.scss";
 
@@ -19,7 +18,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useAppDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const [isUploadingTask, setIsUploadingTask] = useState(false);
+  const {addTaskStatus} = useAppSelector((state) => state.calendar);
   const {
     register,
     handleSubmit,
@@ -41,16 +40,12 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         imageUrl,
       };
       try {
-        setIsUploadingTask(true);
-        await saveTaskInFB(newTask);
         dispatch(addTask(newTask));
         reset();
         onClose();
       } catch (error) {
         console.error("Не удалось сохранить задачу:", error);
         alert("Ошибка при сохранении задачи. Попробуйте снова.");
-      } finally {
-        setIsUploadingTask(false);
       }
     }
   };
@@ -179,7 +174,7 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         placeholder="Описание (необязательно)"
       />
 
-      {isUploadingTask ? (
+      {addTaskStatus ? (
         <Loader />
       ) : (
         <div className={styles.controls}>

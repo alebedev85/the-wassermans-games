@@ -20,7 +20,7 @@ export const store = configureStore({
   preloadedState: preloadedState
     ? {
         theme: preloadedState.theme,
-        calendar: preloadedState.calendar,
+        // calendar: preloadedState.calendar,
       }
     : undefined,
 });

@@ -11,16 +11,14 @@ import useCurrentMonth from "../../hooks/useCurrentMonth";
 import useDragAndDrop from "../../hooks/useDragAndDrop";
 import { useAppDispatch, useAppSelector } from "../../store";
 
-import { useEffect, useState } from "react";
-import { setTasks } from "../../store/calendarSlice";
-import { getAllTasks } from "../../utils/storageFirebase";
+import { useEffect } from "react";
+import { fetchTasks } from "../../store/calendarSlice";
 import styles from "./Calendar.module.scss";
 
 const Calendar = () => {
   const dispatch = useAppDispatch();
-  const [isLoading, setIsLoading] = useState(true);
   // Получаем список задач из Redux store
-  const tasks = useAppSelector((state) => state.calendar.tasks);
+  const { tasks, loadTasksStatus } = useAppSelector((state) => state.calendar);
 
   // Хук для текущего месяца и переключения месяцев
   const { currentMonth, handleNextMonth, handlePrevMonth } = useCurrentMonth();
@@ -32,22 +30,8 @@ const Calendar = () => {
   const days = useCalendarDays(currentMonth);
 
   useEffect(() => {
-    const fetchTasks = async () => {
-      setIsLoading(true); // Начинаем загрузку
-      try {
-        const tasks = await getAllTasks();
-        dispatch(setTasks(tasks));
-      } catch (error) {
-        console.error("Ошибка при загрузке задач:", error);
-        alert("Не удалось загрузить задачи. Попробуйте обновить страницу.");
-      } finally {
-        setIsLoading(false); // Завершаем загрузку в любом случае
-      }
-    };
-
-    fetchTasks();
+    dispatch(fetchTasks());
   }, [dispatch]);
-  //***** */
 
   // Форматируем название месяца с локализацией на русский язык и с заглавной буквы
   const formattedMonth = format(currentMonth, "LLLL yyyy", { locale: ru });
@@ -58,7 +42,7 @@ const Calendar = () => {
   const today = new Date();
 
   // Показываем лоадер, если данные еще загружаются
-  return isLoading ? (
+  return loadTasksStatus ? (
     <div className={styles.loader}>
       <Loader />
     </div>

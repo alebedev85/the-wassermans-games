@@ -10,8 +10,18 @@ export interface Task {
   link?: string;
 }
 
+
 export interface Calendar {
   tasks: Task[];
+  loadTasksStatus: boolean;
+  addTaskStatus: boolean;
+  editTaskStatus: boolean;
+  errors: {
+    load: string | null;
+    add: string | null;
+    edit: string | null;
+    delete: string | null;
+  };
 }
 
 export interface User {
