@@ -13,6 +13,7 @@ const initialState: Calendar = {
   loadTasksStatus: false,
   addTaskStatus: false,
   editTaskStatus: false,
+  delTaskStatus: false,
   errors: {
     load: null,
     add: null,
@@ -57,6 +58,14 @@ export const deleteTask = createAsyncThunk<string, string>(
     } catch (error) {
       return rejectWithValue("Ошибка удаления задачи");
     }
+  },
+  {
+    condition: (_, { getState }) => {
+      const state = getState() as RootState;
+      if (state.calendar.delTaskStatus) {
+        return false;
+      }
+    },
   }
 );
 
@@ -179,12 +188,14 @@ const calendarSlice = createSlice({
       })
 
       // 🔹 Удаление задач
+      .addCase(deleteTask.pending, (state) => {
+        state.delTaskStatus = true;
+      })
       .addCase(deleteTask.fulfilled, (state, action) => {
         state.tasks = state.tasks.filter((t) => t.id !== action.payload);
+        state.delTaskStatus = false;
       });
   },
 });
 
-// export const { setTasks, addTask, moveTask, deleteTask, editTask } =
-//   calendarSlice.actions;
 export default calendarSlice.reducer;

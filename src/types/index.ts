@@ -16,6 +16,7 @@ export interface Calendar {
   loadTasksStatus: boolean;
   addTaskStatus: boolean;
   editTaskStatus: boolean;
+  delTaskStatus: boolean;
   errors: {
     load: string | null;
     add: string | null;

@@ -1,8 +1,6 @@
 import { useAppDispatch, useAppSelector } from "../../store";
 import { deleteTask } from "../../store/calendarSlice";
 import { closeDeleteModal } from "../../store/deleteTaskModalSlice";
-import { closeTaskModal } from "../../store/taskModalSlice";
-import { deleteTaskFromFB } from "../../utils/storageFirebase";
 import styles from "./DeleteTaskModal.module.scss";
 
 const DeleteTaskModal = () => {
@@ -12,10 +10,8 @@ const DeleteTaskModal = () => {
   if (!isOpen || !task) return null;
 
   const handleDelete = async () => {
-    await deleteTaskFromFB(task.id);
     dispatch(deleteTask(task.id));
     dispatch(closeDeleteModal());
-    dispatch(closeTaskModal());
   };
 
   return (
