@@ -1,9 +1,7 @@
 import { DropResult } from "@hello-pangea/dnd";
 import { useCallback } from "react";
 import { useAppDispatch, useAppSelector } from "../store";
-import { moveTask } from "../store/calendarSlice";
-import { Task } from "../types";
-import { updateTaskInFB } from "../utils/storageFirebase";
+import { moveTaskOptimistic, syncMoveTask } from "../store/calendarSlice";
 
 /**
  * Хук для загрузки задач и обработки DnD в календаре.
@@ -34,22 +32,18 @@ const useDragAndDrop = () => {
       }
 
       dispatch(
-        moveTask({ taskId: draggableId, newDate: destination.droppableId })
+        moveTaskOptimistic({
+          taskId: draggableId,
+          newDate: destination.droppableId,
+        })
       );
 
-      // Находим задачу, чтобы обновить её на сервере
-      const movedTask = tasks.find((t) => t.id === draggableId);
-      if (!movedTask) return;
-
-      // Обновляем поле date в Firestore
-      try {
-        await updateTaskInFB({
-          ...movedTask,
-          date: destination.droppableId,
-        } as Task);
-      } catch {
-        alert("Ошибка при обновлении задачи в Firebase:");
-      }
+      // 🔹 синхронизируем с сервером
+      dispatch(
+        syncMoveTask({ taskId: draggableId, newDate: destination.droppableId })
+      )
+        .unwrap()
+        .catch(() => alert("Ошибка при сохранении задачи на сервере"));
     },
     [dispatch, status, tasks]
   );
