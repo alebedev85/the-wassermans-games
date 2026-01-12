@@ -7,14 +7,14 @@ import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
-import styles from "./TaskForm.module.scss";
+import styles from "./AddTaskForm.module.scss";
 
 interface TaskFormProps {
   selectedDate: Date;
   onClose: () => void;
 }
 
-const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
+const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useAppDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
@@ -194,4 +194,4 @@ const TaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   );
 };
 
-export default TaskForm;
+export default AddTaskForm;

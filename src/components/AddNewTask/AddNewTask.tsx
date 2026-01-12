@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import TaskForm from "../TaskForm/TaskForm";
+import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import styles from "./AddNewTask.module.scss";
 
 interface AddNewTaskProps {
@@ -48,7 +48,7 @@ const AddNewTask = ({ selectedDate }: AddNewTaskProps) => {
       {/* Если меню открыто — рендерим компонент формы добавления задачи */}
       {menuOpen && (
         <div className={styles.dropdownMenu}>
-          <TaskForm
+          <AddTaskForm
             selectedDate={selectedDate}       // Передаем выбранную дату
             onClose={() => setMenuOpen(false)} // Закрытие формы по действию изнутри
           />
