@@ -35,4 +35,15 @@
   margin-top: 0.25rem;
   z-index: 11;
   animation: fadeIn 0.3s ease-out forwards;
+
+  &.alignRight {
+    left: auto;
+    right: 0;
+  }
+  
+  &.alignTop {
+    top: auto;
+    bottom: 100%;
+  }
 }
+
