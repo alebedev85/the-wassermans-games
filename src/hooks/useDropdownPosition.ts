@@ -18,10 +18,16 @@ export const useDropdownPosition = () => {
   const updatePosition = () => {
     if (!triggerRef.current || !dropdownRef.current) return;
 
+    // Получаем координаты и размеры кнопки-триггера
     const triggerRect = triggerRef.current.getBoundingClientRect();
+
+    // Получаем размеры выпадающего меню
     const dropdownRect = dropdownRef.current.getBoundingClientRect();
 
+    // Сколько места справа от кнопки до края окна
     const spaceRight = window.innerWidth - triggerRect.left;
+
+    // Сколько места снизу от кнопки до нижнего края окна
     const spaceBottom = window.innerHeight - triggerRect.bottom;
 
     setAlignRight(spaceRight < dropdownRect.width);
