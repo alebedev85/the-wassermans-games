@@ -26,7 +26,10 @@ export const store = configureStore({
 });
 
 store.subscribe(() => {
-  saveState(store.getState());
+  saveState({
+    theme: store.getState().theme,
+    calendar: store.getState().calendar,
+  });
 });
 
 export type RootState = ReturnType<typeof store.getState>;

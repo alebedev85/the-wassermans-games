@@ -13,7 +13,9 @@ export const loadState = (): any => {
   }
 };
 
-export const saveState = (state: RootState) => {
+type PersistedState = Pick<RootState, "theme" | "calendar">;
+
+export const saveState = (state: PersistedState) => {
   try {
     const serializedState = JSON.stringify(state);
     localStorage.setItem("boardState", serializedState);
