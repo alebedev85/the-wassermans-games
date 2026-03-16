@@ -1,13 +1,14 @@
 import { format } from "date-fns";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { useAppDispatch, useAppSelector } from "../../store";
 import fallbackImage from "../../assets/artwork.png";
+import { useAppDispatch, useAppSelector } from "../../store";
 import { addTask } from "../../store/calendarSlice";
 import { Task } from "../../types";
 import { uploadImageToCloudinary } from "../../utils/cloudinary";
 import Loader from "../Loader/Loader";
 import styles from "./AddTaskForm.module.scss";
+import classNames from "classnames";
 
 interface TaskFormProps {
   selectedDate: Date;
@@ -18,7 +19,7 @@ const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
   const dispatch = useAppDispatch();
   const [imageUrl, setImageUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
-  const {addTaskStatus} = useAppSelector((state) => state.calendar);
+  const { addTaskStatus } = useAppSelector((state) => state.calendar);
   const {
     register,
     handleSubmit,
@@ -68,6 +69,9 @@ const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
 
   return (
     <form className={styles.taskForm} onSubmit={handleSubmit(onSubmit)}>
+      <button className={styles.closeButton} onClick={onClose}>
+        ✖
+      </button>
       <h3>Новая игра на {selectedDate.toLocaleDateString()}</h3>
 
       {/* Поле Названия */}
@@ -150,8 +154,8 @@ const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
           {isUploading
             ? "Загружается..."
             : imageUrl
-            ? "Изменить изображение"
-            : "Загрузить изображение"}
+              ? "Изменить изображение"
+              : "Загрузить изображение"}
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
         {isUploading ? (
@@ -178,12 +182,12 @@ const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         <Loader />
       ) : (
         <div className={styles.controls}>
-          <button type="submit" className="buttonColorsPrimary">
+          <button type="submit" className={classNames("buttonColorsPrimary", "squareButton")}>
             Добавить
           </button>
           <button
             type="button"
-            className="buttonColorsSecondary"
+            className={classNames("buttonColorsSecondary", "squareButton")}
             onClick={onClose}
           >
             Отмена

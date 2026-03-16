@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useState } from "react";
 import fallbackImage from "../../../assets/artwork.png";
 import { uploadImageToCloudinary } from "../../../utils/cloudinary";
@@ -47,12 +48,12 @@ export default function ImageArea({
         />
       )}
       {isEditMode && (
-        <label className={styles.customFileUpload}>
+        <label className={classNames(styles.customFileUpload, "buttonColorsPrimary", "squareButton")}>
           {isUploading
             ? "Загружается..."
             : imageUrl
-            ? "Изменить изображение"
-            : "Загрузить изображение"}
+              ? "Изменить изображение"
+              : "Загрузить изображение"}
           <input type="file" accept="image/*" onChange={handleImageChange} />
         </label>
       )}

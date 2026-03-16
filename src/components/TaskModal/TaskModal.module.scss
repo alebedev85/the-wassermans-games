@@ -26,11 +26,10 @@
 
 .modalContent {
   min-width: 525px;
-  
   background: var(--calendar-day);
   // padding: var(--spacing-xl);
   // padding-top: 2.5rem;
-  border-radius: 10px;
+  border-radius: 1.5rem;
   text-align: left; /* Выравнивание по левому краю */
   display: flex;
   flex-direction: column;
@@ -77,8 +76,8 @@
 
 .closeButton {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: 5px;
+  right: 5px;
   width: 30px;
   height: 30px;
   border: none;

@@ -1,6 +1,6 @@
 .taskForm {
   background-color: var(--calendar-day);
-  border-radius: 0.5rem;
+  border-radius: 1rem;
   padding: var(--spacing-lg);
   box-sizing: border-box;
   width: 300px;
@@ -19,6 +19,22 @@
   }
 }
 
+.closeButton {
+  position: absolute;
+  top: 3px;
+  right: 3px;
+  width: 30px;
+  height: 30px;
+  border: none;
+  border-radius: 50%;
+  color: var(--text-color);
+  font-size: var(--font-size-lg);
+
+  &:hover {
+    background-color: var(--hover);
+  }
+}
+
 .inputBlock {
   margin: 10px 0;
   text-align: left;
@@ -33,22 +49,6 @@
 .controls {
   display: flex;
   justify-content: space-between;
-
-  button {
-    padding: 5px 10px;
-    border-radius: 5px;
-    font-family: inherit;
-  }
-
-  .addButton {
-    color: var(--button-text-color);
-    background-color: var(--primary-color);
-  }
-
-  .closeButton {
-    color: var(--primary-color);
-    background-color:var(--calendar-header);
-  }
 }
 
 .error {
@@ -73,6 +73,10 @@
   border-radius: 5px;
   display: inline-block;
   font-size: var(--font-size-sm);
+
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .customFileUpload input {

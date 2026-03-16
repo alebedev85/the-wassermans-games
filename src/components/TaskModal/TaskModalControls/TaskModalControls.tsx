@@ -18,13 +18,13 @@ export default function TaskModalControls({
   return (
     <div className={styles.controls}>
       {!isEditMode ? (
-        <button className={classNames(styles.button, styles.editButton)} onClick={setIsEditMode}>
+        <button className={classNames("buttonColorsPrimary", "squareButton")} onClick={setIsEditMode}>
           Редактировать
         </button>
       ) : (
         <>
           <button
-            className={classNames(styles.button, styles.saveButton, {
+            className={classNames("buttonColorsPrimary", "squareButton", {
               [styles.disabled]: disabled,
             })}
             onClick={handleSave}
@@ -33,7 +33,7 @@ export default function TaskModalControls({
             Сохранить
           </button>
           <button
-            className={classNames(styles.button, styles.cancelButton)}
+            className={classNames("buttonColorsSecondary", "squareButton")}
             onClick={handleCancel}
           >
             Отмена

@@ -7,31 +7,8 @@
   margin-top: var(--spacing-md);
 }
 
-.button {
-  padding: var(--spacing-sm) var(--spacing-md);
-  border: none;
-  border-radius: 5px;
-  font-size: var(--font-size-lg);
-  color: white;
-  font-family: inherit;
-  @media (max-width: $max-width) {
-    font-size: var(--font-size-header-subtitle);
-  }
-}
-
-.editButton {
-  background: var(--primary-color);
-}
-.saveButton {
-  background: var(--save-button-color);
-}
-
-.cancelButton {
-  background: var(--cancel-button-color);
-}
-
 .disabled {
-  background: var(--calendar-header);
+  background-color: var(--calendar-header);
   cursor: default;
   &:hover {
     background: var(--calendar-header);
