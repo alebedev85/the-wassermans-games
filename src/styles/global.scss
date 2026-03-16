@@ -1,19 +1,9 @@
-@use "./styles/vars.scss" as *;
-
 #scaler {
   min-width: 970px;
   width: 100%;
   margin: 0 auto;
   transform-origin: top left;
 }
-
-// @media screen and (max-width: 970px) {
-//   #scaler {
-//     width: 970px;
-//     // transform: scale(calc(100vw / 970));
-//     transform: scale(#{'calc(100vw / 970)'});
-//   }
-// }
 
 #root {
   height: 100%;
@@ -63,7 +53,7 @@ ul {
 }
 
 .tooltip {
-  position: relative;
+  // position: relative;
   z-index: 9;
 }
 
@@ -84,7 +74,27 @@ ul {
   transition: opacity 0.3s ease-in-out;
 }
 
+.tooltipDawn::after {
+  top: 30px;
+}
+
 .tooltip:hover::after {
   opacity: 1;
   visibility: visible;
+}
+
+.squareButton {
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-family: inherit;
+}
+
+.buttonColorsPrimary {
+  color: var(--button-text-color);
+  background-color: var(--primary-color);
+}
+
+.buttonColorsSecondary {
+  color: var(--primary-color);
+  background-color: var(--secondary-header);
 }

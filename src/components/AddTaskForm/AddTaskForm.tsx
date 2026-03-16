@@ -178,12 +178,12 @@ const AddTaskForm = ({ selectedDate, onClose }: TaskFormProps) => {
         <Loader />
       ) : (
         <div className={styles.controls}>
-          <button type="submit" className={styles.addButton}>
+          <button type="submit" className="buttonColorsPrimary">
             Добавить
           </button>
           <button
             type="button"
-            className={styles.closeButton}
+            className="buttonColorsSecondary"
             onClick={onClose}
           >
             Отмена

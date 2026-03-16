@@ -32,21 +32,22 @@
 
 .controls {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
 
   button {
-    color: var(--button-text-color);
     padding: 5px 10px;
     border-radius: 5px;
     font-family: inherit;
   }
 
   .addButton {
+    color: var(--button-text-color);
     background-color: var(--primary-color);
   }
 
   .closeButton {
-    background: var(--cancel-button-color);
+    color: var(--primary-color);
+    background-color:var(--calendar-header);
   }
 }
 

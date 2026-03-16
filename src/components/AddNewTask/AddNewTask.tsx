@@ -3,6 +3,7 @@ import { useDropdownPosition } from "../../hooks/useDropdownPosition";
 import AddTaskForm from "../AddTaskForm/AddTaskForm";
 import clsx from "clsx";
 import styles from "./AddNewTask.module.scss";
+import classNames from "classnames";
 
 interface AddNewTaskProps {
   selectedDate: Date;
@@ -58,7 +59,8 @@ const AddNewTask = ({ selectedDate }: AddNewTaskProps) => {
       {/* Кнопка открытия / закрытия меню */}
       <button
         ref={triggerRef}
-        className={styles.newTaskButton}
+        className={classNames(styles.newTaskButton, "tooltip", "tooltipDawn")}
+        data-tooltip="Добавить игру"
         onClick={toggleMenu} // Переключаем состояние
       >
         +

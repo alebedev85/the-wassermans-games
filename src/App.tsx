@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import "./App.scss";
 import DeleteTaskModal from "./components/DeleteTaskModal/DeleteTaskModal";
 import Footer from "./components/Footer/Footer";
 import Header from "./components/Header/Header";
