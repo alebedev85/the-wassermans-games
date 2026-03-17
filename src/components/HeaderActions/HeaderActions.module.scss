@@ -16,7 +16,7 @@
   .buttonTheme {
     width: 35px;
     height: 35px;
-    border: 1px solid blue;
+    border: 1px solid var(--button-text-color);
     border-radius: 50%;
     background-color: var(--theme-button-color);
 

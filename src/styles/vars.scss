@@ -48,15 +48,16 @@
 
 // Dark Theme
 [data-theme="dark"] {
-  --primary-color: #014287;
-  --background-color: #1e1e1e;
-  --theme-button-color: #2d5b8b;
-  --calendar-header: #2c2c2c;
-  --calendar-past-day: #3a3a3a;
-  --calendar-day: #9d9d9d;
+  --primary-color: #413F54;
+  --background-color: #3d343c;
+  --theme-button-color: #5e5b77;
+  --calendar-header: #413F54;
+  --calendar-past-day: #6a6a6a;
+  --calendar-day: #a3a4a0;
   --task-color: #2c2c2c;
   --modal-bg: #2c2c2c;
   --text-color: #fff;
+  --today-color: #D9AD45;
 }
 
 $max-width: 969px;
