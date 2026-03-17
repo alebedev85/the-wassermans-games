@@ -47,10 +47,6 @@ button {
       opacity: 1;
     }
   }
-
-  @media (max-width: $max-width) {
-    font-size: var(--font-size-header-subtitle);
-  }
 }
 
 h1,
